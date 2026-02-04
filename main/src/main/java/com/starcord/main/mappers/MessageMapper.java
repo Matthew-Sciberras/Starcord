@@ -1,4 +1,4 @@
-package com.starcord.main.services;
+package com.starcord.main.mappers;
 
 import com.starcord.main.dtos.MessageDTO;
 import com.starcord.main.models.Message;
@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
 @Service
-public class MapperService {
+public class MessageMapper {
 
     private final ObjectMapper mapper;
 
 
-    public MapperService(ObjectMapper mapper) {
+    public MessageMapper(ObjectMapper mapper) {
         this.mapper = mapper;
     }
 

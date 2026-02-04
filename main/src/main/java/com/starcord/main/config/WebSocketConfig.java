@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry webSocketHandlerRegistry) {
         // Add domains and CORS policy
-        webSocketHandlerRegistry.addHandler(socketConnectionHandler, "/connect")
+        webSocketHandlerRegistry.addHandler(socketConnectionHandler, "/api/v1/connect")
                 .setAllowedOrigins("*");
     }
 }

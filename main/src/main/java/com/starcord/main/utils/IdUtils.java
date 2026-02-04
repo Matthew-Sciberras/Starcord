@@ -1,9 +1,9 @@
-package com.starcord.main.services;
+package com.starcord.main.utils;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class IdService {
+@Component
+public class IdUtils {
     private final long epoch = 1705689600000L; // custom epoch, e.g., Jan 1, 2026
     private long lastTimestamp = -1L;
     private long sequence = 0L;

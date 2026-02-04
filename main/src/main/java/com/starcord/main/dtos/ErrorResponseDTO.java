@@ -16,19 +16,11 @@ public class ErrorResponseDTO {
         this.timestamp = timestamp;
     }
 
-    public String getErrorCode() {
-        return errorCode;
-    }
+    public String getErrorCode() { return errorCode; }
 
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() { return message; }
 
-    public int getStatus() {
-        return status;
-    }
+    public int getStatus() { return status; }
 
-    public Instant getTimestamp() {
-        return timestamp;
-    }
+    public Instant getTimestamp() { return timestamp; }
 }

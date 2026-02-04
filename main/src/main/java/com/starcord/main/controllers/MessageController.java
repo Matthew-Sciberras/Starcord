@@ -5,7 +5,7 @@ import com.starcord.main.services.MessageService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/messages")
+@RequestMapping("/api/v1/messages")
 public class MessageController {
 
     private final MessageService messageService;
@@ -24,5 +24,10 @@ public class MessageController {
     @PostMapping("/{channelID}")
     public @ResponseBody MessageDTO sendMessage(@RequestBody MessageDTO message) throws Exception{
         return messageService.createMessage(message);
+    }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "Pong!";
     }
 }

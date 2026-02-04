@@ -19,6 +19,9 @@ public class Channel {
     @Column
     private String image;
 
+    @ManyToOne
+    private User creator;
+
     @ManyToMany
     @JoinTable(
             name = "channel_users",
@@ -29,6 +32,5 @@ public class Channel {
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
     private Set<Message> messages;
-
 
 }

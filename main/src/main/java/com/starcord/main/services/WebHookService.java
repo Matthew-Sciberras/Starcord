@@ -1,6 +1,7 @@
 package com.starcord.main.services;
 
 import com.starcord.main.dtos.MessageDTO;
+import com.starcord.main.mappers.MessageMapper;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.CloseStatus;
@@ -15,10 +16,10 @@ import java.util.List;
 public class WebHookService {
     List<WebSocketSession> webSocketSessionList = Collections.synchronizedList(new ArrayList<>());
 
-    private final MapperService mapperService;
+    private final MessageMapper messageMapper;
 
-    public WebHookService(MapperService mapperService) {
-        this.mapperService = mapperService;
+    public WebHookService(MessageMapper messageMapper) {
+        this.messageMapper = messageMapper;
     }
 
     public void connect(@NonNull WebSocketSession session) throws Exception{
@@ -36,7 +37,7 @@ public class WebHookService {
      * @throws Exception
      */
     public void sendMessage(MessageDTO messageDTO) throws Exception {
-        TextMessage message = new TextMessage(mapperService.convertToJSON(messageDTO));
+        TextMessage message = new TextMessage(messageMapper.convertToJSON(messageDTO));
         for (WebSocketSession webSocketSession : webSocketSessionList) {
             webSocketSession.sendMessage(message);
         }

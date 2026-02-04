@@ -1,23 +1,23 @@
 package com.starcord.main.services;
 
 import com.starcord.main.dtos.MessageDTO;
+import com.starcord.main.utils.IdUtils;
+import com.starcord.main.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MessageService {
 
-    private final TimeService timeService;
+    private final TimeUtils timeUtils;
     private final WebHookService webHookService;
-    private final IdService idService;
 
-    public MessageService(TimeService timeService, WebHookService webHookService, IdService idService) {
-        this.timeService = timeService;
+    public MessageService(TimeUtils timeUtils, WebHookService webHookService) {
+        this.timeUtils = timeUtils;
         this.webHookService = webHookService;
-        this.idService = idService;
     }
 
     public MessageDTO createMessage(MessageDTO messageDTO) throws Exception{
-        messageDTO.setTimestamp(timeService.getCurrentTimestamp());
+        messageDTO.setTimestamp(timeUtils.getCurrentTimestamp());
         webHookService.sendMessage(messageDTO);
         return messageDTO;
     }

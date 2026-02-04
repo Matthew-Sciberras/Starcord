@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidCredentialsException extends RuntimeException {
 
-    private static final String DEFAULT_MESSAGE = "Username or password invalid.";
+    private static final String DEFAULT_MESSAGE = "Email or password invalid.";
     private String errorCode = "UNAUTHORIZED";
     private final HttpStatus statusCode = HttpStatus.UNAUTHORIZED;
 
