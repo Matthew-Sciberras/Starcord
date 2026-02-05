@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -51,6 +50,7 @@ public class AuthService {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
         // Refresh Token
+        assert userDetails != null;
         String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getUser());
         System.out.println("Refresh token: " + refreshToken);
 

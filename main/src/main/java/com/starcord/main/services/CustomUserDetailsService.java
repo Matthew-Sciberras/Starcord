@@ -4,7 +4,6 @@ import com.starcord.main.security.CustomUserDetails;
 import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.UserRepository;
-import org.hibernate.annotations.NotFound;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

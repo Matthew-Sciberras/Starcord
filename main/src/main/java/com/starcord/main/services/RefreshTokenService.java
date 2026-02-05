@@ -58,11 +58,7 @@ public class RefreshTokenService {
             return false;
         }
 
-        if(refreshToken.isRevoked()) {
-            return false;
-        }
-
-        return true;
+        return !refreshToken.isRevoked();
     }
 
     public void revokeRefreshToken(String token) {

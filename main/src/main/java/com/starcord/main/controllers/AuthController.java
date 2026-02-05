@@ -24,7 +24,7 @@ public class AuthController {
      * @throws Exception
      */
     @PostMapping("/signup")
-    public @ResponseBody SignupResponseDTO signup(@RequestBody SignupRequestDTO request) throws Exception{
+    public @ResponseBody SignupResponseDTO signup(@RequestBody SignupRequestDTO request){
         return signupService.createUser(request);
     }
 
@@ -34,7 +34,7 @@ public class AuthController {
      * @throws Exception
      */
     @PostMapping("/login")
-    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request) throws Exception {
+    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
         return authService.login(request);
     }
 
