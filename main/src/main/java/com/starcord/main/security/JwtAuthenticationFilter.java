@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         jwt = authHeader.substring(7); // remove "Bearer "
-
         if (!jwtService.isAccessToken(jwt)) {
             filterChain.doFilter(request, response);
             return;
@@ -50,7 +49,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         email = jwtService.extractEmail(jwt);
-
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             // Load user details
             System.out.println("Load user details");
@@ -66,10 +64,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
 
             // Set authentication in context
-            System.out.println("Auth token generated");
             SecurityContextHolder.getContext().setAuthentication(authToken);
         }
-
         filterChain.doFilter(request, response);
     }
 }

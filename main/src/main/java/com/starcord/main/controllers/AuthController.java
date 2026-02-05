@@ -3,7 +3,9 @@ package com.starcord.main.controllers;
 import com.starcord.main.dtos.*;
 import com.starcord.main.services.AuthService;
 import com.starcord.main.services.SignupService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -37,6 +39,16 @@ public class AuthController {
     }
 
     /**
+     * @return SuccessResponseDTO
+     */
+    @PostMapping("/logout")
+    public @ResponseBody SuccessResponseDTO logout(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        String jwt = authHeader.substring(7); // remove "Bearer "
+        return authService.logout(jwt);
+    }
+
+    /**
      * @param AuthTokenRequestDTO request
      * @return AuthTokenResponseDTO
      */
@@ -44,4 +56,5 @@ public class AuthController {
     public @ResponseBody AuthTokenResponseDTO refresh(@RequestBody AuthTokenRequestDTO request) {
         return authService.refreshToken(request);
     }
+
 }

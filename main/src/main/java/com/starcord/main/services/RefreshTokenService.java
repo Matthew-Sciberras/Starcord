@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -74,5 +75,9 @@ public class RefreshTokenService {
         String token = hashingUtils.convertToSha256(plainToken);
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token Provided")));
         return refreshToken.getUser();
+    }
+
+    public List<RefreshToken> getTokensFromUser(User user) {
+        return refreshTokenRepository.findAllByUser(user);
     }
 }

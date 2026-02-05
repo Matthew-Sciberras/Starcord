@@ -1,10 +1,8 @@
 package com.starcord.main.services;
 
-import com.starcord.main.dtos.AuthTokenRequestDTO;
-import com.starcord.main.dtos.AuthTokenResponseDTO;
-import com.starcord.main.dtos.LoginRequestDTO;
-import com.starcord.main.dtos.LoginResponseDTO;
+import com.starcord.main.dtos.*;
 import com.starcord.main.exceptions.InvalidCredentialsException;
+import com.starcord.main.models.RefreshToken;
 import com.starcord.main.models.User;
 import com.starcord.main.security.CustomUserDetails;
 import com.starcord.main.security.JwtService;
@@ -16,18 +14,23 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.List;
+
 @Service
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final AccessTokenService accessTokenService;
+    private final CustomUserDetailsService userDetailsService;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final TimeUtils timeUtils;
 
-    public AuthService(AuthenticationManager authenticationManager, AccessTokenService accessTokenService, JwtService jwtService, RefreshTokenService refreshTokenService, TimeUtils timeUtils) {
+    public AuthService(AuthenticationManager authenticationManager, AccessTokenService accessTokenService, CustomUserDetailsService userDetailsService, JwtService jwtService, RefreshTokenService refreshTokenService, TimeUtils timeUtils) {
         this.authenticationManager = authenticationManager;
         this.accessTokenService = accessTokenService;
+        this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
         this.timeUtils = timeUtils;
@@ -78,5 +81,20 @@ public class AuthService {
         authTokenResponseDTO.setCreatedAt(createdAt);
         authTokenResponseDTO.setExpiresAt(expiresAt);
         return authTokenResponseDTO;
+    }
+
+    public SuccessResponseDTO logout(String jwt) {
+        String email = jwtService.extractEmail(jwt);
+        User user = userDetailsService.loadUserByEmail(email);
+        List<RefreshToken> tokens = refreshTokenService.getTokensFromUser(user);
+        if(tokens.isEmpty()) {
+            throw new InvalidCredentialsException("Invalid Token Entered - No session Found");
+        }
+
+        for(RefreshToken refreshToken : tokens) {
+            String token = refreshToken.getToken();
+            refreshTokenService.revokeRefreshToken(token);
+        }
+        return new SuccessResponseDTO("Successful Logout");
     }
 }
