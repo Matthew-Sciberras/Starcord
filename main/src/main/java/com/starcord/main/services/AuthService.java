@@ -1,12 +1,14 @@
 package com.starcord.main.services;
 
 import com.starcord.main.dtos.*;
+import com.starcord.main.exceptions.BadRequestException;
 import com.starcord.main.exceptions.InvalidCredentialsException;
 import com.starcord.main.models.RefreshToken;
 import com.starcord.main.models.User;
 import com.starcord.main.security.CustomUserDetails;
 import com.starcord.main.security.JwtService;
 import com.starcord.main.utils.TimeUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -35,9 +37,13 @@ public class AuthService {
         this.timeUtils = timeUtils;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO request) {
+    public LoginResponseDTO login(LoginRequestDTO request, String deviceID) {
         String email = request.getEmail();
         String password = request.getPassword();
+
+        if(deviceID == null || deviceID.isEmpty()) {
+            throw new BadRequestException("Missing device ID");
+        }
 
         // Authenticate
         Authentication authentication;
@@ -51,7 +57,7 @@ public class AuthService {
 
         // Refresh Token
         assert userDetails != null;
-        String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getUser());
+        String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getUser(), deviceID);
         System.out.println("Refresh token: " + refreshToken);
 
         // Access Token
@@ -83,18 +89,15 @@ public class AuthService {
         return authTokenResponseDTO;
     }
 
-    public SuccessResponseDTO logout(String jwt) {
+    public SuccessResponseDTO logout(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        String jwt = authHeader.substring(7); // remove "Bearer "
+        String deviceID = request.getHeader("X-Device-Id");
         String email = jwtService.extractEmail(jwt);
         User user = userDetailsService.loadUserByEmail(email);
-        List<RefreshToken> tokens = refreshTokenService.getTokensFromUser(user);
-        if(tokens.isEmpty()) {
-            throw new InvalidCredentialsException("Invalid Token Entered - No session Found");
-        }
-
-        for(RefreshToken refreshToken : tokens) {
-            String token = refreshToken.getToken();
-            refreshTokenService.revokeRefreshToken(token);
-        }
+        RefreshToken refreshToken = refreshTokenService.getTokenByUserAndDeviceID(user, deviceID);
+        String token = refreshToken.getToken();
+        refreshTokenService.revokeRefreshToken(token);
         return new SuccessResponseDTO("Successful Logout");
     }
 }

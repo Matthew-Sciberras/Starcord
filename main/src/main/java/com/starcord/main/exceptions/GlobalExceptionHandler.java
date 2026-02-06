@@ -11,6 +11,20 @@ import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // 400 Bad Request
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(BadRequestException ex) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+                ex.getErrorCode(),
+                ex.getMessage(),
+                ex.getStatusCode().value(),
+                Instant.now()
+        );
+        return ResponseEntity
+                .status(ex.getStatusCode())
+                .body(errorResponseDTO);
+    }
+
     // 401 Invalid Credentials
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponseDTO> handleInvalidCredentialsException(InvalidCredentialsException ex) {
@@ -125,7 +139,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception ex) {
         System.out.println("Unknown error occurred: " + ex.getMessage());
-        ex.printStackTrace();
         InternalServerException exception = new InternalServerException();
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
                 exception.getErrorCode(),

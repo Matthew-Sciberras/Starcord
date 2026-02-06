@@ -30,12 +30,13 @@ public class AuthController {
 
     /**
      * @param LoginRequestDTO request
+     * @param "X-Device-Id" deviceId
      * @return LoginResponseDTO
      * @throws Exception
      */
     @PostMapping("/login")
-    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
-        return authService.login(request);
+    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request, @RequestHeader("X-Device-Id") String deviceId) {
+        return authService.login(request, deviceId);
     }
 
     /**
@@ -43,9 +44,7 @@ public class AuthController {
      */
     @PostMapping("/logout")
     public @ResponseBody SuccessResponseDTO logout(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        String jwt = authHeader.substring(7); // remove "Bearer "
-        return authService.logout(jwt);
+        return authService.logout(request);
     }
 
     /**

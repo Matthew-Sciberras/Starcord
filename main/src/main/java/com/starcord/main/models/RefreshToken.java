@@ -25,6 +25,9 @@ public class RefreshToken {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @Column(name = "device_id")
+    private String deviceID;
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -43,4 +46,7 @@ public class RefreshToken {
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
+
+    public String getDeviceID() { return deviceID; }
+    public void setDeviceID(String deviceID) { this.deviceID = deviceID; }
 }

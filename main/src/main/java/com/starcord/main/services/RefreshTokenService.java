@@ -28,7 +28,7 @@ public class RefreshTokenService {
         this.hashingUtils = hashingUtils;
     }
 
-    public String generateRefreshToken(User user) {
+    public String generateRefreshToken(User user, String deviceID) {
         String id = String.valueOf(UUID.randomUUID());
         String plainToken = jwtService.generateRefreshToken(Collections.emptyMap(), id);
         String hashedToken = hashingUtils.convertToSha256(plainToken);
@@ -41,6 +41,7 @@ public class RefreshTokenService {
         refreshToken.setToken(hashedToken);
         refreshToken.setExpiresAt(expiresAt);
         refreshToken.setCreatedAt(createdAt);
+        refreshToken.setDeviceID(deviceID);
         refreshTokenRepository.save(refreshToken);
 
         return plainToken;
@@ -73,7 +74,16 @@ public class RefreshTokenService {
         return refreshToken.getUser();
     }
 
+    public RefreshToken getRefreshToken(String plainToken) {
+        String token = hashingUtils.convertToSha256(plainToken);
+        return refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token Provided")));
+    }
+
     public List<RefreshToken> getTokensFromUser(User user) {
         return refreshTokenRepository.findAllByUser(user);
+    }
+
+    public RefreshToken getTokenByUserAndDeviceID(User user, String deviceID) {
+        return refreshTokenRepository.findByUserAndDeviceID(user, deviceID).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token or Device ID Provided")));
     }
 }
