@@ -47,6 +47,11 @@ public class AuthController {
         return authService.logout(request);
     }
 
+    @PostMapping("/logoutAll")
+    public @ResponseBody SuccessResponseDTO logoutAll(HttpServletRequest request) {
+        return authService.logoutAll(request);
+    }
+
     /**
      * @param AuthTokenRequestDTO request
      * @return AuthTokenResponseDTO

@@ -100,4 +100,17 @@ public class AuthService {
         refreshTokenService.revokeRefreshToken(token);
         return new SuccessResponseDTO("Successful Logout");
     }
+
+    public SuccessResponseDTO logoutAll(HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+        String jwt = authHeader.substring(7); // remove "Bearer "
+        String email = jwtService.extractEmail(jwt);
+        User user = userDetailsService.loadUserByEmail(email);
+        List<RefreshToken> refreshTokens = refreshTokenService.getTokensFromUser(user);
+        for(RefreshToken refreshToken: refreshTokens) {
+            String token = refreshToken.getToken();
+            refreshTokenService.revokeRefreshToken(token);
+        }
+        return new SuccessResponseDTO("Successful Logout");
+    }
 }
