@@ -1,6 +1,5 @@
-package com.starcord.main.config;
+package com.starcord.main.websocket;
 
-import com.starcord.main.handlers.SocketConnectionHandler;
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

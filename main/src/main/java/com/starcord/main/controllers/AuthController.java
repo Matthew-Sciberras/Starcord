@@ -3,9 +3,7 @@ package com.starcord.main.controllers;
 import com.starcord.main.dtos.*;
 import com.starcord.main.services.AuthService;
 import com.starcord.main.services.SignupService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -30,29 +28,29 @@ public class AuthController {
 
     /**
      * @param LoginRequestDTO request
-     * @param "X-Device-Id" deviceId
+     * @param RequestHeader "X-Device-Id"
      * @return LoginResponseDTO
      * @throws Exception
      */
     @PostMapping("/login")
-    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request, @RequestHeader("X-Device-Id") String deviceId) {
-        return authService.login(request, deviceId);
+    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
+        return authService.login(request);
     }
 
     /**
      * @return SuccessResponseDTO
      */
     @PostMapping("/logout")
-    public @ResponseBody SuccessResponseDTO logout(HttpServletRequest request) {
-        return authService.logout(request);
+    public @ResponseBody SuccessResponseDTO logout() {
+        return authService.logout();
     }
 
     /**
      * @return SuccessResponseDTO
      */
     @PostMapping("/logoutAll")
-    public @ResponseBody SuccessResponseDTO logoutAll(HttpServletRequest request) {
-        return authService.logoutAll(request);
+    public @ResponseBody SuccessResponseDTO logoutAll() {
+        return authService.logoutAll();
     }
 
     /**

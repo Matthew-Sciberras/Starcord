@@ -1,6 +1,5 @@
-package com.starcord.main.handlers;
+package com.starcord.main.websocket;
 
-import com.starcord.main.services.WebHookService;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -11,9 +10,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Component
 public class SocketConnectionHandler extends TextWebSocketHandler {
 
-    private final WebHookService webHookService;
+    private final WebSocketService webHookService;
 
-    public SocketConnectionHandler(WebHookService webHookService) {
+    public SocketConnectionHandler(WebSocketService webHookService) {
         this.webHookService = webHookService;
     }
 

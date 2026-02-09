@@ -9,8 +9,8 @@ public class Message {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @ManyToOne
     @JoinColumn(name = "channel_id", nullable = false)
@@ -21,11 +21,15 @@ public class Message {
     @Column(nullable = false)
     private long timestamp;
 
-    public Message() {}
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
+    public User getAuthor() { return author; }
+    public void setAuthor(User author) { this.author = author; }
+
     public String getContent() { return content; }
+    public void setContent(String content) { this.content = content;}
+
     public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 }

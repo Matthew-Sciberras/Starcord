@@ -7,6 +7,8 @@ import com.starcord.main.models.RefreshToken;
 import com.starcord.main.models.User;
 import com.starcord.main.security.CustomUserDetails;
 import com.starcord.main.security.JwtService;
+import com.starcord.main.utils.AuthUtils;
+import com.starcord.main.utils.RequestUtils;
 import com.starcord.main.utils.TimeUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,24 +24,25 @@ import java.util.List;
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final AuthUtils authUtils;
     private final AccessTokenService accessTokenService;
-    private final CustomUserDetailsService userDetailsService;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final TimeUtils timeUtils;
 
-    public AuthService(AuthenticationManager authenticationManager, AccessTokenService accessTokenService, CustomUserDetailsService userDetailsService, JwtService jwtService, RefreshTokenService refreshTokenService, TimeUtils timeUtils) {
+    public AuthService(AuthenticationManager authenticationManager, AuthUtils authUtils, AccessTokenService accessTokenService, JwtService jwtService, RefreshTokenService refreshTokenService, TimeUtils timeUtils) {
         this.authenticationManager = authenticationManager;
+        this.authUtils = authUtils;
         this.accessTokenService = accessTokenService;
-        this.userDetailsService = userDetailsService;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
         this.timeUtils = timeUtils;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO request, String deviceID) {
+    public LoginResponseDTO login(LoginRequestDTO request) {
         String email = request.getEmail();
         String password = request.getPassword();
+        String deviceID = RequestUtils.getHeader("X-Device-Id");
 
         if(deviceID == null || deviceID.isEmpty()) {
             throw new BadRequestException("Missing device ID");
@@ -89,23 +92,17 @@ public class AuthService {
         return authTokenResponseDTO;
     }
 
-    public SuccessResponseDTO logout(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        String jwt = authHeader.substring(7); // remove "Bearer "
-        String deviceID = request.getHeader("X-Device-Id");
-        String email = jwtService.extractEmail(jwt);
-        User user = userDetailsService.loadUserByEmail(email);
+    public SuccessResponseDTO logout() {
+        String deviceID = RequestUtils.getHeader("X-Device-Id");
+        User user = authUtils.getCurrentUser();
         RefreshToken refreshToken = refreshTokenService.getTokenByUserAndDeviceID(user, deviceID);
         String token = refreshToken.getToken();
         refreshTokenService.revokeRefreshToken(token);
         return new SuccessResponseDTO("Successful Logout");
     }
 
-    public SuccessResponseDTO logoutAll(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        String jwt = authHeader.substring(7); // remove "Bearer "
-        String email = jwtService.extractEmail(jwt);
-        User user = userDetailsService.loadUserByEmail(email);
+    public SuccessResponseDTO logoutAll() {
+        User user = authUtils.getCurrentUser();
         List<RefreshToken> refreshTokens = refreshTokenService.getTokensFromUser(user);
         for(RefreshToken refreshToken: refreshTokens) {
             String token = refreshToken.getToken();
