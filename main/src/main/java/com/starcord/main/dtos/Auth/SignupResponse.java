@@ -1,8 +1,6 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Auth;
 
-import java.time.Instant;
-
-public class SignupResponseDTO {
+public class SignupResponse {
     private Long userID;
     private String email;
     private String username;

@@ -2,6 +2,7 @@ package com.starcord.main.models;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class Channel {
     private String name;
 
     @Column(name = "created_at", nullable = false)
-    private long createdAt;
+    private Instant createdAt;
 
     @Column
     private String image;
@@ -40,14 +41,14 @@ public class Channel {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public long getCreatedAt() { return createdAt; }
-    public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+    public Instant getCreatedAt() { return createdAt; }
+    public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
 
     public String getImage() { return image; }
     public void setImage(String image) { this.image = image; }
 
     public User getCreator() { return creator; }
-    public void setCreator() { this.creator = creator; }
+    public void setCreator(User creator) { this.creator = creator; }
 
     public Set<User> getUsers() { return users; }
     public void addUser(User user) {

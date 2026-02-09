@@ -1,6 +1,6 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Auth;
 
-public class SignupRequestDTO {
+public class SignupRequest {
     private String username;
     private String password;
     private String email;

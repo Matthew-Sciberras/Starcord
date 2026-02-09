@@ -1,13 +1,11 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Messages;
 
-import com.starcord.main.models.User;
-
-public class MessageRequestDTO {
+public class MessageRequest {
     private String content;
     private long channelID;
 
-    public MessageRequestDTO() {}
-    public MessageRequestDTO(String content) { this.content = content; }
+    public MessageRequest() {}
+    public MessageRequest(String content) { this.content = content; }
 
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }

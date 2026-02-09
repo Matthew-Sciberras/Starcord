@@ -1,18 +1,18 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.General;
 
 import java.time.Instant;
 
-public class SuccessResponseDTO {
+public class SuccessResponse {
     private final String message;
     private final int status;
     private final Instant timestamp = Instant.now();
 
-    public SuccessResponseDTO(String message) {
+    public SuccessResponse(String message) {
         this.message = message;
         this.status = 200;
     }
 
-    public SuccessResponseDTO(String message, int status) {
+    public SuccessResponse(String message, int status) {
         this.message = message;
         this.status = status;
     }

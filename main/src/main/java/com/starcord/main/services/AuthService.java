@@ -1,6 +1,10 @@
 package com.starcord.main.services;
 
-import com.starcord.main.dtos.*;
+import com.starcord.main.dtos.Auth.AuthTokenRequest;
+import com.starcord.main.dtos.Auth.AuthTokenResponse;
+import com.starcord.main.dtos.Auth.LoginRequest;
+import com.starcord.main.dtos.Auth.LoginResponse;
+import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.exceptions.BadRequestException;
 import com.starcord.main.exceptions.InvalidCredentialsException;
 import com.starcord.main.models.RefreshToken;
@@ -10,7 +14,6 @@ import com.starcord.main.security.JwtService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.RequestUtils;
 import com.starcord.main.utils.TimeUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -39,7 +42,7 @@ public class AuthService {
         this.timeUtils = timeUtils;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO request) {
+    public LoginResponse login(LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
         String deviceID = RequestUtils.getHeader("X-Device-Id");
@@ -66,7 +69,7 @@ public class AuthService {
         // Access Token
         String accessToken = accessTokenService.generateAccessToken(email);
 
-        LoginResponseDTO responseDTO = new LoginResponseDTO();
+        LoginResponse responseDTO = new LoginResponse();
         responseDTO.setUserID(userDetails.getUserID());
         responseDTO.setEmail(email);
         responseDTO.setUsername(userDetails.getUserHandle());
@@ -76,7 +79,7 @@ public class AuthService {
         return responseDTO;
     }
 
-    public AuthTokenResponseDTO refreshToken(AuthTokenRequestDTO request) {
+    public AuthTokenResponse refreshToken(AuthTokenRequest request) {
         String refreshToken = request.getRefreshToken();
         if(!refreshTokenService.validateRefreshToken(refreshToken)) {
             throw new InvalidCredentialsException("Invalid or Expired Refresh Token");
@@ -85,29 +88,29 @@ public class AuthService {
         String accessToken = accessTokenService.generateAccessToken(user.getEmail());
         long createdAt = timeUtils.convertToLong(jwtService.getIssuedAt(accessToken));
         long expiresAt = timeUtils.convertToLong(jwtService.getExpiresAt(accessToken));
-        AuthTokenResponseDTO authTokenResponseDTO = new AuthTokenResponseDTO();
-        authTokenResponseDTO.setToken(accessToken);
-        authTokenResponseDTO.setCreatedAt(createdAt);
-        authTokenResponseDTO.setExpiresAt(expiresAt);
-        return authTokenResponseDTO;
+        AuthTokenResponse authTokenResponse = new AuthTokenResponse();
+        authTokenResponse.setToken(accessToken);
+        authTokenResponse.setCreatedAt(createdAt);
+        authTokenResponse.setExpiresAt(expiresAt);
+        return authTokenResponse;
     }
 
-    public SuccessResponseDTO logout() {
+    public SuccessResponse logout() {
         String deviceID = RequestUtils.getHeader("X-Device-Id");
         User user = authUtils.getCurrentUser();
         RefreshToken refreshToken = refreshTokenService.getTokenByUserAndDeviceID(user, deviceID);
         String token = refreshToken.getToken();
         refreshTokenService.revokeRefreshToken(token);
-        return new SuccessResponseDTO("Successful Logout");
+        return new SuccessResponse("Successful Logout");
     }
 
-    public SuccessResponseDTO logoutAll() {
+    public SuccessResponse logoutAll() {
         User user = authUtils.getCurrentUser();
         List<RefreshToken> refreshTokens = refreshTokenService.getTokensFromUser(user);
         for(RefreshToken refreshToken: refreshTokens) {
             String token = refreshToken.getToken();
             refreshTokenService.revokeRefreshToken(token);
         }
-        return new SuccessResponseDTO("Successful Logout");
+        return new SuccessResponse("Successful Logout");
     }
 }

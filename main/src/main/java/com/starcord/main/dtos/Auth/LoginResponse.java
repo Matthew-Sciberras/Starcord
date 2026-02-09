@@ -1,6 +1,6 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Auth;
 
-public class LoginResponseDTO {
+public class LoginResponse {
     private Long userID;
     private String email;
     private String username;

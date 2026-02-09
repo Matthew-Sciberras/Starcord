@@ -1,7 +1,7 @@
 package com.starcord.main.services;
 
-import com.starcord.main.dtos.SignupRequestDTO;
-import com.starcord.main.dtos.SignupResponseDTO;
+import com.starcord.main.dtos.Auth.SignupRequest;
+import com.starcord.main.dtos.Auth.SignupResponse;
 import com.starcord.main.exceptions.EmailInUseException;
 import com.starcord.main.exceptions.UsernameInUseException;
 import com.starcord.main.mappers.UserMapper;
@@ -30,7 +30,7 @@ public class SignupService {
     }
 
     @Transactional
-    public SignupResponseDTO createUser(SignupRequestDTO request) {
+    public SignupResponse createUser(SignupRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) { throw new EmailInUseException(); }
         if (userRepository.existsByUsername(request.getUsername())) { throw new UsernameInUseException(); }
 

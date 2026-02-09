@@ -1,6 +1,6 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Auth;
 
-public class AuthTokenResponseDTO {
+public class AuthTokenResponse {
     private String token;
     private long createdAt;
     private long expiresAt;

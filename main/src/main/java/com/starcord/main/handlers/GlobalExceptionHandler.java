@@ -1,8 +1,8 @@
-package com.starcord.main.exceptions;
+package com.starcord.main.handlers;
 
-import com.starcord.main.dtos.ErrorResponseDTO;
+import com.starcord.main.dtos.General.ErrorResponse;
+import com.starcord.main.exceptions.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,8 +13,8 @@ public class GlobalExceptionHandler {
 
     // 400 Bad Request
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(BadRequestException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity
                 .status(ex.getStatusCode())
-                .body(errorResponseDTO);
+                .body(errorResponse);
     }
 
     // 401 Invalid Credentials
     @ExceptionHandler(InvalidCredentialsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidCredentialsException(InvalidCredentialsException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -41,8 +41,8 @@ public class GlobalExceptionHandler {
 
     // 401 Unauthorized
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUnauthorizedException(UnauthorizedException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -55,8 +55,8 @@ public class GlobalExceptionHandler {
 
     // 403 Forbidden
     @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<ErrorResponseDTO> handleForbiddenException(ForbiddenException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -69,8 +69,8 @@ public class GlobalExceptionHandler {
 
     // 404 Not Found
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleNotFoundException(NotFoundException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -83,8 +83,8 @@ public class GlobalExceptionHandler {
 
     // 409 Email In use
     @ExceptionHandler(EmailInUseException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEmailInUseException(EmailInUseException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleEmailInUseException(EmailInUseException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -97,8 +97,8 @@ public class GlobalExceptionHandler {
 
     // 409 Username In use
     @ExceptionHandler(UsernameInUseException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUsernameInUseException(UsernameInUseException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleUsernameInUseException(UsernameInUseException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -111,8 +111,8 @@ public class GlobalExceptionHandler {
 
     // 429 Rate limited
     @ExceptionHandler(RateLimitException.class)
-    public ResponseEntity<ErrorResponseDTO> handleRateLimitException(RateLimitException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleRateLimitException(RateLimitException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -124,8 +124,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InternalServerException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInternalServerException(InternalServerException ex) {
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+    public ResponseEntity<ErrorResponse> handleInternalServerException(InternalServerException ex) {
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
                 ex.getStatusCode().value(),
@@ -137,10 +137,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGeneralException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
         System.out.println("Unknown error occurred: " + ex.getMessage());
         InternalServerException exception = new InternalServerException();
-        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
+        ErrorResponse errorResponseDTO = new ErrorResponse(
                 exception.getErrorCode(),
                 exception.getMessage(),
                 exception.getStatusCode().value(),

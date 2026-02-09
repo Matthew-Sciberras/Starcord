@@ -1,6 +1,7 @@
 package com.starcord.main.controllers;
 
-import com.starcord.main.dtos.*;
+import com.starcord.main.dtos.Auth.*;
+import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.services.AuthService;
 import com.starcord.main.services.SignupService;
 import org.springframework.web.bind.annotation.*;
@@ -18,47 +19,47 @@ public class AuthController {
 
     /**
      * @param SignupRequestDTO request
-     * @return SignupResponseDTO
+     * @return SignupResponse
      * @throws Exception
      */
     @PostMapping("/signup")
-    public @ResponseBody SignupResponseDTO signup(@RequestBody SignupRequestDTO request){
+    public @ResponseBody SignupResponse signup(@RequestBody SignupRequest request){
         return signupService.createUser(request);
     }
 
     /**
      * @param LoginRequestDTO request
      * @param RequestHeader "X-Device-Id"
-     * @return LoginResponseDTO
+     * @return LoginResponse
      * @throws Exception
      */
     @PostMapping("/login")
-    public @ResponseBody LoginResponseDTO login(@RequestBody LoginRequestDTO request) {
+    public @ResponseBody LoginResponse login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }
 
     /**
-     * @return SuccessResponseDTO
+     * @return SuccessResponse
      */
     @PostMapping("/logout")
-    public @ResponseBody SuccessResponseDTO logout() {
+    public @ResponseBody SuccessResponse logout() {
         return authService.logout();
     }
 
     /**
-     * @return SuccessResponseDTO
+     * @return SuccessResponse
      */
     @PostMapping("/logoutAll")
-    public @ResponseBody SuccessResponseDTO logoutAll() {
+    public @ResponseBody SuccessResponse logoutAll() {
         return authService.logoutAll();
     }
 
     /**
      * @param AuthTokenRequestDTO request
-     * @return AuthTokenResponseDTO
+     * @return AuthTokenResponse
      */
     @PostMapping("/refresh")
-    public @ResponseBody AuthTokenResponseDTO refresh(@RequestBody AuthTokenRequestDTO request) {
+    public @ResponseBody AuthTokenResponse refresh(@RequestBody AuthTokenRequest request) {
         return authService.refreshToken(request);
     }
 

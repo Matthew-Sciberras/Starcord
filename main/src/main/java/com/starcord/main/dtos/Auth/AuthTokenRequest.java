@@ -1,6 +1,6 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Auth;
 
-public class AuthTokenRequestDTO {
+public class AuthTokenRequest {
     private String refreshToken;
 
     public String getRefreshToken() { return refreshToken; }

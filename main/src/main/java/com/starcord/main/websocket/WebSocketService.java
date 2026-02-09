@@ -1,6 +1,6 @@
 package com.starcord.main.websocket;
 
-import com.starcord.main.dtos.MessageResponseDTO;
+import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.mappers.MessageMapper;
 import com.starcord.main.models.Channel;
 import com.starcord.main.models.User;
@@ -48,7 +48,7 @@ public class WebSocketService {
      * @param MessageResponseDTO
      * @throws Exception
      */
-    public void sendMessage(MessageResponseDTO messageResponseDTO) throws Exception {
+    public void sendMessage(MessageResponse messageResponseDTO) throws Exception {
         TextMessage message = new TextMessage(messageMapper.convertToJSON(messageResponseDTO));
         System.out.println("Message: " + message.getPayload());
         long channelID = messageResponseDTO.getChannelID();

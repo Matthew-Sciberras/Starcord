@@ -1,16 +1,14 @@
-package com.starcord.main.dtos;
+package com.starcord.main.dtos.Messages;
 
-import com.starcord.main.models.User;
-
-public class MessageResponseDTO {
+public class MessageResponse {
     private long authorID;
     private String content;
     private long timestamp;
     private long channelID;
     private long messageID;
 
-    public MessageResponseDTO() {}
-    public MessageResponseDTO(String content) { this.content = content; }
+    public MessageResponse() {}
+    public MessageResponse(String content) { this.content = content; }
 
     public long getAuthorID() { return authorID; }
     public void setAuthorID(long authorID) { this.authorID = authorID; }

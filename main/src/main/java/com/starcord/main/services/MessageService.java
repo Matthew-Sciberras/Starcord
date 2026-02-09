@@ -1,12 +1,10 @@
 package com.starcord.main.services;
 
-import com.starcord.main.dtos.MessageRequestDTO;
-import com.starcord.main.dtos.MessageResponseDTO;
+import com.starcord.main.dtos.Messages.MessageRequest;
+import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.models.User;
-import com.starcord.main.security.JwtService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
-import com.starcord.main.utils.RequestUtils;
 import com.starcord.main.utils.TimeUtils;
 import com.starcord.main.websocket.WebSocketService;
 import org.springframework.stereotype.Service;
@@ -26,9 +24,9 @@ public class MessageService {
         this.webHookService = webHookService;
     }
 
-    public MessageResponseDTO createMessage(MessageRequestDTO messageRequestDTO) throws Exception{
+    public MessageResponse createMessage(MessageRequest messageRequestDTO) throws Exception{
         User user = authUtils.getCurrentUser();
-        MessageResponseDTO response = new MessageResponseDTO();
+        MessageResponse response = new MessageResponse();
         response.setContent(messageRequestDTO.getContent());
         response.setMessageID(idUtils.generateId());
         response.setTimestamp(timeUtils.getCurrentTimestamp());
