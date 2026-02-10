@@ -2,6 +2,8 @@ package com.starcord.main.models;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -19,10 +21,13 @@ public class Message {
     @Column(nullable = false)
     private String content;
     @Column(nullable = false)
-    private long timestamp;
+    private Instant timestamp;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Channel getChannel() { return channel; }
+    public void setChannel(Channel channel) { this.channel = channel; }
 
     public User getAuthor() { return author; }
     public void setAuthor(User author) { this.author = author; }
@@ -30,6 +35,6 @@ public class Message {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content;}
 
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public Instant getTimestamp() { return timestamp; }
+    public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
 }

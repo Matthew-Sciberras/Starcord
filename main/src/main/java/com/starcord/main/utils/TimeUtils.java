@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Date;
 
-@Component
 public class TimeUtils {
-    public long getCurrentTimestamp() {
+    public static long getCurrentTimestamp() {
         return Instant.now().getEpochSecond();
     }
-    public Instant convertToInstant(Date date) { return date.toInstant(); }
-    public long convertToLong(Date date) { return date.toInstant().getEpochSecond(); }
-    public boolean isExpired(Instant expireyDate) {
-        return Instant.now().isAfter(expireyDate);
+    public static Instant convertToInstant(Date date) { return date.toInstant(); }
+    public static long convertToLong(Date date) { return date.toInstant().getEpochSecond(); }
+    public static boolean isExpired(Instant expiryDate) {
+        return Instant.now().isAfter(expiryDate);
     }
 }

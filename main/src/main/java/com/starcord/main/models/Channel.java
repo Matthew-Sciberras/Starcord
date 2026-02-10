@@ -12,7 +12,7 @@ public class Channel {
     @Id
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String name;
 
     @Column(name = "created_at", nullable = false)

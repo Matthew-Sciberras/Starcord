@@ -27,4 +27,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public User loadUserByEmail(@NonNull String email) throws NotFoundException {
         return userRepository.findByEmail(email.toLowerCase().trim()).orElseThrow(() -> new NotFoundException("User not found"));
     }
+
+    public User loadUserByID(long id) throws NotFoundException {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
+    }
 }

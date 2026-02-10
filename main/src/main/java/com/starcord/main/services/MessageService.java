@@ -2,38 +2,49 @@ package com.starcord.main.services;
 
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
+import com.starcord.main.mappers.MessageMapper;
+import com.starcord.main.models.Message;
 import com.starcord.main.models.User;
+import com.starcord.main.repositories.MessageRepository;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
 import com.starcord.main.utils.TimeUtils;
 import com.starcord.main.websocket.WebSocketService;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 public class MessageService {
 
     private final AuthUtils authUtils;
-    private final TimeUtils timeUtils;
+    private final ChannelService channelService;
+    private final MessageRepository messageRepository;
     private final IdUtils idUtils;
-    private final WebSocketService webHookService;
+    private final WebSocketService webSocketService;
 
-    public MessageService(AuthUtils authUtils, TimeUtils timeUtils, IdUtils idUtils, WebSocketService webHookService) {
+    public MessageService(AuthUtils authUtils, ChannelService channelService, MessageRepository messageRepository, IdUtils idUtils, WebSocketService webSocketService) {
         this.authUtils = authUtils;
-        this.timeUtils = timeUtils;
+        this.channelService = channelService;
+        this.messageRepository = messageRepository;
         this.idUtils = idUtils;
-        this.webHookService = webHookService;
+        this.webSocketService = webSocketService;
     }
 
-    public MessageResponse createMessage(MessageRequest messageRequestDTO) throws Exception{
+    public MessageResponse createMessage(MessageRequest messageRequest) throws Exception{
         User user = authUtils.getCurrentUser();
-        MessageResponse response = new MessageResponse();
-        response.setContent(messageRequestDTO.getContent());
-        response.setMessageID(idUtils.generateId());
-        response.setTimestamp(timeUtils.getCurrentTimestamp());
-        response.setChannelID(messageRequestDTO.getChannelID());
-        response.setAuthorID(user.getID());
+        long messageID = idUtils.generateId();
+        Message message = new Message();
+        message.setId(messageID);
+        message.setAuthor(user);
+        message.setChannel(channelService.getChannelByID(messageRequest.getChannelID()));
+        message.setContent(messageRequest.getContent());
+        message.setTimestamp(Instant.now());
 
-        webHookService.sendMessage(response);
+        MessageResponse response = MessageMapper.convertToResponse(message);
+
+        messageRepository.save(message);
+        webSocketService.sendMessage(response);
 
         return response;
     }

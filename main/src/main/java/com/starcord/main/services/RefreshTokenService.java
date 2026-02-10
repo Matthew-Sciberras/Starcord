@@ -18,22 +18,18 @@ import java.util.UUID;
 public class RefreshTokenService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
-    private final TimeUtils timeUtils;
-    private final HashingUtils hashingUtils;
 
-    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, JwtService jwtService, TimeUtils timeUtils, HashingUtils hashingUtils) {
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, JwtService jwtService) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtService = jwtService;
-        this.timeUtils = timeUtils;
-        this.hashingUtils = hashingUtils;
     }
 
     public String generateRefreshToken(User user, String deviceID) {
         String id = String.valueOf(UUID.randomUUID());
         String plainToken = jwtService.generateRefreshToken(Collections.emptyMap(), id);
-        String hashedToken = hashingUtils.convertToSha256(plainToken);
-        Instant expiresAt = timeUtils.convertToInstant(jwtService.getExpiresAt(plainToken));
-        Instant createdAt = timeUtils.convertToInstant(jwtService.getIssuedAt(plainToken));
+        String hashedToken = HashingUtils.convertToSha256(plainToken);
+        Instant expiresAt = TimeUtils.convertToInstant(jwtService.getExpiresAt(plainToken));
+        Instant createdAt = TimeUtils.convertToInstant(jwtService.getIssuedAt(plainToken));
 
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setId(id);
@@ -48,14 +44,14 @@ public class RefreshTokenService {
     }
 
     public boolean validateRefreshToken(String plainToken) {
-        String token = hashingUtils.convertToSha256(plainToken);
+        String token = HashingUtils.convertToSha256(plainToken);
         if(!refreshTokenRepository.existsByToken(token)) {
             return false;
         }
 
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token Provided")));
 
-        if(timeUtils.isExpired(refreshToken.getExpiresAt())) {
+        if(TimeUtils.isExpired(refreshToken.getExpiresAt())) {
             return false;
         }
 
@@ -69,13 +65,13 @@ public class RefreshTokenService {
     }
 
     public User getUserFromToken(String plainToken) {
-        String token = hashingUtils.convertToSha256(plainToken);
+        String token = HashingUtils.convertToSha256(plainToken);
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token Provided")));
         return refreshToken.getUser();
     }
 
     public RefreshToken getRefreshToken(String plainToken) {
-        String token = hashingUtils.convertToSha256(plainToken);
+        String token = HashingUtils.convertToSha256(plainToken);
         return refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidCredentialsException(("Invalid Token Provided")));
     }
 

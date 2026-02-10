@@ -31,15 +31,13 @@ public class AuthService {
     private final AccessTokenService accessTokenService;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
-    private final TimeUtils timeUtils;
 
-    public AuthService(AuthenticationManager authenticationManager, AuthUtils authUtils, AccessTokenService accessTokenService, JwtService jwtService, RefreshTokenService refreshTokenService, TimeUtils timeUtils) {
+    public AuthService(AuthenticationManager authenticationManager, AuthUtils authUtils, AccessTokenService accessTokenService, JwtService jwtService, RefreshTokenService refreshTokenService) {
         this.authenticationManager = authenticationManager;
         this.authUtils = authUtils;
         this.accessTokenService = accessTokenService;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
-        this.timeUtils = timeUtils;
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -86,8 +84,8 @@ public class AuthService {
         }
         User user = refreshTokenService.getUserFromToken(refreshToken);
         String accessToken = accessTokenService.generateAccessToken(user.getEmail());
-        long createdAt = timeUtils.convertToLong(jwtService.getIssuedAt(accessToken));
-        long expiresAt = timeUtils.convertToLong(jwtService.getExpiresAt(accessToken));
+        long createdAt = TimeUtils.convertToLong(jwtService.getIssuedAt(accessToken));
+        long expiresAt = TimeUtils.convertToLong(jwtService.getExpiresAt(accessToken));
         AuthTokenResponse authTokenResponse = new AuthTokenResponse();
         authTokenResponse.setToken(accessToken);
         authTokenResponse.setCreatedAt(createdAt);

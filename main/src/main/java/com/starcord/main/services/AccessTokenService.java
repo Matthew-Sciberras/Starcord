@@ -10,7 +10,7 @@ import java.util.Collections;
 public class AccessTokenService {
     private final JwtService jwtService;
 
-    public AccessTokenService(JwtService jwtService, TimeUtils timeUtils) {
+    public AccessTokenService(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 

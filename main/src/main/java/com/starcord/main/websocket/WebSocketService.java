@@ -18,8 +18,6 @@ import java.util.*;
 public class WebSocketService {
     Map<String, WebSocketConnection> webSocketSessionList = new HashMap<>();
 
-    private final MessageMapper messageMapper = new MessageMapper();
-
     private final AuthUtils authUtils;
     private final ChannelService channelService;
 
@@ -49,7 +47,7 @@ public class WebSocketService {
      * @throws Exception
      */
     public void sendMessage(MessageResponse messageResponseDTO) throws Exception {
-        TextMessage message = new TextMessage(messageMapper.convertToJSON(messageResponseDTO));
+        TextMessage message = new TextMessage(MessageMapper.convertToJSON(messageResponseDTO));
         System.out.println("Message: " + message.getPayload());
         long channelID = messageResponseDTO.getChannelID();
         Channel channel = channelService.getChannelByID(channelID);

@@ -19,14 +19,12 @@ public class SignupService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final IdUtils idUtils;
-    private final TimeUtils timeUtils;
     private final UserMapper userMapper = new UserMapper();
 
-    public SignupService(UserRepository userRepository, PasswordEncoder passwordEncoder, IdUtils idUtils, TimeUtils timeUtils) {
+    public SignupService(UserRepository userRepository, PasswordEncoder passwordEncoder, IdUtils idUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.idUtils = idUtils;
-        this.timeUtils = timeUtils;
     }
 
     @Transactional
@@ -41,7 +39,7 @@ public class SignupService {
         user.setUsername(request.getUsername());
         user.setPassword(encodedPassword);
         user.setDisplayName(request.getDisplayName());
-        user.setCreatedAt(timeUtils.getCurrentTimestamp());
+        user.setCreatedAt(TimeUtils.getCurrentTimestamp());
         user.setEmail(request.getEmail());
         user.setMfa(false);
         user.setActive(false);
