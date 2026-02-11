@@ -2,6 +2,7 @@ package com.starcord.main.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,8 +32,9 @@ public class User {
     @Column(name = "mfa_enabled")
     private boolean mfa;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Channel> channels;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ChannelMember> channelMemberships = new HashSet<>();
+
 
     @Column
     private boolean active;
@@ -61,10 +63,8 @@ public class User {
     public boolean getMfa() { return mfa; }
     public void setMfa(boolean mfa) { this.mfa = mfa; }
 
-    public Set<Channel> getChannels() { return channels; }
-    public void setChannels(Set<Channel> channels) { this.channels = channels; }
-    public void addChannel(Channel channel) { channels.add(channel); };
-    public void removeChannel(Channel channel) { channels.remove(channel); }
+    public Set<ChannelMember> getChannelMemberships() { return channelMemberships; }
+
 
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }

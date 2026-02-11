@@ -1,4 +1,4 @@
-package com.starcord.main.services;
+package com.starcord.main.services.Auth;
 
 import com.starcord.main.dtos.Auth.AuthTokenRequest;
 import com.starcord.main.dtos.Auth.AuthTokenResponse;

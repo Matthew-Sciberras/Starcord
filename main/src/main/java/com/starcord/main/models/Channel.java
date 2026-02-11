@@ -1,10 +1,13 @@
 package com.starcord.main.models;
 
+import com.starcord.main.emuns.ChannelRole;
+import com.starcord.main.emuns.ChannelType;
 import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "channels")
@@ -24,16 +27,16 @@ public class Channel {
     @ManyToOne
     private User creator;
 
-    @ManyToMany
-    @JoinTable(
-            name = "channel_users",
-            joinColumns = @JoinColumn(name = "channel_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ChannelMember> members = new HashSet<>();
+
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
     private Set<Message> messages;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private ChannelType channelType;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -50,16 +53,33 @@ public class Channel {
     public User getCreator() { return creator; }
     public void setCreator(User creator) { this.creator = creator; }
 
-    public Set<User> getUsers() { return users; }
-    public void addUser(User user) {
-        if(users == null) { users = new HashSet<>(); }
-        users.add(user);
+    public Set<ChannelMember> getMembers() {
+        return members;
+    }
 
-        if (user.getChannels() == null) { user.setChannels(new HashSet<>()); }
-        user.getChannels().add(this);
+    public void addMember(User user, ChannelRole role) {
+        ChannelMember member = new ChannelMember();
+        member.setChannel(this);
+        member.setUser(user);
+        member.setRole(role);
+        member.setJoinedAt(Instant.now());
+
+        members.add(member);
     }
-    public void removeUser(User user) {
-        if (users != null) { users.remove(user); }
-        if (user.getChannels() != null) { user.getChannels().remove(this); }
+
+    public void removeMember(User user) {
+        members.removeIf(member -> member.getUser().equals(user));
     }
+
+    public Set<User> getAdminsAndOwners() {
+        return members.stream()
+                .filter(m -> m.getRole() == ChannelRole.ADMIN || m.getRole() == ChannelRole.OWNER)
+                .map(ChannelMember::getUser)
+                .collect(Collectors.toSet());
+    }
+
+
+
+    public ChannelType getChannelType() { return channelType; }
+    public void setChannelType(ChannelType channelType) { this.channelType = channelType; }
 }

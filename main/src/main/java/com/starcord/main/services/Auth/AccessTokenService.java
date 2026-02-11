@@ -1,7 +1,6 @@
-package com.starcord.main.services;
+package com.starcord.main.services.Auth;
 
 import com.starcord.main.security.JwtService;
-import com.starcord.main.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

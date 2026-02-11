@@ -25,6 +25,20 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
+    // 400 Too Many Members
+    @ExceptionHandler(TooManyMembersException.class)
+    public ResponseEntity<ErrorResponse> handleTooManyMembersException(TooManyMembersException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getErrorCode(),
+                ex.getMessage(),
+                ex.getStatusCode().value(),
+                Instant.now()
+        );
+        return ResponseEntity
+                .status(ex.getStatusCode())
+                .body(errorResponse);
+    }
+
     // 401 Invalid Credentials
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex) {

@@ -1,4 +1,4 @@
-package com.starcord.main.services;
+package com.starcord.main.services.Auth;
 
 import com.starcord.main.exceptions.InvalidCredentialsException;
 import com.starcord.main.models.RefreshToken;

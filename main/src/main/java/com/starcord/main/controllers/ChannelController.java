@@ -5,7 +5,7 @@ import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
 import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.exceptions.UnauthorizedException;
-import com.starcord.main.services.ChannelService;
+import com.starcord.main.services.Channels.ChannelService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

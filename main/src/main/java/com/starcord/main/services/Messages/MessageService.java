@@ -1,4 +1,4 @@
-package com.starcord.main.services;
+package com.starcord.main.services.Messages;
 
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
@@ -6,9 +6,9 @@ import com.starcord.main.mappers.MessageMapper;
 import com.starcord.main.models.Message;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.MessageRepository;
+import com.starcord.main.services.Channels.ChannelService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
-import com.starcord.main.utils.TimeUtils;
 import com.starcord.main.websocket.WebSocketService;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +31,13 @@ public class MessageService {
         this.webSocketService = webSocketService;
     }
 
-    public MessageResponse createMessage(MessageRequest messageRequest) throws Exception{
+    public MessageResponse createMessage(MessageRequest messageRequest, long channelID) throws Exception{
         User user = authUtils.getCurrentUser();
         long messageID = idUtils.generateId();
         Message message = new Message();
         message.setId(messageID);
         message.setAuthor(user);
-        message.setChannel(channelService.getChannelByID(messageRequest.getChannelID()));
+        message.setChannel(channelService.getChannelByID(channelID));
         message.setContent(messageRequest.getContent());
         message.setTimestamp(Instant.now());
 

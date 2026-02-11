@@ -1,4 +1,4 @@
-package com.starcord.main.services;
+package com.starcord.main.services.Auth;
 
 import com.starcord.main.security.CustomUserDetails;
 import com.starcord.main.exceptions.NotFoundException;

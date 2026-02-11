@@ -2,8 +2,8 @@ package com.starcord.main.controllers;
 
 import com.starcord.main.dtos.Auth.*;
 import com.starcord.main.dtos.General.SuccessResponse;
-import com.starcord.main.services.AuthService;
-import com.starcord.main.services.SignupService;
+import com.starcord.main.services.Auth.AuthService;
+import com.starcord.main.services.Auth.SignupService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

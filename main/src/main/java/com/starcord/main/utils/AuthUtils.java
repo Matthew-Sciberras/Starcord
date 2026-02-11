@@ -2,7 +2,7 @@ package com.starcord.main.utils;
 
 import com.starcord.main.models.User;
 import com.starcord.main.security.JwtService;
-import com.starcord.main.services.CustomUserDetailsService;
+import com.starcord.main.services.Auth.CustomUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 

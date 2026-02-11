@@ -2,7 +2,7 @@ package com.starcord.main.controllers;
 
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
-import com.starcord.main.services.MessageService;
+import com.starcord.main.services.Messages.MessageService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,8 +23,8 @@ public class MessageController {
      * @throws Exception
      */
     @PostMapping("/{channelID}")
-    public @ResponseBody MessageResponse sendMessage(@RequestBody MessageRequest message) throws Exception{
-        return messageService.createMessage(message);
+    public @ResponseBody MessageResponse sendMessage(@RequestBody MessageRequest message, @PathVariable long channelID) throws Exception{
+        return messageService.createMessage(message, channelID);
     }
 
     @GetMapping("/ping")

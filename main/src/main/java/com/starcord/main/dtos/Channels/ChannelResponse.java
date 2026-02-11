@@ -1,5 +1,7 @@
 package com.starcord.main.dtos.Channels;
 
+import com.starcord.main.emuns.ChannelType;
+
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +13,7 @@ public class ChannelResponse {
     private Instant createdAt;
     private long creatorID;
     private Set<Long> members;
+    private ChannelType channelType;
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -33,4 +36,7 @@ public class ChannelResponse {
         members.add(memberID);
     }
     public void setMembers(Set<Long> members) { this.members = members; }
+
+    public ChannelType getChannelType() { return channelType; }
+    public void setChannelType(ChannelType channelType) { this.channelType = channelType; }
 }

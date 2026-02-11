@@ -1,6 +1,6 @@
 package com.starcord.main.security;
 
-import com.starcord.main.services.CustomUserDetailsService;
+import com.starcord.main.services.Auth.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
