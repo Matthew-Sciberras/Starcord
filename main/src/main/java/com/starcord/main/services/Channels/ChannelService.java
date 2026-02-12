@@ -3,6 +3,7 @@ package com.starcord.main.services.Channels;
 import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
 import com.starcord.main.emuns.ChannelRole;
+import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
 import com.starcord.main.mappers.ChannelMapper;
@@ -31,7 +32,7 @@ public class ChannelService {
     }
 
     public Channel getChannelByID(Long id) {
-        return channelRepository.getReferenceById(id);
+        return channelRepository.findById(id).orElseThrow(() -> new NotFoundException("Channel not found"));
     }
 
     public ChannelResponse createChannel(CreateChannelRequest request) {
@@ -50,7 +51,7 @@ public class ChannelService {
     }
 
     public void addMember(long channelID, long userID) {
-        Channel channel = channelRepository.getReferenceById(channelID);
+        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         User user = userDetailsService.loadUserByID(userID);
         addMemberChecks(authUtils.getCurrentUser(), channel);
         channel.addMember(user, ChannelRole.MEMBER);
@@ -75,21 +76,21 @@ public class ChannelService {
     }
 
     public boolean isInChannel(long channelID, long userID) {
-        Channel channel = channelRepository.getReferenceById(channelID);
+        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         User user = userDetailsService.loadUserByID(userID);
         return channel.getMembers().stream()
                 .anyMatch(member -> member.getUser().equals(user));
     }
 
     public boolean isInChannel(long channelID) {
-        Channel channel = channelRepository.getReferenceById(channelID);
+        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         User user = authUtils.getCurrentUser();
         return channel.getMembers().stream()
                 .anyMatch(member -> member.getUser().equals(user));
     }
 
     public ChannelResponse getChannelData(long channelID) {
-        Channel channel = channelRepository.getReferenceById(channelID);
+        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         return ChannelMapper.convertToResponse(channel);
     }
 }
