@@ -1,5 +1,6 @@
 package com.starcord.main.controllers;
 
+import com.starcord.main.dtos.Messages.ListOfMessages;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.services.Messages.MessageService;
@@ -27,9 +28,13 @@ public class MessageController {
         return messageService.createMessage(message, channelID);
     }
 
+    @GetMapping("/{channelID}")
+    public @ResponseBody ListOfMessages getMessages(@PathVariable long channelID) {
+        return messageService.getAllMessages(channelID);
+    }
+
     @GetMapping("/ping")
     public String ping() {
-
         return "Pong!";
     }
 }
