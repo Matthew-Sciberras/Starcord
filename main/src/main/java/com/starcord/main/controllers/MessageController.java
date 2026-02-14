@@ -4,6 +4,9 @@ import com.starcord.main.dtos.Messages.ListOfMessages;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.services.Messages.MessageService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,8 +36,15 @@ public class MessageController {
         return messageService.getAllMessages(channelID);
     }
 
-    @GetMapping("/ping")
-    public String ping() {
-        return "Pong!";
+    @GetMapping("/history/{channelID}")
+    public @ResponseBody ListOfMessages getHistory(
+            @PathVariable long channelID,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "true") boolean ascending
+    ) {
+        Sort sort = ascending ? Sort.unsorted().ascending() : Sort.unsorted().descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return messageService.getMessages(channelID, pageable);
     }
 }

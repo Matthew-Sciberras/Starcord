@@ -12,6 +12,8 @@ import com.starcord.main.services.Channels.ChannelService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
 import com.starcord.main.websocket.WebSocketService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -59,6 +61,20 @@ public class MessageService {
         List<Message> messageList = messageRepository.getAllByChannel(channel);
         Set<MessageResponse> responseSet = new HashSet<MessageResponse>();
         for(Message message : messageList) {
+            responseSet.add(MessageMapper.convertToResponse(message));
+        }
+        ListOfMessages messages = new ListOfMessages();
+        messages.setTimestamp(Instant.now());
+        messages.setMessages(responseSet);
+        messages.setChannelID(channelID);
+        return messages;
+    }
+
+    public ListOfMessages getMessages(long channelID, Pageable pageable) {
+        Channel channel = channelService.getChannelByID(channelID);
+        Page<Message> messagePage = messageRepository.findByChannel(channel, pageable);
+        Set<MessageResponse> responseSet = new HashSet<>();
+        for (Message message : messagePage.getContent()) {
             responseSet.add(MessageMapper.convertToResponse(message));
         }
         ListOfMessages messages = new ListOfMessages();
