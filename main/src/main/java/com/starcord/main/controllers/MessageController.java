@@ -41,7 +41,9 @@ public class MessageController {
             @PathVariable long channelID,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
-            @RequestParam(defaultValue = "true") boolean ascending
+            @RequestParam(defaultValue = "true") boolean ascending,
+            @RequestParam(required = false) Long before,
+            @RequestParam(required = false) Long after
     ) {
         Sort sort = ascending ? Sort.unsorted().ascending() : Sort.unsorted().descending();
         Pageable pageable = PageRequest.of(page, size, sort);
