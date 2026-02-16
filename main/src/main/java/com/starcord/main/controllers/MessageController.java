@@ -36,6 +36,15 @@ public class MessageController {
         return messageService.getAllMessages(channelID);
     }
 
+    /**
+     * @param channelID
+     * @param page
+     * @param size
+     * @param ascending
+     * @param before
+     * @param after
+     * @return
+     */
     @GetMapping("/history/{channelID}")
     public @ResponseBody ListOfMessages getHistory(
             @PathVariable long channelID,
@@ -45,8 +54,10 @@ public class MessageController {
             @RequestParam(required = false) Long before,
             @RequestParam(required = false) Long after
     ) {
-        Sort sort = ascending ? Sort.unsorted().ascending() : Sort.unsorted().descending();
+        Sort sort = ascending
+                ? Sort.by("timestamp").ascending()
+                : Sort.by("timestamp").descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return messageService.getMessages(channelID, pageable);
+        return messageService.getMessages(channelID, pageable, before, after);
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -59,28 +60,44 @@ public class MessageService {
     public ListOfMessages getAllMessages(long channelID) {
         Channel channel = channelService.getChannelByID(channelID);
         List<Message> messageList = messageRepository.getAllByChannel(channel);
-        Set<MessageResponse> responseSet = new HashSet<MessageResponse>();
-        for(Message message : messageList) {
-            responseSet.add(MessageMapper.convertToResponse(message));
-        }
+        List<MessageResponse> responseList = messageList.stream()
+                .map(MessageMapper::convertToResponse)
+                .toList();
+
         ListOfMessages messages = new ListOfMessages();
-        messages.setTimestamp(Instant.now());
-        messages.setMessages(responseSet);
+        messages.setTimestamp(Instant.now().getEpochSecond());
+        messages.setMessages(responseList);
         messages.setChannelID(channelID);
         return messages;
     }
 
-    public ListOfMessages getMessages(long channelID, Pageable pageable) {
+    public ListOfMessages getMessages(long channelID, Pageable pageable, Long before, Long after) {
+
         Channel channel = channelService.getChannelByID(channelID);
-        Page<Message> messagePage = messageRepository.findByChannel(channel, pageable);
-        Set<MessageResponse> responseSet = new HashSet<>();
-        for (Message message : messagePage.getContent()) {
-            responseSet.add(MessageMapper.convertToResponse(message));
+
+        Page<Message> messagePage;
+
+        if (before != null && after != null) {
+            messagePage = messageRepository.findByChannelAndTimestampBetween(channel, Instant.ofEpochSecond(after), Instant.ofEpochSecond(before), pageable);
+        } else if (before != null) {
+            messagePage = messageRepository.findByChannelAndTimestampBefore(channel, Instant.ofEpochSecond(before), pageable);
+        } else if (after != null) {
+            messagePage = messageRepository.findByChannelAndTimestampAfter(channel, Instant.ofEpochSecond(after), pageable);
+        } else {
+            messagePage = messageRepository.findByChannel(channel, pageable);
         }
+
+        List<MessageResponse> responseList = new ArrayList<>();
+
+        for (Message message : messagePage.getContent()) {
+            responseList.add(MessageMapper.convertToResponse(message));
+        }
+
         ListOfMessages messages = new ListOfMessages();
-        messages.setTimestamp(Instant.now());
-        messages.setMessages(responseSet);
+        messages.setTimestamp(Instant.now().getEpochSecond());
+        messages.setMessages(responseList);
         messages.setChannelID(channelID);
+
         return messages;
     }
 }

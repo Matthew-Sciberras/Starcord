@@ -1,20 +1,20 @@
 package com.starcord.main.dtos.Messages;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 
 //TODO: Add Pagination
 public class ListOfMessages {
-    private Instant timestamp;
+    private long timestamp;
     private long channelID;
-    private Set<MessageResponse> messages;
+    private List<MessageResponse> messages;
 
-    public Instant getTimestamp() { return timestamp; }
-    public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
     public long getChannelID() { return channelID; }
     public void setChannelID(long channelID) { this.channelID = channelID; }
 
-    public Set<MessageResponse> getMessages() { return messages; }
-    public void setMessages(Set<MessageResponse> messages) { this.messages = messages; }
+    public List<MessageResponse> getMessages() { return messages; }
+    public void setMessages(List<MessageResponse> messages) { this.messages = messages; }
 }

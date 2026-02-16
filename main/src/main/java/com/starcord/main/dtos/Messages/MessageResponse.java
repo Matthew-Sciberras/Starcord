@@ -5,7 +5,7 @@ import java.time.Instant;
 public class MessageResponse {
     private long authorID;
     private String content;
-    private Instant timestamp;
+    private long timestamp;
     private long channelID;
     private long messageID;
 
@@ -18,8 +18,8 @@ public class MessageResponse {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public Instant getTimestamp() { return timestamp; }
-    public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
+    public long getTimestamp() { return timestamp; }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
     public long getChannelID() { return channelID; }
     public void setChannelID(long channelID) { this.channelID = channelID; }
