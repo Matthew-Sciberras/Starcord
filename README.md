@@ -1,7 +1,7 @@
 # Starcord
 
 ![Version](https://img.shields.io/badge/version-1.0.0–beta-orange)
-![Language](https://img.shields.io/badge/Backend%20Language-TypeScript-blue)
+![Language](https://img.shields.io/badge/Frontend%20Language-TypeScript-blue)
 ![Language](https://img.shields.io/badge/Backend%20Language-Java-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
@@ -16,8 +16,6 @@
 * [License](#license)
 
 ## Overview
-
-**Project Name:** `Starcord`
 
 Starcord is a project I started for an alternative to large complicated messaging apps, and extra micro-transactions and limitations. Starcord has one main feature, chatting. You can create large groupchats, send DMs to one another, upload files, and more. Furthermore, all of it is end to end encrypted (E2EE) so your chats can never get leaked.
 
