@@ -50,7 +50,7 @@ To be done
 
 ## Configuration
 
-* `.env` or `application.properties` example:
+* `application.properties` example:
 
 ```
 server.port=8080
