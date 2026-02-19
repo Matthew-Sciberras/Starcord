@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-background-color: #282a3a;
+    --secondary-color: #44687E;
+    --secondary-color-2: #3C3D4C;
+
+    --error-color: #E5383B;
+    --success-color: #52B788;
+
+    --primary-text-color: #F8F8FA;
+    --secondary-text-color: #6C757D;
+
+    --accent-color-red: #9E2A2B;
+    --accent-color-gray: #373D49;
+    --accent-color-light-gray: #9DA394;
+    --accent-color-purple: #6A4C93;
+    --accent-color-light-blue: #778da9;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}

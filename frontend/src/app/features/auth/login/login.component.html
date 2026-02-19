@@ -1,15 +1,28 @@
 <div class="login-container">
-  <div class="login-text-container">
-        <h1>Starcord</h1>
-        <h3>Welcome Back!</h3>
+  <div class="login-left">
+    <div class="login-text-container">
+      <img src="../../../../assets/images/logo-red.png" />
+      <!--
+      <h1>Starcord</h1>
+      <h3>Welcome Back!</h3>
+      -->
+    </div>
   </div>
-  <div class="login-form-container">
-    <form class="login-form">
-    <h1 id="login-text">Login</h1>
-    <input type="text" placeholder="Username" />
-    <input type="password" placeholder="Password" />
-    <button type="submit">Login</button>
-    <p>Not a member? <a href="http://localhost:4200/signup">Create an account</a></p>
-  </form>
+  <div class="login-right">
+    <div class="loin-form-contgainer">
+      <form class="login-form">
+        <h1 id="login-text">Log into an account</h1>
+        <p id="signup-text">Not a member? <a routerLink="/signup">Create an account</a></p>
+        <div id="font-user">
+          <i class="fa-regular fa-user"></i>
+          <input id="username-input" type="text" placeholder="Username" />
+        </div>
+        <div id="font-password">
+          <i class="fa-solid fa-key"></i>
+          <input id="password-input" type="password" placeholder="Password" />
+        </div>
+        <button id="submit-button" type="submit">Let's Go!</button>
+      </form>
+    </div>
   </div>
 </div>
