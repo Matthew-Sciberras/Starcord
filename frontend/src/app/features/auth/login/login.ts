@@ -7,4 +7,12 @@ import { RouterLink } from "@angular/router";
   styleUrls: ['./login.component.css'],
   imports: [RouterLink]
 })
-export class LoginComponent { }
+
+export class LoginComponent {
+  showPassword = false;
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+}
+

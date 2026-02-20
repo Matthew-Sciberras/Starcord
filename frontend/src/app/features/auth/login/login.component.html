@@ -1,7 +1,7 @@
 <div class="login-container">
   <div class="login-left">
     <div class="login-text-container">
-      <img src="../../../../assets/images/logo-red.png" />
+      <img src="../../../../assets/images/StarcordBannerPNG.png" />
       <!--
       <h1>Starcord</h1>
       <h3>Welcome Back!</h3>
@@ -18,10 +18,35 @@
           <input id="username-input" type="text" placeholder="Username" />
         </div>
         <div id="font-password">
-          <i class="fa-solid fa-key"></i>
-          <input id="password-input" type="password" placeholder="Password" />
+          <i class="fa-solid fa-key" id="key-icon"></i>
+          <input
+            id="password-input"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+          />
+          <button type="button" id="password-toggle" (click)="togglePassword()">
+            <i
+              class="fa-solid"
+              [class.fa-eye]="showPassword"
+              [class.fa-eye-slash]="!showPassword"
+            ></i>
+          </button>
         </div>
         <button id="submit-button" type="submit">Let's Go!</button>
+        <div class="divider">
+          <span>Or register with</span>
+        </div>
+        <div class="social-login">
+          <a href="/auth/google" class="social-btn google">
+            <img src="../../../../assets/images/google.svg" alt="" />
+            <span>Google</span>
+          </a>
+
+          <a href="/auth/github" class="social-btn github">
+            <img src="../../../../assets/images/github.svg" alt="" />
+            <span>Github</span>
+          </a>
+        </div>
       </form>
     </div>
   </div>
