@@ -158,6 +158,10 @@ a {
   padding-right: 45px;
 }
 
+.error-border {
+  border-bottom: 2px solid var(--error-color) !important;
+}
+
 .divider {
   margin-top: 20px;
   color: var(--accent-color-light-gray);

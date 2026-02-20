@@ -10,12 +10,24 @@
   </div>
   <div class="login-right">
     <div class="loin-form-contgainer">
-      <form class="login-form">
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <h1 id="login-text">Log into an account</h1>
         <p id="signup-text">Not a member? <a routerLink="/signup">Create an account</a></p>
         <div id="font-user">
           <i class="fa-regular fa-user"></i>
-          <input id="username-input" type="text" placeholder="Username" />
+          <input
+            id="email-input"
+            type="text"
+            placeholder="Email"
+            formControlName="email"
+            (focus)="isFocused.email = true"
+            (blur)="isFocused.email = false"
+            [class.error-border]="
+              loginForm.controls.email.invalid &&
+              !isFocused.email &&
+              loginForm.controls.email.touched
+            "
+          />
         </div>
         <div id="font-password">
           <i class="fa-solid fa-key" id="key-icon"></i>
@@ -23,6 +35,14 @@
             id="password-input"
             [type]="showPassword ? 'text' : 'password'"
             placeholder="Password"
+            formControlName="password"
+            (focus)="isFocused.password = true"
+            (blur)="isFocused.password = false"
+            [class.error-border]="
+              loginForm.controls.password.invalid &&
+              !isFocused.password &&
+              loginForm.controls.password.touched
+            "
           />
           <button type="button" id="password-toggle" (click)="togglePassword()">
             <i
