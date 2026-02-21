@@ -1,28 +1,32 @@
+@import "../src/app/shared/components/toast/toast.component.css";
+
 :root {
-    --primary-background-color: #282a3a;
-    --secondary-color: #44687E;
-    --secondary-color-2: #3C3D4C;
+  --primary-background-color: #282a3a;
+  --secondary-color: #44687e;
+  --secondary-color-2: #3c3d4c;
 
-    --error-color: #E5383B;
-    --success-color: #52B788;
+  --error-color: #e5383b;
+  --success-color: #52b788;
 
-    --primary-text-color: #F8F8FA;
-    --secondary-text-color: #6C757D;
+  --primary-text-color: #f8f8fa;
+  --secondary-text-color: #6c757d;
 
-    --accent-color-red: #9E2A2B;
-    --accent-color-gray: #373D49;
-    --accent-color-light-gray: #9DA394;
-    --accent-color-purple: #6A4C93;
-    --accent-color-dark-purple: #694B91;
-    --accent-color-light-blue: #778da9;
+  --accent-color-red: #9e2a2b;
+  --accent-color-gray: #373d49;
+  --accent-color-light-gray: #9da394;
+  --accent-color-purple: #6a4c93;
+  --accent-color-dark-purple: #694b91;
+  --accent-color-light-blue: #778da9;
 }
 
-html, body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
+

@@ -20,7 +20,7 @@
 
 .login-left {
   height: 100vh;
-  width: calc(45% - 5px);
+  width: calc(50% - 5px);
   float: left;
   background-color: var(--primary-background-color);
   border-right-width: 1px;
@@ -40,7 +40,7 @@
 .login-right {
   background-color: var(--primary-background-color);
   height: 100vh;
-  width: 55%;
+  width: 50%;
   float: right;
 
   display: flex;
