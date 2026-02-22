@@ -15,4 +15,8 @@ export class ToastComponent {
     public snackBarRef: MatSnackBarRef<ToastComponent>,
     @Inject(MAT_SNACK_BAR_DATA) public data: { message: string; type: 'error' | 'success' | 'info' }
   ) {}
+
+  close(): void {
+    this.snackBarRef.dismiss();
+  }
 }

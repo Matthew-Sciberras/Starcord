@@ -73,5 +73,6 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
     console.log('Form submitted:', { email, password });
+    this.notification.showSuccess("Succesfully logged in! ")
   }
 }

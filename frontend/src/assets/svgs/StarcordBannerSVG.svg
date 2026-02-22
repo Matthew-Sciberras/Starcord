@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048.22 2048">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-width: 40px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-3 {
+        stroke: #bc141a;
+      }
+
+      .cls-4 {
+        fill: #282a3a;
+      }
+
+      .cls-5 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-2 {
+        stroke: #ed1750;
+      }
+
+      .cls-2, .cls-3 {
+        stroke-width: 15px;
+      }
+
+      .cls-6 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-7 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-8 {
+        fill: #fff;
+        font-family: IncompleetaLight, Incompleeta;
+        font-size: 302.28px;
+      }
+    </style>
+  </defs>
+  <g id="Logo">
+    <g>
+      <path class="cls-1" d="M1024.11,1805.99c0-713.28-402.45-739.45-808.16-739.45"/>
+      <path class="cls-1" d="M1024.11,1805.99c0-713.28,402.45-739.45,808.16-739.45"/>
+      <path class="cls-1" d="M1024.11,242.01c0,759.09-503.88,719.82-1024.11,719.82"/>
+      <path class="cls-1" d="M1024.11,242.01c0,759.09,503.88,719.82,1024.11,719.82"/>
+    </g>
+    <g>
+      <path class="cls-3" d="M1024.11,1805.99c0-713.28-402.45-739.45-808.16-739.45"/>
+      <path class="cls-3" d="M1024.11,1805.99c0-713.28,402.45-739.45,808.16-739.45"/>
+      <path class="cls-3" d="M1024.11,242.01c0,759.09-503.88,719.82-1024.11,719.82"/>
+      <path class="cls-3" d="M1024.11,242.01c0,759.09,503.88,719.82,1024.11,719.82"/>
+    </g>
+  </g>
+  <g id="Banner">
+    <rect class="cls-4" x=".11" width="2048" height="2048"/>
+    <path class="cls-2" d="M1024.11,436.43c0,274.34,182.1,260.15,370.12,260.15"/>
+    <path class="cls-2" d="M1024.11,436.43c0,274.34-182.1,260.15-370.12,260.15"/>
+    <path class="cls-2" d="M1024.11,1001.66c0-257.78,145.45-267.24,292.07-267.24"/>
+    <path class="cls-2" d="M1024.11,1001.66c0-257.78-145.45-267.24-292.07-267.24"/>
+    <text class="cls-8" transform="translate(294.86 1486.47)"><tspan x="0" y="0">S</tspan><tspan class="cls-5" x="179.85" y="0">T</tspan><tspan class="cls-6" x="326.16" y="0">A</tspan><tspan x="498.15" y="0">R</tspan><tspan class="cls-7" x="678" y="0">C</tspan><tspan x="876.9" y="0">ORD</tspan></text>
+  </g>
+</svg>

@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 
 :host {
-  display: block; /* make sure host behaves like a block element */
+  display: block;
   margin: 0;
   padding: 0;
 
-  background-color: var(--primary-background-color, #f5f5f5); /* fallback color */
+  background-color: var(--primary-background-color);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -23,7 +23,7 @@
   width: calc(50% - 5px);
   float: left;
   background-color: var(--primary-background-color);
-  border-right-width: 1px;
+  border-right-width: 0px;
   border-right-color: var(--accent-color-gray);
   border-right-style: solid;
 
@@ -114,11 +114,22 @@ a {
   color: var(--primary-text-color);
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
 }
 
 #submit-button:hover {
   background-color: var(--accent-color-dark-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+#submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 #font-user,
@@ -198,15 +209,29 @@ a {
 }
 
 .social-login .social-btn {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 12px 50px;
   border: 2px solid var(--accent-color-light-gray);
-  border-radius: 5px;
+  border-radius: 6px;
+  color: var(--primary-text-color);
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
 }
 
-.social-login img {
-  padding-right: 5px;
-  transform: translateY(2px);
+.social-login .social-btn:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: var(--primary-text-color);
+  transform: translateY(-1px);
+}
+
+.social-login .social-btn:active {
+  transform: translateY(0);
 }

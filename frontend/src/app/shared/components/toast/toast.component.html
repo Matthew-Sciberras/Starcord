@@ -1,3 +1,21 @@
 <div class="toast-container" [ngClass]="data.type">
-  {{ data.message }}
+  <div class="toast-icon">
+    @switch (data.type) {
+      @case ('error') {
+        <img src="../../../../assets/svgs/circle-close.svg" class="icon" alt="error icon" />
+      }
+
+      @case ('success') {
+        <img src="../../../../assets/svgs/success.svg" class="icon" alt="success icon" />
+      }
+    }
+  </div>
+
+  <div class="toast-message">
+    {{ data.message }}
+  </div>
+
+  <button class="toast-close" (click)="close()">
+    <img src="../../../../assets/svgs/close.svg" alt="Close" />
+  </button>
 </div>

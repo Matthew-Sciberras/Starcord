@@ -12,7 +12,7 @@ export class NotificationService {
   showError(message: string): void {
     this.snackBar.openFromComponent(ToastComponent, {
       data: { message, type: 'error' },
-      duration: 10000000,
+      duration: 2500,
       verticalPosition: 'top',
       horizontalPosition: 'center',
       panelClass:['snackbar-error']
