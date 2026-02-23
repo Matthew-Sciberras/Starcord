@@ -9,11 +9,12 @@ import {
 import { RouterLink } from '@angular/router';
 import {
   emailValidator,
-  passwordStrengthValidator,
-  matchFieldsValidator,
+  passwordRequiredValidator
 } from '@shared/validators';
 
 import { NotificationService } from '@shared/services/notification.service';
+import { LoginRequest } from './login-request.model';
+import { AuthService } from '@app/shared/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,10 @@ import { NotificationService } from '@shared/services/notification.service';
   imports: [RouterLink, FormsModule, ReactiveFormsModule],
 })
 export class LoginComponent {
-  constructor(private notification: NotificationService) {}
+  constructor(
+    private notification: NotificationService,
+    private authService: AuthService,
+  ) {}
 
   showPassword = false;
 
@@ -36,8 +40,8 @@ export class LoginComponent {
   };
 
   loginForm = new FormGroup({
-    email: new FormControl<String>('', [Validators.required, emailValidator()]),
-    password: new FormControl<String>('', [Validators.required, passwordStrengthValidator()]),
+    email: new FormControl<string>('', [Validators.required, emailValidator()]),
+    password: new FormControl<string>('', [Validators.required, passwordRequiredValidator()]),
   });
 
   onSubmit(): void {
@@ -49,7 +53,6 @@ export class LoginComponent {
         email_required: 'Please enter an email',
         email_invalidEmail: 'Please enter a valid email',
         password_required: 'Please enter a password',
-        password_passwordStrength: 'Please enter a strong password',
       };
 
       const errors: string[] = [];
@@ -63,7 +66,7 @@ export class LoginComponent {
         });
       });
 
-      if(errors.length > 0) {
+      if (errors.length > 0) {
         this.notification.showError(errors[0]);
       }
 
@@ -72,7 +75,22 @@ export class LoginComponent {
     }
 
     const { email, password } = this.loginForm.value;
+    const loginData: LoginRequest = {
+      email: email!,
+      password: password!,
+    };
+
+    this.authService.login(loginData).subscribe({
+      next: (response) => {
+        console.log('Logged in successfully:', response);
+        this.notification.showSuccess('Successfully logged in!');
+      },
+      error: (err) => {
+        console.error('Login failed:', err);
+        this.notification.showError('Login failed, please try again.');
+      },
+    });
     console.log('Form submitted:', { email, password });
-    this.notification.showSuccess("Succesfully logged in! ")
+    this.notification.showSuccess('Succesfully logged in! ');
   }
 }

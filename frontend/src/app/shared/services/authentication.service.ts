@@ -1,0 +1,28 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LoginRequest } from '@app/features/auth/login/login-request.model';
+import { LoginResponse } from '@app/features/auth/login/login-response.model';
+import { Observable } from 'rxjs';
+import { v4 as generateUUID } from 'uuid';
+
+@Injectable({
+  providedIn: 'root'   // Makes it globally accessable
+})
+export class AuthService {
+  private readonly baseURL = 'http://localhost:8080/api/v1/auth';
+
+  constructor(private http: HttpClient) {}
+
+  login(request: LoginRequest): Observable<LoginResponse> {
+    const headers = new HttpHeaders({
+      'X-Device-Id': generateUUID(),
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.post<LoginResponse>(
+      `${this.baseURL}/login`,
+      request,
+      { headers }
+    );
+  }
+}

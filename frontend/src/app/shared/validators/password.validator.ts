@@ -18,3 +18,17 @@ export function passwordStrengthValidator(): ValidatorFn {
     return valid ? null : { passwordStrength: errors };
   };
 }
+
+export function passwordRequiredValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    // If empty, return error
+    if (!value || value.trim() === '') {
+      return { passwordRequired: true };
+    }
+
+    // Otherwise valid
+    return null;
+  };
+}

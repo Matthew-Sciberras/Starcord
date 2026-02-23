@@ -17,6 +17,9 @@
   --accent-color-purple: #6a4c93;
   --accent-color-dark-purple: #694b91;
   --accent-color-light-blue: #778da9;
+
+  --login-button-background-color: #e9174a;
+  --login-button-background-hover-color: #cc1550;
 }
 
 html,
