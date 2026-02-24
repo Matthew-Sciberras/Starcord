@@ -7,14 +7,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-  emailValidator,
-  passwordRequiredValidator
-} from '@shared/validators';
+import { emailValidator, passwordRequiredValidator } from '@shared/validators';
+import { firstValueFrom } from 'rxjs';
 
 import { NotificationService } from '@shared/services/notification.service';
 import { LoginRequest } from './login-request.model';
-import { AuthService } from '@app/shared/services/authentication.service';
+import { AuthService } from '@app/core/auth/authentication.service';
+import { AuthStateService } from '@app/core/auth/auth-state.service';
+import { ChannelService } from '@app/core/channels/channel.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +26,8 @@ export class LoginComponent {
   constructor(
     private notification: NotificationService,
     private authService: AuthService,
+    private authStateService: AuthStateService,
+    private channelService: ChannelService
   ) {}
 
   showPassword = false;
@@ -44,7 +46,7 @@ export class LoginComponent {
     password: new FormControl<string>('', [Validators.required, passwordRequiredValidator()]),
   });
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     // Mark all controls as touched so errors show if invalid
     this.loginForm.markAllAsTouched();
 
@@ -70,8 +72,7 @@ export class LoginComponent {
         this.notification.showError(errors[0]);
       }
 
-      console.log(errors);
-      return;
+      return; // Don't send request
     }
 
     const { email, password } = this.loginForm.value;
@@ -80,17 +81,23 @@ export class LoginComponent {
       password: password!,
     };
 
-    this.authService.login(loginData).subscribe({
-      next: (response) => {
-        console.log('Logged in successfully:', response);
-        this.notification.showSuccess('Successfully logged in!');
-      },
-      error: (err) => {
-        console.error('Login failed:', err);
-        this.notification.showError('Login failed, please try again.');
-      },
-    });
-    console.log('Form submitted:', { email, password });
-    this.notification.showSuccess('Succesfully logged in! ');
+    try {
+      const response = await firstValueFrom(this.authService.login(loginData));
+
+      console.log('Logged in successfully:', response);
+
+      this.authStateService.setAccessToken(response.accessToken);
+
+      this.notification.showSuccess('Successfully logged in!');
+    } catch (err: any) {
+      console.error('Login failed:', err);
+
+      if (err.status === 401) {
+        this.notification.showError('Email or password invalid.');
+        this.loginForm.patchValue({ password: '' });
+      } else {
+        this.notification.showError('Unknown error, please try again later.');
+      }
+    }
   }
 }
