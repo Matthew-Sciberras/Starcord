@@ -17,10 +17,10 @@ public class AuthController {
         this.signupService = signupService;
     }
 
+
     /**
-     * @param SignupRequestDTO request
+     * @param request SignupRequest
      * @return SignupResponse
-     * @throws Exception
      */
     @PostMapping("/signup")
     public @ResponseBody SignupResponse signup(@RequestBody SignupRequest request){
@@ -28,10 +28,8 @@ public class AuthController {
     }
 
     /**
-     * @param LoginRequestDTO request
-     * @param RequestHeader "X-Device-Id"
+     * @param request LoginRequest
      * @return LoginResponse
-     * @throws Exception
      */
     @PostMapping("/login")
     public @ResponseBody LoginResponse login(@RequestBody LoginRequest request) {
@@ -55,7 +53,7 @@ public class AuthController {
     }
 
     /**
-     * @param AuthTokenRequestDTO request
+     * @param request AuthTokenRequest
      * @return AuthTokenResponse
      */
     @PostMapping("/refresh")
