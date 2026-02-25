@@ -14,11 +14,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.login-container {
+.signup-container {
   height: 100vh;
 }
 
-.login-left {
+.signup-left {
   height: 100vh;
   width: calc(50% - 5px);
   float: left;
@@ -32,13 +32,13 @@
   align-items: center;
 }
 
-.login-left img {
+.signup-left img {
   width: 100%;
   height: 100%;
   outline: none;
 }
 
-.login-right {
+.signup-right {
   background-color: var(--primary-background-color);
   height: 100vh;
   width: 50%;
@@ -49,7 +49,7 @@
   align-items: center;
 }
 
-.loin-form-container {
+.signup-form-container {
   width: 100%;
   height: 70%;
 
@@ -58,7 +58,7 @@
   align-items: center;
 }
 
-.login-form {
+.signup-form {
   width: 100%;
 
   display: flex;
@@ -66,7 +66,7 @@
   align-items: center;
 }
 
-#login-text {
+#signup-text {
   font-family: 'Google Sans', sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
@@ -75,7 +75,7 @@
   margin-bottom: 0;
 }
 
-#signup-text {
+#login-text {
   color: var(--secondary-text-color);
 }
 
@@ -84,7 +84,7 @@ a {
   text-decoration: dashed;
 }
 
-.login-form input {
+.signup-form input {
   width: 40%;
   padding-top: 18px;
   padding-bottom: 18px;
@@ -99,7 +99,7 @@ a {
   margin-bottom: 20px;
 }
 
-.login-form input:focus {
+.signup-form input:focus {
   color: var(--primary-text-color);
   border: 1px solid var(--accent-color-light-gray);
 }
@@ -132,8 +132,10 @@ a {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-#font-user,
-#font-password {
+#font-email,
+#font-password,
+#font-display,
+#font-username {
   position: relative;
   width: 40%;
   display: flex;
@@ -141,8 +143,10 @@ a {
 }
 
 /* icon positioning */
-#font-user i,
-#font-password #key-icon {
+#font-email i,
+#font-password #key-icon,
+#font-username i,
+#font-display i {
   position: absolute;
   left: 12px;
   color: var(--accent-color-light-gray);
@@ -162,8 +166,10 @@ a {
   transform: translateY(-9px);
 }
 
-#font-user input,
-#font-password input {
+#font-email input,
+#font-password input,
+#font-username input,
+#font-display input {
   width: 100%;
   padding-left: 40px; /* space for icon */
   padding-right: 45px;

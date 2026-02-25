@@ -1,15 +1,15 @@
-<div class="login-container">
-  <div class="login-left">
+<div class="signup-container">
+  <div class="signup-left">
     <div class="login-text-container">
       <img src="../../../../assets/images/StarcordBannerPNG.png" />
     </div>
   </div>
-  <div class="login-right">
-    <div class="loin-form-container">
-      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <h1 id="login-text">Log into an account</h1>
-        <p id="signup-text">Not a member? <a routerLink="/signup">Create an account</a></p>
-        <div id="font-user">
+  <div class="signup-right">
+    <div class="signup-form-container">
+      <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <h1 id="signup-text">Create a new account</h1>
+        <p id="login-text">Already have an account? <a routerLink="/login">Login</a></p>
+        <div id="font-email">
           <i class="fa-regular fa-envelope"></i>
           <input
             id="email-input"
@@ -19,9 +19,41 @@
             (focus)="isFocused.email = true"
             (blur)="isFocused.email = false"
             [class.error-border]="
-              loginForm.controls.email.invalid &&
+              signupForm.controls.email.invalid &&
               !isFocused.email &&
-              loginForm.controls.email.touched
+              signupForm.controls.email.touched
+            "
+          />
+        </div>
+        <div id="font-display">
+          <i class="fa-regular fa-address-card"></i>
+          <input
+            id="display-input"
+            type="text"
+            placeholder="Display name"
+            formControlName="displayName"
+            (focus)="isFocused.displayName = true"
+            (blur)="isFocused.displayName = false"
+            [class.error-border]="
+              signupForm.controls.displayName.invalid &&
+              !isFocused.username &&
+              signupForm.controls.displayName.touched
+            "
+          />
+        </div>
+        <div id="font-username">
+          <i class="fa-regular fa-user"></i>
+          <input
+            id="username-input"
+            type="text"
+            placeholder="Username"
+            formControlName="username"
+            (focus)="isFocused.username = true"
+            (blur)="isFocused.username = false"
+            [class.error-border]="
+              signupForm.controls.username.invalid &&
+              !isFocused.username &&
+              signupForm.controls.username.touched
             "
           />
         </div>
@@ -35,9 +67,9 @@
             (focus)="isFocused.password = true"
             (blur)="isFocused.password = false"
             [class.error-border]="
-              loginForm.controls.password.invalid &&
+              signupForm.controls.password.invalid &&
               !isFocused.password &&
-              loginForm.controls.password.touched
+              signupForm.controls.password.touched
             "
           />
           <button type="button" id="password-toggle" (click)="togglePassword()">
