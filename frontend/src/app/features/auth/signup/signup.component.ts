@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { emailValidator, passwordRequiredValidator } from '@app/shared/validators';
+import { emailValidator, passwordRequiredValidator, passwordStrengthValidator } from '@app/shared/validators';
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +20,7 @@ export class SignupComponent {
     email: new FormControl<string>('', [Validators.required, emailValidator()]),
     displayName: new FormControl<string>(''),
     username: new FormControl<string>('', [Validators.required]),
-    password: new FormControl<string>('', [Validators.required, passwordRequiredValidator()]),
+    password: new FormControl<string>('', [Validators.required, passwordRequiredValidator(), passwordStrengthValidator()]),
   });
 
   showPassword = false;
