@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { emailValidator, passwordRequiredValidator } from '@shared/validators';
+import { emailValidator, passwordRequiredValidator, safeTextValidator } from '@shared/validators';
 import { firstValueFrom } from 'rxjs';
 
 import { NotificationService } from '@shared/services/notification.service';
@@ -26,8 +26,7 @@ export class LoginComponent {
   constructor(
     private notification: NotificationService,
     private authService: AuthService,
-    private authStateService: AuthStateService,
-    private channelService: ChannelService
+    private authStateService: AuthStateService
   ) {}
 
   showPassword = false;
@@ -42,8 +41,8 @@ export class LoginComponent {
   };
 
   loginForm = new FormGroup({
-    email: new FormControl<string>('', [Validators.required, emailValidator()]),
-    password: new FormControl<string>('', [Validators.required, passwordRequiredValidator()]),
+    email: new FormControl<string>('', [Validators.required, emailValidator(), safeTextValidator()]),
+    password: new FormControl<string>('', [Validators.required, passwordRequiredValidator(), safeTextValidator()]),
   });
 
   async onSubmit(): Promise<void> {
