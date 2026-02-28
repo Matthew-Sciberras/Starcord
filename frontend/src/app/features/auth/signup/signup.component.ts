@@ -106,6 +106,8 @@ export class SignupComponent {
     } catch (err: unknown) {
       if (isApiError(err)) {
         this.notification.showError(err.message);
+      } else {
+        this.notification.showError("An Unknown error occoured")
       }
     }
   }
