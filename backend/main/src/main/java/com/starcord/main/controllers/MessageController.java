@@ -1,5 +1,6 @@
 package com.starcord.main.controllers;
 
+import com.starcord.main.annotations.RateLimit;
 import com.starcord.main.dtos.Messages.ListOfMessages;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
@@ -26,17 +27,20 @@ public class MessageController {
      * @return MessageResponse
      * @throws Exception
      */
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @PostMapping("/{channelID}")
     public @ResponseBody MessageResponse sendMessage(@RequestBody MessageRequest message, @PathVariable long channelID) throws Exception{
         return messageService.createMessage(message, channelID);
     }
 
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @GetMapping("/{channelID}")
     public @ResponseBody ListOfMessages getMessages(@PathVariable long channelID) {
         return messageService.getAllMessages(channelID);
     }
 
     /**
+     * Get history for a channel
      * @param channelID
      * @param page
      * @param size
@@ -45,6 +49,7 @@ public class MessageController {
      * @param after
      * @return
      */
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @GetMapping("/history/{channelID}")
     public @ResponseBody ListOfMessages getHistory(
             @PathVariable long channelID,

@@ -1,5 +1,6 @@
 package com.starcord.main.controllers;
 
+import com.starcord.main.annotations.RateLimit;
 import com.starcord.main.dtos.Channels.AddMemberRequest;
 import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
@@ -18,20 +19,23 @@ public class ChannelController {
     }
 
     /**
-     * @param CreateChannelRequest
+     * @param request
      * @return ChannelResponse
      */
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @PostMapping("/create")
     public @ResponseBody ChannelResponse create(@RequestBody CreateChannelRequest request) {
         return channelService.createChannel(request);
     }
 
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @PostMapping("/add/{channelID}")
     public SuccessResponse add(@PathVariable long channelID, @RequestBody AddMemberRequest request) {
         channelService.addMember(channelID, request.getUserID());
         return new SuccessResponse("Successfully added user");
     }
 
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
     @GetMapping("/get/{channelID}")
     public @ResponseBody ChannelResponse get(@PathVariable long channelID) {
         if(!channelService.isInChannel(channelID)) {
