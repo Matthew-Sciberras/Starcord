@@ -17,7 +17,7 @@
 
 ## Overview
 
-Starcord is a project I started for an alternative to large complicated messaging apps, and extra micro-transactions and limitations. Starcord has one main feature, chatting. You can create large groupchats, send DMs to one another, upload files, and more. Furthermore, all of it is end to end encrypted (E2EE) so your chats can never get leaked.
+Starcord is a fully open-source chat application built for the public’s needs. No paywalls, unlimited file uploads, no annoying ads, and complete transparency. What began as a fun project has quickly grown, with many users already eager to use the platform.
 
 ## Features
 
