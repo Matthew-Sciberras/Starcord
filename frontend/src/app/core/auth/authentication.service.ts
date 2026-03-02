@@ -24,12 +24,15 @@ export class AuthService {
       'Content-Type': 'application/json',
     });
 
-    return this.http.post<LoginResponse>(`${this.baseURL}/login`, request, { headers });
+    return this.http.post<LoginResponse>(`${this.baseURL}/login`, request, {
+      headers,
+      withCredentials: true,
+    });
   }
 
   signup(request: LoginRequest): Observable<void> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
 
     return this.http.post<void>(`${this.baseURL}/signup`, request, { headers }).pipe(

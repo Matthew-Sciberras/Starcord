@@ -15,4 +15,8 @@ export class AuthStateService {
   clear() {
     this.accessToken = null;
   }
+
+  isAuthenticated(): boolean {
+    return this.accessToken !== null;
+  }
 }

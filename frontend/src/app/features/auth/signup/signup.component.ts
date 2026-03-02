@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthStateService } from '@app/core/auth/auth-state.service';
 import { AuthService } from '@app/core/auth/authentication.service';
 import { NotificationService } from '@app/shared/services/notification.service';
@@ -33,6 +33,8 @@ export class SignupComponent {
     private authService: AuthService,
     private authStateService: AuthStateService,
   ) {}
+
+  private router = inject(Router);
 
   signupForm = new FormGroup({
     email: new FormControl<string>('', [
@@ -102,7 +104,8 @@ export class SignupComponent {
 
     try {
       const response = await firstValueFrom(this.authService.signup(signupData));
-      this.notification.showSuccess('Logged in successfully');
+      this.notification.showSuccess('Account created successfully');
+      this.router.navigateByUrl("/login")
     } catch (err: unknown) {
       if (isApiError(err)) {
         this.notification.showError(err.message);

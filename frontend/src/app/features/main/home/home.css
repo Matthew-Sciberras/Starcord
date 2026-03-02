@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  background-color: var(--primary-background-color);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  color: var(--primary-text-color);
+  font-family: 'Roboto', sans-serif;
+}
+
+.home-container {
+  height: 100vh;
+}

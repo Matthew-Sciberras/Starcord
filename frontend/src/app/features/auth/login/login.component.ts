@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { emailValidator, passwordRequiredValidator, safeTextValidator } from '@shared/validators';
 import { firstValueFrom } from 'rxjs';
 
@@ -28,6 +28,8 @@ export class LoginComponent {
     private authService: AuthService,
     private authStateService: AuthStateService
   ) {}
+
+  private router = inject(Router);
 
   showPassword = false;
 
@@ -88,6 +90,7 @@ export class LoginComponent {
       this.authStateService.setAccessToken(response.accessToken);
 
       this.notification.showSuccess('Successfully logged in!');
+      this.router.navigateByUrl("/home")
     } catch (err: any) {
       console.error('Login failed:', err);
 
