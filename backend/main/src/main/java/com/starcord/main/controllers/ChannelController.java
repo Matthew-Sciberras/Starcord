@@ -28,14 +28,14 @@ public class ChannelController {
         return channelService.createChannel(request);
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 25, timeWindowSeconds = 60)
     @PostMapping("/add/{channelID}")
     public SuccessResponse add(@PathVariable long channelID, @RequestBody AddMemberRequest request) {
         channelService.addMember(channelID, request.getUserID());
         return new SuccessResponse("Successfully added user");
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 50, timeWindowSeconds = 60)
     @GetMapping("/get/{channelID}")
     public @ResponseBody ChannelResponse get(@PathVariable long channelID) {
         if(!channelService.isInChannel(channelID)) {

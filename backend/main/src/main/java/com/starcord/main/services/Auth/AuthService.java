@@ -1,6 +1,5 @@
 package com.starcord.main.services.Auth;
 
-import com.starcord.main.dtos.Auth.AuthTokenRequest;
 import com.starcord.main.dtos.Auth.AuthTokenResponse;
 import com.starcord.main.dtos.Auth.LoginRequest;
 import com.starcord.main.dtos.Auth.LoginResponse;
@@ -14,6 +13,8 @@ import com.starcord.main.security.JwtService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.RequestUtils;
 import com.starcord.main.utils.TimeUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -38,6 +39,19 @@ public class AuthService {
         this.accessTokenService = accessTokenService;
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
+    }
+
+    @Value("${jwt.refreshExpirationSeconds}")
+    private long refreshTokenExpiration;
+
+    public ResponseCookie generateRefreshCookie(String refreshToken) {
+        return ResponseCookie.from("refreshToken", refreshToken)
+                .httpOnly(true)
+                .secure(false) // IMPORTANT: In prod, this should be changed to true to use HTTPS
+                .sameSite("Strict")  // CSRF protection
+                .path("/auth/refresh")
+                .maxAge(refreshTokenExpiration)
+                .build();
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -77,8 +91,7 @@ public class AuthService {
         return responseDTO;
     }
 
-    public AuthTokenResponse refreshToken(AuthTokenRequest request) {
-        String refreshToken = request.getRefreshToken();
+    public AuthTokenResponse refreshToken(String refreshToken) {
         if(!refreshTokenService.validateRefreshToken(refreshToken)) {
             throw new InvalidCredentialsException("Invalid or Expired Refresh Token");
         }

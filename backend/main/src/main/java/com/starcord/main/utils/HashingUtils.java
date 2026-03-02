@@ -1,8 +1,7 @@
 package com.starcord.main.utils;
 
-import com.starcord.main.exceptions.InternalServerException;
+import com.starcord.main.exceptions.InternalServerErrorException;
 import org.apache.tomcat.util.buf.HexUtils;
-import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,7 +15,7 @@ public class HashingUtils {
         } catch(Exception ex) {
             System.out.println("HashingUtils error: " + ex.getMessage());
             ex.printStackTrace();
-            throw new InternalServerException();
+            throw new InternalServerErrorException();
         }
     }
 }

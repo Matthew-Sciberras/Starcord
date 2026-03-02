@@ -27,13 +27,13 @@ public class MessageController {
      * @return MessageResponse
      * @throws Exception
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 100, timeWindowSeconds = 60)
     @PostMapping("/{channelID}")
     public @ResponseBody MessageResponse sendMessage(@RequestBody MessageRequest message, @PathVariable long channelID) throws Exception{
         return messageService.createMessage(message, channelID);
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 100, timeWindowSeconds = 60)
     @GetMapping("/{channelID}")
     public @ResponseBody ListOfMessages getMessages(@PathVariable long channelID) {
         return messageService.getAllMessages(channelID);
@@ -49,7 +49,7 @@ public class MessageController {
      * @param after
      * @return
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 100, timeWindowSeconds = 60)
     @GetMapping("/history/{channelID}")
     public @ResponseBody ListOfMessages getHistory(
             @PathVariable long channelID,

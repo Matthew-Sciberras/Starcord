@@ -1,6 +1,6 @@
 package com.starcord.main.services.Auth;
 
-import com.starcord.main.exceptions.InternalServerException;
+import com.starcord.main.exceptions.InternalServerErrorException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class RateLimiterService {
         Long currentCount = redisTemplate.opsForValue().increment(key);
 
         if (currentCount == null) {
-            throw new InternalServerException(
+            throw new InternalServerErrorException(
                     "Rate limiter failed: Redis increment returned null"
             );
         }

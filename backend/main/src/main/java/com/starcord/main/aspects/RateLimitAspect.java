@@ -30,6 +30,7 @@ public class RateLimitAspect {
         RateLimit rateLimit = method.getAnnotation(RateLimit.class);
 
         String clientIp = httpServletRequest.getRemoteAddr();
+        System.out.println("Remote IP: " + clientIp);
         String redisKey = "ratelimit:%s:%s".formatted(clientIp, method.getName());
 
         boolean allowed = rateLimiterService.isAllowed(redisKey, rateLimit.limit(), rateLimit.timeWindowSeconds());

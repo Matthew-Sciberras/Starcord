@@ -1,12 +1,11 @@
 package com.starcord.main.dtos.Auth;
 
-public class LoginResponse {
+public class LoginPublicResponse {
     private Long userID;
     private String email;
     private String username;
     private String displayName;
     private String accessToken;
-    private String refreshToken;
 
     public Long getUserID() { return userID; }
     public void setUserID(Long userID) { this.userID = userID; }
@@ -22,7 +21,4 @@ public class LoginResponse {
 
     public String getAccessToken() { return accessToken; }
     public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
-
-    public String getRefreshToken() { return refreshToken; }
-    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 }

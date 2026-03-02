@@ -11,6 +11,20 @@ import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /*
+    Index:
+    BadRequestException: 400 Bad Request
+    TooManyMembersException: 400 Bad Request
+    InvalidCredentialsEception: 401 Invalid Credentials
+    UnauthorizedException: 401 Unauthorized
+    ForbiddenException: 403 Forbidden
+    NotFoundException: 404 Not Found
+    EmailInUseException: 409 Conflict
+    UsernameInUseException: 409 Conflict
+    RateLimitException: 429 Ratelimit
+    InternalServerErrorException: 500 Internal Server Error
+     */
+
     // 400 Bad Request
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
@@ -25,7 +39,7 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
-    // 400 Too Many Members
+    // 400 Too Bad Request
     @ExceptionHandler(TooManyMembersException.class)
     public ResponseEntity<ErrorResponse> handleTooManyMembersException(TooManyMembersException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -137,8 +151,9 @@ public class GlobalExceptionHandler {
                 .body(errorResponseDTO);
     }
 
-    @ExceptionHandler(InternalServerException.class)
-    public ResponseEntity<ErrorResponse> handleInternalServerException(InternalServerException ex) {
+    // 500 Internal Server Error
+    @ExceptionHandler(InternalServerErrorException.class)
+    public ResponseEntity<ErrorResponse> handleInternalServerException(InternalServerErrorException ex) {
         ErrorResponse errorResponseDTO = new ErrorResponse(
                 ex.getErrorCode(),
                 ex.getMessage(),
@@ -153,7 +168,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
         System.out.println("Unknown error occurred: " + ex.getMessage());
-        InternalServerException exception = new InternalServerException();
+        InternalServerErrorException exception = new InternalServerErrorException();
         ErrorResponse errorResponseDTO = new ErrorResponse(
                 exception.getErrorCode(),
                 exception.getMessage(),
