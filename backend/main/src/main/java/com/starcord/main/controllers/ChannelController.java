@@ -4,6 +4,7 @@ import com.starcord.main.annotations.RateLimit;
 import com.starcord.main.dtos.Channels.AddMemberRequest;
 import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
+import com.starcord.main.dtos.Channels.ListOfChannels;
 import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.exceptions.UnauthorizedException;
 import com.starcord.main.services.Channels.ChannelService;
@@ -42,5 +43,11 @@ public class ChannelController {
             throw new UnauthorizedException("You do not have access to this channel");
         }
         return channelService.getChannelData(channelID);
+    }
+
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @GetMapping("/getAll")
+    public @ResponseBody ListOfChannels getAll() {
+        return channelService.getUserChannels();
     }
 }

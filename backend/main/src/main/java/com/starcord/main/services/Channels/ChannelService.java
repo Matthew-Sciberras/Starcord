@@ -2,20 +2,25 @@ package com.starcord.main.services.Channels;
 
 import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
+import com.starcord.main.dtos.Channels.ListOfChannels;
 import com.starcord.main.emuns.ChannelRole;
 import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
 import com.starcord.main.mappers.ChannelMapper;
 import com.starcord.main.models.Channel;
+import com.starcord.main.models.ChannelMember;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.ChannelRepository;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
+import com.starcord.main.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ChannelService {
@@ -92,5 +97,17 @@ public class ChannelService {
     public ChannelResponse getChannelData(long channelID) {
         Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         return ChannelMapper.convertToResponse(channel);
+    }
+
+    public ListOfChannels getUserChannels() {
+        User user = authUtils.getCurrentUser();
+        ListOfChannels channels = new ListOfChannels();
+        List<ChannelResponse> responseList = new ArrayList<>();
+        for(ChannelMember membership : user.getChannelMemberships()) {
+            responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
+        }
+        channels.setChannels(responseList);
+        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
+        return channels;
     }
 }
