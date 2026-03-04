@@ -5,7 +5,6 @@ import com.starcord.main.dtos.Messages.ListOfMessages;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.exceptions.ForbiddenException;
-import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.mappers.MessageMapper;
 import com.starcord.main.models.Channel;
 import com.starcord.main.models.Message;
@@ -15,7 +14,6 @@ import com.starcord.main.services.Auth.CustomUserDetailsService;
 import com.starcord.main.services.Channels.ChannelService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
-import com.starcord.main.websocket.WebSocketService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,8 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class MessageService {
@@ -34,33 +30,13 @@ public class MessageService {
     private final CustomUserDetailsService userDetailsService;
     private final MessageRepository messageRepository;
     private final IdUtils idUtils;
-    private final WebSocketService webSocketService;
 
-    public MessageService(AuthUtils authUtils, ChannelService channelService, CustomUserDetailsService userDetailsService, MessageRepository messageRepository, IdUtils idUtils, WebSocketService webSocketService) {
+    public MessageService(AuthUtils authUtils, ChannelService channelService, CustomUserDetailsService userDetailsService, MessageRepository messageRepository, IdUtils idUtils) {
         this.authUtils = authUtils;
         this.channelService = channelService;
         this.userDetailsService = userDetailsService;
         this.messageRepository = messageRepository;
         this.idUtils = idUtils;
-        this.webSocketService = webSocketService;
-    }
-
-    public MessageResponse createMessage(MessageRequest messageRequest, long channelID) throws Exception{
-        User user = authUtils.getCurrentUser();
-        long messageID = idUtils.generateId();
-        Message message = new Message();
-        message.setId(messageID);
-        message.setAuthor(user);
-        message.setChannel(channelService.getChannelByID(channelID));
-        message.setContent(messageRequest.getContent());
-        message.setTimestamp(Instant.now());
-
-        MessageResponse response = MessageMapper.convertToResponse(message);
-
-        messageRepository.save(message);
-        webSocketService.sendMessage(response);
-
-        return response;
     }
 
     public ListOfMessages getAllMessages(long channelID) {
@@ -107,7 +83,7 @@ public class MessageService {
         return messages;
     }
 
-    public Message save(ChatMessage chatMessage) {
+    public void save(ChatMessage chatMessage) {
         User author = userDetailsService.loadUserByID(chatMessage.getSenderId());
 
         Channel channel = channelService.getChannelByID(chatMessage.getChannelId());
@@ -122,6 +98,6 @@ public class MessageService {
         message.setContent(chatMessage.getContent());
         message.setTimestamp(Instant.now());
 
-        return messageRepository.save(message);
+        messageRepository.save(message);
     }
 }

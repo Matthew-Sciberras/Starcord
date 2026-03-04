@@ -25,16 +25,14 @@ public class ChatController {
 
     @MessageMapping("/chat.send")
     public void sendMessage(@Payload ChatMessage message, Principal principal) {
-        // This actually returns email but the way the Principal class is setup I have to write getName instead
-        String email = principal.getName();
-        long senderId = 123; // To change
+        long senderId = Long.parseLong(principal.getName());
         message.setSenderId(senderId);
 
         if (!channelService.isInChannel(message.getChannelId(), senderId)) return;
 
         messageService.save(message);
         messagingTemplate.convertAndSend(
-                "/topic/conversation." + message.getChannelId(),
+                "/topic/conversation.%d".formatted(message.getChannelId()),
                 message
         );
     }

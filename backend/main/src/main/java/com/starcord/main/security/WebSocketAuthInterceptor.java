@@ -25,6 +25,7 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
             ServerHttpRequest request, ServerHttpResponse response,
             WebSocketHandler wsHandler, Map<String, Object> attributes) {
 
+        System.out.println("Initializing handshake");
         String authHeader = ((ServletServerHttpRequest) request)
                 .getServletRequest()
                 .getHeader("Authorization");
@@ -33,6 +34,7 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
             if (jwtService.isTokenValid(token)) {
                 String userID = String.valueOf(jwtService.extractUserID(token));
                 attributes.put("principal", new StompPrincipal(userID));
+                System.out.printf("Handshake initialized for user ID %s%n", userID);
                 return true;
             }
         }

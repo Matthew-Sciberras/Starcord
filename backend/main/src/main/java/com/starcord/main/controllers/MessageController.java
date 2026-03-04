@@ -20,19 +20,6 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    /**
-     * Controller for sending messages to a specific channel ID
-     * @body MessageRequest
-     * @param channelID
-     * @return MessageResponse
-     * @throws Exception
-     */
-    @RateLimit(limit = 100, timeWindowSeconds = 60)
-    @PostMapping("/{channelID}")
-    public @ResponseBody MessageResponse sendMessage(@RequestBody MessageRequest message, @PathVariable long channelID) throws Exception{
-        return messageService.createMessage(message, channelID);
-    }
-
     @RateLimit(limit = 100, timeWindowSeconds = 60)
     @GetMapping("/{channelID}")
     public @ResponseBody ListOfMessages getMessages(@PathVariable long channelID) {
