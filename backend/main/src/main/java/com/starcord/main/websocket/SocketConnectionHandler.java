@@ -10,19 +10,19 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 @Component
 public class SocketConnectionHandler extends TextWebSocketHandler {
 
-    private final WebSocketService webHookService;
+    private final WebSocketService webSocketService;
 
     public SocketConnectionHandler(WebSocketService webHookService) {
-        this.webHookService = webHookService;
+        this.webSocketService = webHookService;
     }
 
     @Override
     public void afterConnectionEstablished(@NonNull WebSocketSession session) throws Exception{
-        webHookService.connect(session);
+        webSocketService.connect(session);
     }
 
     @Override
     public void afterConnectionClosed(@NonNull WebSocketSession session, @NonNull CloseStatus status) throws Exception {
-        webHookService.disconnect(session, status);
+        webSocketService.disconnect(session, status);
     }
 }

@@ -2,24 +2,24 @@ package com.starcord.main.websocket;
 
 import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
-import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
-import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
-@EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer {
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final SocketConnectionHandler socketConnectionHandler;
-
-    public WebSocketConfig(SocketConnectionHandler socketConnectionHandler) {
-        this.socketConnectionHandler = socketConnectionHandler;
+    @Override
+    public void configureMessageBroker(MessageBrokerRegistry config) {
+        config.enableSimpleBroker("/topic", "/queue");
+        config.setApplicationDestinationPrefixes("/app");
+        config.setUserDestinationPrefix("/user");
     }
 
     @Override
-    public void registerWebSocketHandlers(@NonNull WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        // Add domains and CORS policy
-        webSocketHandlerRegistry.addHandler(socketConnectionHandler, "/api/v1/connect")
-                .setAllowedOrigins("*");
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/connect")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 }

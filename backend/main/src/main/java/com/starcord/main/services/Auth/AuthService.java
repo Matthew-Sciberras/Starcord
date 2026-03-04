@@ -76,10 +76,10 @@ public class AuthService {
         // Refresh Token
         assert userDetails != null;
         String refreshToken = refreshTokenService.generateRefreshToken(userDetails.getUser(), deviceID);
-        System.out.println("Refresh token: " + refreshToken);
+        System.out.printf("Refresh token: %s%n", refreshToken);
 
         // Access Token
-        String accessToken = accessTokenService.generateAccessToken(email);
+        String accessToken = accessTokenService.generateAccessToken(email, userDetails.getUserID());
 
         LoginResponse responseDTO = new LoginResponse();
         responseDTO.setUserID(userDetails.getUserID());
@@ -96,7 +96,7 @@ public class AuthService {
             throw new InvalidCredentialsException("Invalid or Expired Refresh Token");
         }
         User user = refreshTokenService.getUserFromToken(refreshToken);
-        String accessToken = accessTokenService.generateAccessToken(user.getEmail());
+        String accessToken = accessTokenService.generateAccessToken(user.getEmail(), user.getID());
         long createdAt = TimeUtils.convertToLong(jwtService.getIssuedAt(accessToken));
         long expiresAt = TimeUtils.convertToLong(jwtService.getExpiresAt(accessToken));
         AuthTokenResponse authTokenResponse = new AuthTokenResponse();

@@ -1,13 +1,17 @@
 package com.starcord.main.services.Messages;
 
+import com.starcord.main.dtos.Messages.ChatMessage;
 import com.starcord.main.dtos.Messages.ListOfMessages;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
+import com.starcord.main.exceptions.ForbiddenException;
+import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.mappers.MessageMapper;
 import com.starcord.main.models.Channel;
 import com.starcord.main.models.Message;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.MessageRepository;
+import com.starcord.main.services.Auth.CustomUserDetailsService;
 import com.starcord.main.services.Channels.ChannelService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
@@ -27,13 +31,15 @@ public class MessageService {
 
     private final AuthUtils authUtils;
     private final ChannelService channelService;
+    private final CustomUserDetailsService userDetailsService;
     private final MessageRepository messageRepository;
     private final IdUtils idUtils;
     private final WebSocketService webSocketService;
 
-    public MessageService(AuthUtils authUtils, ChannelService channelService, MessageRepository messageRepository, IdUtils idUtils, WebSocketService webSocketService) {
+    public MessageService(AuthUtils authUtils, ChannelService channelService, CustomUserDetailsService userDetailsService, MessageRepository messageRepository, IdUtils idUtils, WebSocketService webSocketService) {
         this.authUtils = authUtils;
         this.channelService = channelService;
+        this.userDetailsService = userDetailsService;
         this.messageRepository = messageRepository;
         this.idUtils = idUtils;
         this.webSocketService = webSocketService;
@@ -99,5 +105,23 @@ public class MessageService {
         messages.setChannelID(channelID);
 
         return messages;
+    }
+
+    public Message save(ChatMessage chatMessage) {
+        User author = userDetailsService.loadUserByID(chatMessage.getSenderId());
+
+        Channel channel = channelService.getChannelByID(chatMessage.getChannelId());
+
+        if (!channelService.isInChannel(channel.getId(), author.getID())) {
+            throw new ForbiddenException("User not in channel");
+        }
+
+        Message message = new Message();
+        message.setAuthor(author);
+        message.setChannel(channel);
+        message.setContent(chatMessage.getContent());
+        message.setTimestamp(Instant.now());
+
+        return messageRepository.save(message);
     }
 }

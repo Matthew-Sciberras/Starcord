@@ -13,12 +13,14 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
 public class WebSocketService {
-    Map<String, WebSocketConnection> webSocketSessionList = new HashMap<>();
+    private final Map<String, WebSocketConnection> webSocketSessionList = new ConcurrentHashMap<>();
 
     private final AuthUtils authUtils;
     private final ChannelService channelService;
@@ -45,10 +47,10 @@ public class WebSocketService {
 
     /**
      * Send messages to clients
-     * @param MessageResponseDTO
-     * @throws Exception
+     * @param messageResponseDTO request DTO
+     * @throws IOException for send message
      */
-    public void sendMessage(MessageResponse messageResponseDTO) throws Exception {
+    public void sendMessage(MessageResponse messageResponseDTO) throws IOException {
         TextMessage message = new TextMessage(MessageMapper.convertToJSON(messageResponseDTO));
         System.out.println("Message: " + message.getPayload());
 
