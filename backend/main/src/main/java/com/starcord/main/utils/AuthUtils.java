@@ -19,13 +19,13 @@ public class AuthUtils {
 
     public User getCurrentUser() {
         String jwt = RequestUtils.getAuthorizationToken();
-        String email = jwtService.extractEmail(jwt);
-        return userDetailsService.loadUserByEmail(email);
+        long userID = jwtService.extractUserID(jwt);
+        return userDetailsService.loadUserByID(userID);
     }
 
     public User getCurrentWebhookuser(WebSocketSession session) {
         String jwt = session.getHandshakeHeaders().get("Authorization").getFirst().substring(7);;
-        String email = jwtService.extractEmail(jwt);
-        return userDetailsService.loadUserByEmail(email);
+        long userID = jwtService.extractUserID(jwt);
+        return userDetailsService.loadUserByID(userID);
     }
 }

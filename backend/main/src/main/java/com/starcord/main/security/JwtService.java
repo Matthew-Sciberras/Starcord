@@ -58,8 +58,8 @@ public class JwtService {
         return Jwts.parser().verifyWith(getPrivateSigningKey()).build().parseSignedClaims(token).getPayload();
     }
 
-    public String extractEmail(String token) {
-        return extractAllClaims(token).getSubject();
+    public long extractUserID(String token) {
+        return Long.parseLong(extractAllClaims(token).getSubject());
     }
 
     public Date getIssuedAt(String token) {

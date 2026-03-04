@@ -31,8 +31,8 @@ public class WebSocketAuthInterceptor implements HandshakeInterceptor {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             if (jwtService.isTokenValid(token)) {
-                String email = jwtService.extractEmail(token);
-                attributes.put("principal", new StompPrincipal(email));
+                String userID = String.valueOf(jwtService.extractUserID(token));
+                attributes.put("principal", new StompPrincipal(userID));
                 return true;
             }
         }

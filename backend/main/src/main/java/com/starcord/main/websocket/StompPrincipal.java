@@ -2,9 +2,9 @@ package com.starcord.main.websocket;
 
 import java.security.Principal;
 
-public record StompPrincipal(String email) implements Principal {
+public record StompPrincipal(String userID) implements Principal {
     @Override
     public String getName() {
-        return email();
+        return userID();
     }
 }

@@ -14,14 +14,7 @@ public class AccessTokenService {
     public AccessTokenService(JwtService jwtService) {
         this.jwtService = jwtService;
     }
-
-    public String generateAccessToken(String email, long userID) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userID", userID);
-        return jwtService.generateAccessToken(claims, email);
-    }
-
-    public String generateAccessToken(String email) {
-        return jwtService.generateAccessToken(Collections.emptyMap(), email);
+    public String generateAccessToken(long userId) {
+        return jwtService.generateAccessToken(Collections.emptyMap(), String.valueOf(userId));
     }
 }

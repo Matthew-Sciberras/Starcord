@@ -1,5 +1,6 @@
 package com.starcord.main.security;
 
+import com.starcord.main.models.User;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.printf("JwtAuthenticationFilter running for request: %s%n", request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        final String email;
+        final long userID;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             System.out.println("Invalid Header");
@@ -48,12 +49,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        email = jwtService.extractEmail(jwt);
+        userID = jwtService.extractUserID(jwt);
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             // Load user details
             System.out.println("Load user details");
-            CustomUserDetails userDetails = userDetailsService.loadUserByUsername(email);
-            System.out.printf("User Details: %d%n", userDetails.getUserID());
+            User user = userDetailsService.loadUserByID(userID);
+            CustomUserDetails userDetails = new CustomUserDetails(user);
+            System.out.printf("User Details: %d%n", userID);
             System.out.printf("Authorities: %s%n", userDetails.getAuthorities());
             // Create authentication token
             UsernamePasswordAuthenticationToken authToken =
