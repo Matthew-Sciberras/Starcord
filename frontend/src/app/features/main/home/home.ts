@@ -8,16 +8,14 @@ import { AuthStateService } from '@app/core/auth/auth-state.service';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class HomeComponent implements OnInit{
-  constructor(
-    private authStateService: AuthStateService
-  ) {}
+export class HomeComponent implements OnInit {
+  constructor(private authStateService: AuthStateService) {}
 
   private router = inject(Router);
 
   ngOnInit() {
-    if(!this.authStateService.isAuthenticated()) {
-      this.router.navigateByUrl("/login");
+    if (!this.authStateService.isAuthenticated()) {
+      //this.router.navigateByUrl('/login');
     }
   }
 }
