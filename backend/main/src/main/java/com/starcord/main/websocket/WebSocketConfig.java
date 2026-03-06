@@ -21,14 +21,20 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic", "/queue");
         config.setApplicationDestinationPrefixes("/app");
-        config.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/connect")
-                .setAllowedOriginPatterns("*")
-                .addInterceptors(new WebSocketAuthInterceptor(jwtService));
+                .setAllowedOriginPatterns("*");
+                //.addInterceptors(new WebSocketAuthInterceptor(jwtService));
                 //.withSockJS();
+
+        // Test
+        registry.addEndpoint("/chat")
+        .setAllowedOriginPatterns("*");
+        registry.addEndpoint("/chat")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
     }
 }

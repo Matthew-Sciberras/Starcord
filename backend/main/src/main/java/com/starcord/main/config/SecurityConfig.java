@@ -25,9 +25,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> {
+                    csrf.disable();
+                })
                 .authorizeHttpRequests(
                         httpRequest -> httpRequest.requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/chat/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow options preflight requests
                                 .anyRequest().authenticated()
                 )
