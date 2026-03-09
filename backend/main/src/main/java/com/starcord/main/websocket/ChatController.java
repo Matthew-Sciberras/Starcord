@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import tools.jackson.databind.ObjectMapper;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
@@ -43,16 +44,10 @@ public class ChatController {
         );
     }
 
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public SuccessResponse greeting(MessageRequest message) {
-        System.out.println("Content: " + message.from());
-        return new SuccessResponse("Message sent succesfully");
-    }
-
     @MessageMapping("/chat")
     @SendTo("/topic/messages")
     public OutputMessage send(MessageRequest message) throws Exception {
+        System.out.println("Content: " + message.from());
         String time = new SimpleDateFormat("HH:mm").format(new Date());
         return new OutputMessage(message.from(), message.text(), time);
     }
