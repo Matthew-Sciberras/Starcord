@@ -90,7 +90,7 @@ export class LoginComponent {
       this.authStateService.setAccessToken(response.accessToken);
 
       this.notification.showSuccess('Successfully logged in!');
-      this.router.navigateByUrl("/home")
+      await this.router.navigateByUrl("/home")
     } catch (err: any) {
       console.error('Login failed:', err);
 

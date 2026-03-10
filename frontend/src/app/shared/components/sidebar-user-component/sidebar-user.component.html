@@ -1,0 +1,10 @@
+@for (person of contacts; track person.id) {
+  <div class="contact-row">
+    <img [src]="person.avatarUrl || 'assets/images/pfp_christmas.png'" alt="avatar">
+    <div class="info">
+      <div class="name">{{ person.name }}</div>
+    </div>
+  </div>
+} @empty {
+  <div>No contacts found!</div>
+}

@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/shared/components/sidebar-user-component/contact.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/core/channels/channel.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/core/channels/channel.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

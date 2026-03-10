@@ -73,3 +73,9 @@
 .divider::after {
   margin-right: 20px;
 }
+
+/* TODO: REMOVE AFTER TESTING IS OVER */
+#test-button {
+  width: 200px;
+  height: 30px;
+}
