@@ -4,6 +4,7 @@ import com.starcord.main.dtos.Channels.ChannelResponse;
 import com.starcord.main.dtos.Channels.CreateChannelRequest;
 import com.starcord.main.dtos.Channels.ListOfChannels;
 import com.starcord.main.emuns.ChannelRole;
+import com.starcord.main.emuns.ChannelType;
 import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
@@ -64,15 +65,12 @@ public class ChannelService {
     }
 
     public void addMemberChecks(User user, Channel channel) {
-        channel.getAdminsAndOwners().forEach(currentUser -> {
-            System.out.println(user.getUsername());
-        });
         if(!channel.getAdminsAndOwners().contains(user)) {
             throw new UnauthorizedException("You must be an owner or admin to add users");
         }
 
         if(channel.getMembers().size() >= channel.getChannelType().getMaxMembers()) {
-            throw new TooManyMembersException("You have already hit the maximum number of members. The maximum for this type of channel is " + channel.getChannelType().getMaxMembers());
+            throw new TooManyMembersException("You have already hit the maximum number of members. The maximum for this type of channel is %d".formatted(channel.getChannelType().getMaxMembers()));
         }
     }
 
@@ -99,12 +97,43 @@ public class ChannelService {
         return ChannelMapper.convertToResponse(channel);
     }
 
-    public ListOfChannels getUserChannels() {
+    // All channels in general
+    public ListOfChannels getAllConversations() {
         User user = authUtils.getCurrentUser();
         ListOfChannels channels = new ListOfChannels();
         List<ChannelResponse> responseList = new ArrayList<>();
         for(ChannelMember membership : user.getChannelMemberships()) {
             responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
+        }
+        channels.setChannels(responseList);
+        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
+        return channels;
+    }
+
+    // DM's and Group chats
+    public ListOfChannels getUserChats() {
+        User user = authUtils.getCurrentUser();
+        ListOfChannels channels = new ListOfChannels();
+        List<ChannelResponse> responseList = new ArrayList<>();
+        for(ChannelMember membership : user.getChannelMemberships()) {
+            if(membership.getChannel().getChannelType() == ChannelType.DM || membership.getChannel().getChannelType() == ChannelType.GROUP) {
+                responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
+            }
+        }
+        channels.setChannels(responseList);
+        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
+        return channels;
+    }
+
+    // ChannelType of type channel
+    public ListOfChannels getUserChannels() {
+        User user = authUtils.getCurrentUser();
+        ListOfChannels channels = new ListOfChannels();
+        List<ChannelResponse> responseList = new ArrayList<>();
+        for(ChannelMember membership : user.getChannelMemberships()) {
+            if(membership.getChannel().getChannelType() == ChannelType.CHANNEL) {
+                responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
+            }
         }
         channels.setChannels(responseList);
         channels.setTimestamp(TimeUtils.getCurrentTimestamp());

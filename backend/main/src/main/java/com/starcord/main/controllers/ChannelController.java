@@ -20,7 +20,7 @@ public class ChannelController {
     }
 
     /**
-     * @param request
+     * Takes in CreateChannelRequest
      * @return ChannelResponse
      */
     @RateLimit(limit = 10, timeWindowSeconds = 60)
@@ -48,6 +48,18 @@ public class ChannelController {
     @RateLimit(limit = 10, timeWindowSeconds = 60)
     @GetMapping("/getAll")
     public @ResponseBody ListOfChannels getAll() {
+        return channelService.getAllConversations();
+    }
+
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @GetMapping("/getAll/chats")
+    public @ResponseBody ListOfChannels getAllChats() {
+        return channelService.getUserChats();
+    }
+
+    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @GetMapping("/getAll/channels")
+    public @ResponseBody ListOfChannels getUserChannels() {
         return channelService.getUserChannels();
     }
 }
