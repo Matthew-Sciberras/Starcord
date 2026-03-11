@@ -7,17 +7,13 @@ import {Contact} from '@shared/components/sidebar-user-component/contact.model';
   templateUrl: './sidebar-user.component.html',
   styleUrl: './sidebar-user.component.css',
 })
-@Component({
-  selector: 'app-contact-list',
-  templateUrl: './contact-list.component.html'
-})
-export class ContactListComponent {
+export class SidebarUserComponent {
   contacts: Contact[] = [
-    { name: 'Star', status: 'coding', avatarUrl: '' },
-    { name: 'Shrey', status: 'femboy', avatarUrl: '' },
+    { name: 'Star', status: 'coding', avatarUrl: '',  channelID: '1'},
+    { name: 'Shrey', status: 'femboy', avatarUrl: '', channelID: '2' },
   ];
 
   addContact() {
-    this.contacts.push({ name: 'New User', status: 'online', avatarUrl: 'assets/default.png' });
+    this.contacts.push({ name: 'New User', status: 'online', avatarUrl: 'assets/default.png', channelID: '3'});
   }
 }

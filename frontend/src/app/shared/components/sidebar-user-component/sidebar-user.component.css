@@ -1,0 +1,31 @@
+.main {
+  width: 90%;
+  height: 50px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px 10px 20px; /* 20px left */
+  width: 100%;
+}
+
+#avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.info {
+  flex: 1;
+}
+
+.name {
+  font-size: 1rem;
+  color: var(--primary-text-color);
+}
+
+.status {
+  color: var(--secondary-text-color);
+}
