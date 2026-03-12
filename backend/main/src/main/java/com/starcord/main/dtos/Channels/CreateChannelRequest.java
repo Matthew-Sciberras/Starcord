@@ -1,6 +1,6 @@
 package com.starcord.main.dtos.Channels;
 
-import com.starcord.main.emuns.ChannelType;
+import com.starcord.main.enums.ChannelType;
 
 public class CreateChannelRequest {
     private String name;

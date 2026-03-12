@@ -1,4 +1,4 @@
-package com.starcord.main.emuns;
+package com.starcord.main.enums;
 
 public enum ChannelType {
     DM(2),         // DM between 2 people

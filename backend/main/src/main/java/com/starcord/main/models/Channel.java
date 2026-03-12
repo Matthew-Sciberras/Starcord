@@ -1,7 +1,7 @@
 package com.starcord.main.models;
 
-import com.starcord.main.emuns.ChannelRole;
-import com.starcord.main.emuns.ChannelType;
+import com.starcord.main.enums.ChannelRole;
+import com.starcord.main.enums.ChannelType;
 import jakarta.persistence.*;
 
 import java.time.Instant;
