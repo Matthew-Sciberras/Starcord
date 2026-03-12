@@ -37,6 +37,7 @@
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@stomp/stompjs": "^7.3.0",
     "express": "^5.1.0",
+    "lucide-angular": "^0.577.0",
     "rxjs": "~7.8.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",

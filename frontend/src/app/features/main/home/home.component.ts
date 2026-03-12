@@ -4,10 +4,14 @@ import { AuthStateService } from '@app/core/auth/auth-state.service';
 import {ChannelService} from '@core/channels/channel.service';
 import {SidebarUserComponent} from '@shared/components/sidebar-user/sidebar-user.component';
 
+// Icons
+import { LucideAngularModule } from 'lucide-angular';
+
 @Component({
   selector: 'app-home',
   imports: [
-    SidebarUserComponent
+    SidebarUserComponent,
+    LucideAngularModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
