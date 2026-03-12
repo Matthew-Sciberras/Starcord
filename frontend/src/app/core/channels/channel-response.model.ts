@@ -1,9 +1,14 @@
 export interface ChannelResponse {
-    channelID: Number;
+    channelID: number;
     channelType: string;
     createdAt: string;
-    creatorID: Number;
-    image: String | null;
+    creatorID: number;
+    image: string | null;
     members: number[];
-    name: String;
+    name: string;
+}
+
+export interface GetChannelResponse {
+  channels: ChannelResponse[];
+  timestamp: number;
 }

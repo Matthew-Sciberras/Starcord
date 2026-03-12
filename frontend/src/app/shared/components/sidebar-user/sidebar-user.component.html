@@ -1,0 +1,14 @@
+<div class="main">
+  @for (person of contacts$ | async; track person.channelID) {
+    <div class="contact-row">
+      <img [src]="person.image || 'assets/images/pfp_christmas.png'" alt="avatar" id="avatar">
+
+      <div class="info">
+        <div class="name">{{ person.name }}</div>
+        <div class="status">Active</div>
+      </div>
+    </div>
+  } @empty {
+    <div>No contacts found!</div>
+  }
+</div>

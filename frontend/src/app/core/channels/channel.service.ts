@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ChannelResponse } from "./channel-response.model";
+import {ChannelResponse, GetChannelResponse} from "./channel-response.model";
 import {Observable, tap} from "rxjs";
 
 @Injectable({
@@ -22,6 +22,12 @@ export class ChannelService {
       tap(data => {
         console.log("Data received:", data);
       })
+    );
+  }
+
+  getChats(): Observable<GetChannelResponse> {
+    return this.http.get<GetChannelResponse>(`${this.baseURL}/getAll/chats`).pipe(
+      tap(data => console.log("Data received:", data))
     );
   }
 }

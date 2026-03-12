@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStateService } from '@app/core/auth/auth-state.service';
 import {ChannelService} from '@core/channels/channel.service';
-import {SidebarUserComponent} from '@shared/components/sidebar-user-component/sidebar-user.component';
+import {SidebarUserComponent} from '@shared/components/sidebar-user/sidebar-user.component';
 
 @Component({
   selector: 'app-home',
