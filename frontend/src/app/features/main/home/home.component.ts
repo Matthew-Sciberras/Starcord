@@ -35,4 +35,6 @@ export class HomeComponent implements OnInit {
       console.log("Channels:", channels);
     })
   }
+
+  public onLogout() {}
 }

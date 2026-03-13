@@ -3,35 +3,39 @@
     <div class="logo">
       <img src="../../../../assets/images/StarcordBannerPNG(2).png" alt="logo">
     </div>
+
     <div class="divider"></div>
+
     <div class="direct-messages-div">
       <p>Direct Messages</p>
       <img id="add-star" src="../../../../assets/svgs/four-point-star.svg" alt="" />
     </div>
+
     <div class="sidebar-users">
       <app-sidebar-user></app-sidebar-user>
     </div>
+
+    <div class="divider"></div>
+
     <div class="sidebar-footer">
       <div class="footer-item">
         <lucide-icon name="users" [size]="18"></lucide-icon>
         <span>Friends</span>
       </div>
-
       <div class="footer-item">
         <lucide-icon name="settings" [size]="18"></lucide-icon>
         <span>Settings</span>
       </div>
-
-      <div class="footer-item logout">
+      <div class="footer-item logout" (click)="onLogout()">
         <lucide-icon name="log-out" [size]="18"></lucide-icon>
         <span>Log out</span>
       </div>
     </div>
   </div>
+
   <div class="main-content">
-    <button id="test-button" (click)="clickTest()">
-      TEST BUTTON
-    </button>
+    <button id="test-button" (click)="clickTest()">TEST BUTTON</button>
   </div>
+
   <div class="sidebar-right"></div>
 </div>
