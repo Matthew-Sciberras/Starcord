@@ -24,6 +24,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class ChannelService {
@@ -120,46 +122,31 @@ public class ChannelService {
         return ChannelMapper.convertToResponse(channel);
     }
 
-    // All channels in general
+    private ListOfChannels getFilteredChannels(Predicate<ChannelType> filter) {
+        User user = authUtils.getCurrentUser();
+
+        List<ChannelResponse> responseList = user.getChannelMemberships().stream()
+                .map(ChannelMember::getChannel)
+                .filter(channel -> filter.test(channel.getChannelType()))
+                .map(ChannelMapper::convertToResponse)
+                .collect(Collectors.toList());
+
+        ListOfChannels channels = new ListOfChannels();
+        channels.setChannels(responseList);
+        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
+        return channels;
+    }
+
     public ListOfChannels getAllConversations() {
-        User user = authUtils.getCurrentUser();
-        ListOfChannels channels = new ListOfChannels();
-        List<ChannelResponse> responseList = new ArrayList<>();
-        for(ChannelMember membership : user.getChannelMemberships()) {
-            responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
-        }
-        channels.setChannels(responseList);
-        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
-        return channels;
+        // Pass a predicate that always returns true
+        return getFilteredChannels(type -> true);
     }
 
-    // DM's and Group chats
     public ListOfChannels getUserChats() {
-        User user = authUtils.getCurrentUser();
-        ListOfChannels channels = new ListOfChannels();
-        List<ChannelResponse> responseList = new ArrayList<>();
-        for(ChannelMember membership : user.getChannelMemberships()) {
-            if(membership.getChannel().getChannelType() == ChannelType.DM || membership.getChannel().getChannelType() == ChannelType.GROUP) {
-                responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
-            }
-        }
-        channels.setChannels(responseList);
-        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
-        return channels;
+        return getFilteredChannels(type -> type == ChannelType.DM || type == ChannelType.GROUP);
     }
 
-    // ChannelType of type channel
     public ListOfChannels getUserChannels() {
-        User user = authUtils.getCurrentUser();
-        ListOfChannels channels = new ListOfChannels();
-        List<ChannelResponse> responseList = new ArrayList<>();
-        for(ChannelMember membership : user.getChannelMemberships()) {
-            if(membership.getChannel().getChannelType() == ChannelType.CHANNEL) {
-                responseList.add(ChannelMapper.convertToResponse(membership.getChannel()));
-            }
-        }
-        channels.setChannels(responseList);
-        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
-        return channels;
+        return getFilteredChannels(type -> type == ChannelType.CHANNEL);
     }
 }
