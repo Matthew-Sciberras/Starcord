@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/controllers/ChannelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/controllers/ChannelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/dtos/Channels/AddMemberRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/dtos/Channels/AddMemberRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/dtos/Channels/CreateChannelRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/dtos/Channels/CreateChannelRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/models/Channel.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/models/Channel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/services/Channels/ChannelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/services/Channels/ChannelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

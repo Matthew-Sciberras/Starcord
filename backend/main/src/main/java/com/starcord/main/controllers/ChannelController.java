@@ -32,7 +32,7 @@ public class ChannelController {
     @RateLimit(limit = 25, timeWindowSeconds = 60)
     @PostMapping("/add/{channelID}")
     public SuccessResponse add(@PathVariable long channelID, @RequestBody AddMemberRequest request) {
-        channelService.addMember(channelID, request.getUserID());
+        channelService.addMembers(channelID, request.getMembers());
         return new SuccessResponse("Successfully added user");
     }
 

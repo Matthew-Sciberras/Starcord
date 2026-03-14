@@ -1,8 +1,11 @@
 package com.starcord.main.dtos.Channels;
 
-public class AddMemberRequest {
-    private long userID;
+import java.util.Set;
 
-    public long getUserID() { return userID; }
-    public void setUserID(long userID) { this.userID = userID; }
+public class AddMemberRequest {
+    private Set<Long> members;
+
+    public Set<Long> getMembers() { return members; }
+    public void setMembers(Set<Long> members) { this.members = members; }
+    public void addMember(Long member) { this.members.add(member); }
 }

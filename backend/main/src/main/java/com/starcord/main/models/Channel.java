@@ -15,7 +15,8 @@ public class Channel {
     @Id
     private Long id;
 
-    @Column(nullable = false, unique = false)
+    // Can be nullable in the case of DM's
+    @Column()
     private String name;
 
     @Column(name = "created_at", nullable = false)

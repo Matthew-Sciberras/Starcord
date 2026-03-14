@@ -5,6 +5,7 @@ import com.starcord.main.dtos.Channels.CreateChannelRequest;
 import com.starcord.main.dtos.Channels.ListOfChannels;
 import com.starcord.main.enums.ChannelRole;
 import com.starcord.main.enums.ChannelType;
+import com.starcord.main.exceptions.BadRequestException;
 import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ChannelService {
@@ -43,6 +45,9 @@ public class ChannelService {
 
     public ChannelResponse createChannel(CreateChannelRequest request) {
         String channelName = request.getName();
+        if(request.getChannelType() != ChannelType.DM && channelName == null) {
+            throw new BadRequestException("Channel name is required if not a DM");
+        }
         User user = authUtils.getCurrentUser();
         Channel channel = new Channel();
         channel.setId(idUtils.generateId());
@@ -51,6 +56,14 @@ public class ChannelService {
         channel.setCreator(user);
         channel.addMember(user, ChannelRole.OWNER);
         channel.setChannelType(request.getChannelType());
+
+        // Adding members
+        if(request.getMembers() != null && !request.getMembers().isEmpty()) {
+            request.getMembers().forEach(memberID -> {
+                User member = userDetailsService.loadUserByID(memberID);
+                channel.addMember(member, ChannelRole.MEMBER);
+            });
+        }
 
         channelRepository.save(channel);
         return ChannelMapper.convertToResponse(channel);
@@ -61,6 +74,16 @@ public class ChannelService {
         User user = userDetailsService.loadUserByID(userID);
         addMemberChecks(authUtils.getCurrentUser(), channel);
         channel.addMember(user, ChannelRole.MEMBER);
+        channelRepository.save(channel);
+    }
+
+    public void addMembers(long channelID, Set<Long> memberIDs) {
+        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
+        addMemberChecks(authUtils.getCurrentUser(), channel);
+        memberIDs.forEach(memberID -> {
+            User user = userDetailsService.loadUserByID(memberID);
+            channel.addMember(user, ChannelRole.MEMBER);
+        });
         channelRepository.save(channel);
     }
 
