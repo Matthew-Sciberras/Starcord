@@ -1,6 +1,7 @@
 package com.starcord.main.controllers;
 
 import com.starcord.main.annotations.RateLimit;
+import com.starcord.main.dtos.Users.GetUsersRequest;
 import com.starcord.main.dtos.Users.PublicUserResponse;
 import com.starcord.main.mappers.UserMapper;
 import com.starcord.main.models.User;
@@ -31,8 +32,8 @@ public class UserController {
 
     @RateLimit(limit=30, timeWindowSeconds = 60)
     @GetMapping("/get")
-    public @ResponseBody Set<PublicUserResponse> getMultiple(@RequestBody Set<Long> ids) {
-        return userDetailsService.loadUsersByIDs(ids).stream()
+    public @ResponseBody Set<PublicUserResponse> getMultiple(@RequestBody GetUsersRequest request) {
+        return userDetailsService.loadUsersByIDs(request.getUsers()).stream()
                 .map(UserMapper::convertToPublicDTO)
                 .collect(Collectors.toSet());
     }
