@@ -2,6 +2,7 @@ package com.starcord.main.security;
 
 import com.starcord.main.models.User;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,48 +27,41 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        System.out.printf("JwtAuthenticationFilter running for request: %s%n", request.getRequestURI());
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final long userID;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("Invalid Header");
-            filterChain.doFilter(request, response); // no token, continue chain
-            return;
-        }
-
-        jwt = authHeader.substring(7); // remove "Bearer "
-        if (!jwtService.isAccessToken(jwt)) {
+            request.setAttribute("auth_error", "MISSING");
             filterChain.doFilter(request, response);
             return;
         }
 
-        if (!jwtService.isTokenValid(jwt)) {
-            filterChain.doFilter(request, response); // invalid token, continue chain (Spring will reject later)
-            return;
+        final String jwt = authHeader.substring(7);
+
+        try {
+            if (jwtService.isAccessToken(jwt) && jwtService.isTokenValid(jwt)) {
+                long userID = jwtService.extractUserID(jwt);
+
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                    User user = userDetailsService.loadUserByID(userID);
+                    CustomUserDetails userDetails = new CustomUserDetails(user);
+
+                    UsernamePasswordAuthenticationToken authToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+        } catch (ExpiredJwtException ex) {
+            request.setAttribute("auth_error", "EXPIRED");
+            throw ex;
+        } catch (Exception ex) {
+            request.setAttribute("auth_error", "INVALID");
+            throw ex;
         }
 
-        userID = jwtService.extractUserID(jwt);
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Load user details
-            System.out.println("Load user details");
-            User user = userDetailsService.loadUserByID(userID);
-            CustomUserDetails userDetails = new CustomUserDetails(user);
-            System.out.printf("User Details: %d%n", userID);
-            System.out.printf("Authorities: %s%n", userDetails.getAuthorities());
-            // Create authentication token
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-
-            // Set authentication in context
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        }
         filterChain.doFilter(request, response);
     }
 }
