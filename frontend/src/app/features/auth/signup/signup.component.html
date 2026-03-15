@@ -80,7 +80,12 @@
             ></i>
           </button>
         </div>
-        <button id="submit-button" type="submit">Let's Go!</button>
+        <button
+          id="submit-button"
+          type="submit"
+          [disabled]="signupForm.invalid">
+          Let's Go!
+        </button>
         <div class="divider">
           <span>Or log in with</span>
         </div>

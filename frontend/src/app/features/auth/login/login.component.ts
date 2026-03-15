@@ -15,6 +15,7 @@ import { LoginRequest } from './login-request.model';
 import { AuthService } from '@app/core/auth/authentication.service';
 import { AuthStateService } from '@app/core/auth/auth-state.service';
 import { ChannelService } from '@app/core/channels/channel.service';
+import {UserProfile} from '@shared/models/user-profile.model';
 
 @Component({
   selector: 'app-login',
@@ -88,6 +89,16 @@ export class LoginComponent {
       console.log('Logged in successfully:', response);
 
       this.authStateService.setAccessToken(response.accessToken);
+
+      // User profile
+      let userProfile = {
+        displayName: response.displayName || null,
+        email: response.email,
+        userID: response.userID,
+        username: response.username
+      };
+
+      this.authStateService.setUserProfile(userProfile);
 
       this.notification.showSuccess('Successfully logged in!');
       await this.router.navigateByUrl("/home")
