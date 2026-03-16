@@ -1,0 +1,24 @@
+services:
+
+  postgres:
+    image: postgres:18
+    container_name: starcord-postgres
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  redis:
+    image: redis:8.4.2-trixie
+    container_name: starcord-redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "1mM12345!?"]
+
+volumes:
+  pgdata:
+    external: true

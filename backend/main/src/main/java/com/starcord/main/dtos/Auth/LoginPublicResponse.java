@@ -6,6 +6,7 @@ public class LoginPublicResponse {
     private String username;
     private String displayName;
     private String accessToken;
+    private long createdAt;
 
     public Long getUserID() { return userID; }
     public void setUserID(Long userID) { this.userID = userID; }
@@ -21,4 +22,7 @@ public class LoginPublicResponse {
 
     public String getAccessToken() { return accessToken; }
     public void setAccessToken(String accessToken) { this.accessToken = accessToken; }
+
+    public long getCreatedAt() { return createdAt; }
+    public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
 }

@@ -11,6 +11,7 @@ public class AuthMapper {
         response.setUsername(loginResponse.getUsername());
         response.setEmail(loginResponse.getEmail());
         response.setUserID(loginResponse.getUserID());
+        response.setCreatedAt(loginResponse.getCreatedAt());
         return response;
     }
 }

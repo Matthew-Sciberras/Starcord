@@ -34,7 +34,7 @@
 .main-content {
   height: 100vh;
   width: 70%;
-  border-right: 1px solid blue;
+  /*border-right: 1px solid blue; TEST BORDER*/
 }
 
 .sidebar-right {
@@ -64,13 +64,6 @@
   height: 2px;
   flex: 1;
   content: '';
-}
-
-
-/* TODO: REMOVE AFTER TESTING IS OVER */
-#test-button {
-  width: 200px;
-  height: 30px;
 }
 
 .sidebar-users {

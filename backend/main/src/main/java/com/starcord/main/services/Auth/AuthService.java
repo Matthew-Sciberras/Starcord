@@ -88,6 +88,7 @@ public class AuthService {
         responseDTO.setDisplayName(userDetails.getDisplayName());
         responseDTO.setRefreshToken(refreshToken);
         responseDTO.setAccessToken(accessToken);
+        responseDTO.setCreatedAt(userDetails.getUser().getCreatedAt());
         return responseDTO;
     }
 

@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/security/JwtAuthenticationEntryPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/information_schema.FNRwLQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/ed823859-92dd-4c57-b747-4dc3222d141c.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/core/user/user.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/shared/components/sidebar-user/sidebar-user.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/StarcordBannerPNG(2).png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/assets/images/pfp_christmas.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/handlers/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/handlers/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/security/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/auth/signup/signup.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/main/home/home.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
