@@ -12,6 +12,7 @@ public class AuthMapper {
         response.setEmail(loginResponse.getEmail());
         response.setUserID(loginResponse.getUserID());
         response.setCreatedAt(loginResponse.getCreatedAt());
+        response.setProfilePicture(loginResponse.getProfilePicture());
         return response;
     }
 }

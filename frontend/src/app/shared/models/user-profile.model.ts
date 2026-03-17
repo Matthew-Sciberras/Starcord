@@ -3,4 +3,6 @@ export interface UserProfile {
   email: string;
   userID: number;
   username: string;
+  createdAt: number;
+  profilePicture: string;
 }

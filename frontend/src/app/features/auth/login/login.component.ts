@@ -95,7 +95,9 @@ export class LoginComponent {
         displayName: response.displayName || null,
         email: response.email,
         userID: response.userID,
-        username: response.username
+        username: response.username,
+        createdAt: response.createdAt,
+        profilePicture: response.profilePicture,
       };
 
       this.authStateService.setUserProfile(userProfile);

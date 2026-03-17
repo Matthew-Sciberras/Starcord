@@ -30,8 +30,9 @@ public class UserController {
         return UserMapper.convertToPublicDTO(user);
     }
 
+    // Post mapping to allow for the request body
     @RateLimit(limit=30, timeWindowSeconds = 60)
-    @GetMapping("/get")
+    @PostMapping("/get")
     public @ResponseBody Set<PublicUserResponse> getMultiple(@RequestBody GetUsersRequest request) {
         return userDetailsService.loadUsersByIDs(request.getUsers()).stream()
                 .map(UserMapper::convertToPublicDTO)

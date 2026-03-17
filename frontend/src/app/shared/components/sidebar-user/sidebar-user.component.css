@@ -3,18 +3,42 @@
   height: 50px;
 }
 
-.contact-row {
+/* 1. Allow .main to grow with content */
+.main {
+  width: 100%;       /* Match the sidebar width */
+  height: auto;      /* Let it expand to fit the list */
   display: flex;
-  align-items: center;
-  padding: 10px 10px 10px 20px; /* 20px left */
-  width: 100%;
+  flex-direction: column;
+  padding: 0 10px;   /* Add some breathing room */
+  box-sizing: border-box;
 }
 
-#avatar {
+/* 2. Changed #avatar to .avatar */
+.avatar {
   width: 35px;
   height: 35px;
   border-radius: 50%;
   margin-right: 15px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.8;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.contact-row:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  opacity: 1;
 }
 
 .info {

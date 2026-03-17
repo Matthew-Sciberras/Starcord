@@ -7,6 +7,7 @@ public class LoginPublicResponse {
     private String displayName;
     private String accessToken;
     private long createdAt;
+    private String profilePicture;
 
     public Long getUserID() { return userID; }
     public void setUserID(Long userID) { this.userID = userID; }
@@ -25,4 +26,7 @@ public class LoginPublicResponse {
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    public String getProfilePicture() { return profilePicture; }
+    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
 }

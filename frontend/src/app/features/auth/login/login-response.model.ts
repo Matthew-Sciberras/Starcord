@@ -5,4 +5,6 @@ export interface LoginResponse {
     refreshToken: string;
     userID: number;
     username: string;
+    createdAt: number;
+    profilePicture: string;
 }
