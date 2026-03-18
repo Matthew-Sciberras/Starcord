@@ -17,4 +17,6 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
             @Param("user") User user,
             @Param("types") List<ChannelType> types
     );
+    @Query("SELECT COUNT(cm) > 0 FROM ChannelMember cm WHERE cm.channel.id = :channelId AND cm.user.id = :userId")
+    boolean isUserInChannel(@Param("channelId") Long channelId, @Param("userId") Long userId);
 }

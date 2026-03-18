@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   // Helper method to test
-  // 'ng.getComponent(document.querySelector("app-home")).testSend("hello", "1")' in console
+  // 'ng.getComponent(document.querySelector("app-home")).testSend("hello", "278835366006784")' in console
   testSend(content: string, channelId: string) {
     const payload = {
       content: content,

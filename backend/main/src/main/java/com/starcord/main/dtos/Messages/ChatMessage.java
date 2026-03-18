@@ -5,7 +5,7 @@ import java.time.Instant;
 public class ChatMessage {
     private long channelId;
     private String content;
-    private long senderId;
+    private long authorId;
     private Instant timestamp;
 
     public ChatMessage() {}
@@ -17,8 +17,8 @@ public class ChatMessage {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
-    public long getSenderId() { return senderId; }
-    public void setSenderId(long senderId) { this.senderId = senderId; }
+    public long getAuthorId() { return authorId; }
+    public void setAuthorId(long authorId) { this.authorId = authorId; }
 
     public Instant getTimestamp() { return timestamp; }
     public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }

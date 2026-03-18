@@ -2,6 +2,9 @@ package com.starcord.main.controllers;
 
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
+import com.starcord.main.mappers.MessageMapper;
+import com.starcord.main.models.Message;
+import com.starcord.main.services.Messages.MessageService;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,9 +18,11 @@ import java.time.Instant;
 public class ChatController {
 
     private final SimpMessagingTemplate messagingTemplate;
+    private final MessageService messageService;
 
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
+    public ChatController(SimpMessagingTemplate messagingTemplate, MessageService messageService) {
         this.messagingTemplate = messagingTemplate;
+        this.messageService = messageService;
     }
 
     /**
@@ -54,14 +59,9 @@ public class ChatController {
     public void processPrivateMessage(@Payload MessageRequest request,
                                       Principal principal) {
 
-        MessageResponse response = new MessageResponse();
-        response.setAuthorID(Long.parseLong(principal.getName()));
-        response.setTimestamp(Instant.now());
-        response.setContent(request.getContent());
-        response.setChannelID(request.getChannelId());
-        response.setMessageID(123456);
+        Message message = messageService.save(MessageMapper.convertToChatMessage(request, principal.getName()));
 
-        // messageService.save(message);
+        MessageResponse response = MessageMapper.convertToResponse(message);
 
         // Send specifically to the recipient's private queue
         messagingTemplate.convertAndSendToUser(

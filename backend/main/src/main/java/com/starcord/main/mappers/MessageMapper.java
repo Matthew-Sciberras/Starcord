@@ -1,8 +1,12 @@
 package com.starcord.main.mappers;
 
+import com.starcord.main.dtos.Messages.ChatMessage;
+import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.models.Message;
 import tools.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 
 public class MessageMapper {
 
@@ -20,6 +24,15 @@ public class MessageMapper {
         response.setTimestamp(message.getTimestamp());
         response.setChannelID(message.getChannel().getId());
         response.setAuthorID(message.getAuthor().getID());
+        return response;
+    }
+
+    public static ChatMessage convertToChatMessage(MessageRequest request, String authorId) {
+        ChatMessage response = new ChatMessage();
+        response.setContent(request.getContent());
+        response.setChannelId(request.getChannelId());
+        response.setTimestamp(Instant.now());
+        response.setAuthorId(Long.parseLong(authorId));
         return response;
     }
 }

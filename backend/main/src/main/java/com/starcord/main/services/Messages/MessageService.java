@@ -15,6 +15,7 @@ import com.starcord.main.utils.IdUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -76,14 +77,12 @@ public class MessageService {
         messages.setMessages(responseList);
         messages.setChannelID(channelID);
 
-        channelService.updateLastMessage(channel);
-
         return messages;
     }
 
-    public void save(ChatMessage chatMessage) {
-        User author = userDetailsService.loadUserByID(chatMessage.getSenderId());
-
+    @Transactional
+    public Message save(ChatMessage chatMessage) {
+        User author = userDetailsService.loadUserByID(chatMessage.getAuthorId());
         Channel channel = channelService.getChannelByID(chatMessage.getChannelId());
 
         if (!channelService.isInChannel(channel.getId(), author.getID())) {
@@ -91,11 +90,15 @@ public class MessageService {
         }
 
         Message message = new Message();
+        message.setId(idUtils.generateId());
         message.setAuthor(author);
         message.setChannel(channel);
         message.setContent(chatMessage.getContent());
         message.setTimestamp(Instant.now());
 
         messageRepository.save(message);
+
+        channelService.setLastMessage(channel, message.getTimestamp());
+        return message;
     }
 }

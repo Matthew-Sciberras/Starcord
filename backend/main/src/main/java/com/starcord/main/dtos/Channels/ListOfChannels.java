@@ -1,13 +1,14 @@
 package com.starcord.main.dtos.Channels;
 
+import java.time.Instant;
 import java.util.List;
 
 public class ListOfChannels {
-    private long timestamp;
+    private Instant timestamp;
     private List<ChannelResponse> channels;
 
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+    public Instant getTimestamp() { return timestamp; }
+    public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
 
     public List<ChannelResponse> getChannels() { return channels; }
     public void setChannels(List<ChannelResponse> channels) { this.channels = channels; }

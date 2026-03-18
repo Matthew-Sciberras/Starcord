@@ -72,6 +72,26 @@
   margin-top: 20px;
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.sidebar-users::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-users::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-users::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-users:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .direct-messages-div {

@@ -16,8 +16,8 @@ import com.starcord.main.repositories.ChannelRepository;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
 import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
-import com.starcord.main.utils.TimeUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -101,17 +101,12 @@ public class ChannelService {
     }
 
     public boolean isInChannel(long channelID, long userID) {
-        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
-        User user = userDetailsService.loadUserByID(userID);
-        return channel.getMembers().stream()
-                .anyMatch(member -> member.getUser().equals(user));
+        return channelRepository.isUserInChannel(channelID, userID);
     }
 
     public boolean isInChannel(long channelID) {
-        Channel channel = channelRepository.findById(channelID).orElseThrow(() -> new NotFoundException("Channel not found"));
         User user = authUtils.getCurrentUser();
-        return channel.getMembers().stream()
-                .anyMatch(member -> member.getUser().equals(user));
+        return channelRepository.isUserInChannel(channelID, user.getID());
     }
 
     public ChannelResponse getChannelData(long channelID) {
@@ -128,7 +123,7 @@ public class ChannelService {
 
         ListOfChannels channels = new ListOfChannels();
         channels.setChannels(responseList);
-        channels.setTimestamp(TimeUtils.getCurrentTimestamp());
+        channels.setTimestamp(Instant.now());
         return channels;
     }
 
@@ -144,8 +139,13 @@ public class ChannelService {
         return getFilteredChannels(List.of(ChannelType.CHANNEL));
     }
 
+    @Transactional // No need to save, transactional auto-saves
     public void updateLastMessage(Channel channel) {
         channel.setLastMessage();
-        channelRepository.save(channel);
+    }
+
+    @Transactional
+    public void setLastMessage(Channel channel, Instant timestamp) {
+        channel.setLastMessageAt(timestamp);
     }
 }
