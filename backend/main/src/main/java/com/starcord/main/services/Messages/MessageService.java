@@ -2,7 +2,6 @@ package com.starcord.main.services.Messages;
 
 import com.starcord.main.dtos.Messages.ChatMessage;
 import com.starcord.main.dtos.Messages.ListOfMessages;
-import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.exceptions.ForbiddenException;
 import com.starcord.main.mappers.MessageMapper;
@@ -12,7 +11,6 @@ import com.starcord.main.models.User;
 import com.starcord.main.repositories.MessageRepository;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
 import com.starcord.main.services.Channels.ChannelService;
-import com.starcord.main.utils.AuthUtils;
 import com.starcord.main.utils.IdUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,14 +23,12 @@ import java.util.List;
 @Service
 public class MessageService {
 
-    private final AuthUtils authUtils;
     private final ChannelService channelService;
     private final CustomUserDetailsService userDetailsService;
     private final MessageRepository messageRepository;
     private final IdUtils idUtils;
 
-    public MessageService(AuthUtils authUtils, ChannelService channelService, CustomUserDetailsService userDetailsService, MessageRepository messageRepository, IdUtils idUtils) {
-        this.authUtils = authUtils;
+    public MessageService(ChannelService channelService, CustomUserDetailsService userDetailsService, MessageRepository messageRepository, IdUtils idUtils) {
         this.channelService = channelService;
         this.userDetailsService = userDetailsService;
         this.messageRepository = messageRepository;
@@ -79,6 +75,8 @@ public class MessageService {
         messages.setTimestamp(Instant.now().getEpochSecond());
         messages.setMessages(responseList);
         messages.setChannelID(channelID);
+
+        channelService.updateLastMessage(channel);
 
         return messages;
     }

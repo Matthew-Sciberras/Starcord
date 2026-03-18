@@ -1,4 +1,4 @@
-package com.starcord.main.websocket;
+package com.starcord.main.security;
 
 import java.security.Principal;
 

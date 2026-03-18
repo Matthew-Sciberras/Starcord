@@ -1,40 +1,61 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthStateService } from '@app/core/auth/auth-state.service';
-import {ChannelService} from '@core/channels/channel.service';
-import {SidebarUserComponent} from '@shared/components/sidebar-user/sidebar-user.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ChatService } from '@core/auth/services/chat/chat.service'; // Update path
+import { AuthStateService } from '@core/auth/auth-state.service'; // Update path
 
-// Icons
 import { LucideAngularModule } from 'lucide-angular';
+import {SidebarUserComponent} from '@shared/components/sidebar-user/sidebar-user.component';
 
 @Component({
   selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   imports: [
     SidebarUserComponent,
     LucideAngularModule
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  private dmSub?: Subscription;
+
   constructor(
-    private authStateService: AuthStateService,
-    private channelService: ChannelService,
+    private chatService: ChatService,
+    private authState: AuthStateService
   ) {}
 
-  private router = inject(Router);
-
   ngOnInit() {
-    if (!this.authStateService.isAuthenticated()) {
-      //this.router.navigateByUrl('/login');
+    if (this.authState.isAuthenticated()) {
+      const user = this.authState.getUserProfile();
+      console.log(`%c [Starcord] Initializing Chat for ${user?.username} `, 'background: #7289da; color: white');
+
+      // Subscribe to Private Messages
+      this.dmSub = this.chatService.watchDMs().subscribe({
+        next: (message) => {
+          console.log('%c [New Message Received] ', 'color: #43b581; font-weight: bold');
+          console.table(message);
+        },
+        error: (err) => console.error('DM Subscription Error:', err)
+      });
+
+    } else {
+      console.error('[Starcord] WebSocket aborted: No active session found in AuthStateService.');
     }
   }
 
-  public clickTest() {
-    this.channelService.getAllChannels().subscribe(channels => {
-      console.log("Channels:", channels);
-    })
+  // Helper method to test
+  // 'ng.getComponent(document.querySelector("app-home")).testSend("hello", "1")' in console
+  testSend(content: string, channelId: string) {
+    const payload = {
+      content: content,
+      channelId: channelId,
+    }
+    this.chatService.sendMessage('/app/chat.private', payload);
   }
 
-  public onLogout() {}
+  ngOnDestroy() {
+    if (this.dmSub) {
+      this.dmSub.unsubscribe();
+      console.log('[Starcord] Cleaned up WebSocket subscriptions.');
+    }
+  }
 }

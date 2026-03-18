@@ -1,9 +1,9 @@
-package com.starcord.main.websocket;
+package com.starcord.main.config;
 
 import com.starcord.main.security.JwtService;
 import com.starcord.main.security.WebSocketAuthInterceptor;
-import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
 
@@ -20,21 +20,29 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic", "/queue");
+
+        // Outbound prefix for sending to specific users
+        config.setUserDestinationPrefix("/user");
+
+        // Inbound prefix for messages hitting your @MessageMapping controllers
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/connect")
+        // Unified endpoint. Angular will connect to: ws://localhost:8080/ws
+        registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*");
-                //.addInterceptors(new WebSocketAuthInterceptor(jwtService));
-                //.withSockJS();
 
-        // Test
-        registry.addEndpoint("/chat")
-        .setAllowedOriginPatterns("*");
-        registry.addEndpoint("/chat")
+        // Separate registration for SockJS fallback if needed
+        registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        // Registers interceptor as a guard for all incoming STOMP messages
+        registration.interceptors(new WebSocketAuthInterceptor(jwtService));
     }
 }

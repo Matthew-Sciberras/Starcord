@@ -1,4 +1,4 @@
-package com.starcord.main.websocket;
+package com.starcord.main.dtos.WebSockets;
 
 import com.starcord.main.models.User;
 import org.springframework.web.socket.WebSocketSession;

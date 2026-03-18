@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ChannelResponse } from '@core/channels/channel-response.model';
-import { ChannelService } from '@core/channels/channel.service';
+import { ChannelResponse } from '@core/auth/services/channels/channel-response.model';
+import { ChannelService } from '@core/auth/services/channels/channel.service';
 import { map, Observable, switchMap, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { UserService } from '@core/user/user.service';
+import { UserService } from '@core/auth/services/user/user.service';
 
 @Component({
   selector: 'app-sidebar-user',

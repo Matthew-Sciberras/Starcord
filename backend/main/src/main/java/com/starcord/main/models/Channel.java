@@ -39,6 +39,9 @@ public class Channel {
     @Column(name = "type", nullable = false)
     private ChannelType channelType;
 
+    @Column(name="last_message")
+    private Instant lastMessageAt;
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -83,4 +86,8 @@ public class Channel {
 
     public ChannelType getChannelType() { return channelType; }
     public void setChannelType(ChannelType channelType) { this.channelType = channelType; }
+
+    public Instant getLastMessageAt() { return lastMessageAt; }
+    public void setLastMessageAt(Instant lastMessageAt) { this.lastMessageAt = lastMessageAt; }
+    public void setLastMessage() { lastMessageAt = Instant.now(); }
 }

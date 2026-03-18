@@ -9,7 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthStateService } from '@app/core/auth/auth-state.service';
 import { AuthService } from '@app/core/auth/authentication.service';
-import { NotificationService } from '@app/shared/services/notification.service';
+import { NotificationService } from '@core/auth/services/notification/notification.service';
 import {
   emailValidator,
   passwordRequiredValidator,

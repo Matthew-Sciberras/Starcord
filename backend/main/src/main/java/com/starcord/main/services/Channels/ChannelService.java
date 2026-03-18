@@ -11,7 +11,6 @@ import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
 import com.starcord.main.mappers.ChannelMapper;
 import com.starcord.main.models.Channel;
-import com.starcord.main.models.ChannelMember;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.ChannelRepository;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
@@ -21,10 +20,8 @@ import com.starcord.main.utils.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -122,12 +119,10 @@ public class ChannelService {
         return ChannelMapper.convertToResponse(channel);
     }
 
-    private ListOfChannels getFilteredChannels(Predicate<ChannelType> filter) {
+    private ListOfChannels getFilteredChannels(List<ChannelType> types) {
         User user = authUtils.getCurrentUser();
-
-        List<ChannelResponse> responseList = user.getChannelMemberships().stream()
-                .map(ChannelMember::getChannel)
-                .filter(channel -> filter.test(channel.getChannelType()))
+        List<Channel> sortedChannels = channelRepository.findUserChannelsSorted(user, types);
+        List<ChannelResponse> responseList = sortedChannels.stream()
                 .map(ChannelMapper::convertToResponse)
                 .collect(Collectors.toList());
 
@@ -138,15 +133,19 @@ public class ChannelService {
     }
 
     public ListOfChannels getAllConversations() {
-        // Pass a predicate that always returns true
-        return getFilteredChannels(type -> true);
+        return getFilteredChannels(List.of(ChannelType.DM, ChannelType.GROUP, ChannelType.CHANNEL));
     }
 
     public ListOfChannels getUserChats() {
-        return getFilteredChannels(type -> type == ChannelType.DM || type == ChannelType.GROUP);
+        return getFilteredChannels(List.of(ChannelType.DM, ChannelType.GROUP));
     }
 
     public ListOfChannels getUserChannels() {
-        return getFilteredChannels(type -> type == ChannelType.CHANNEL);
+        return getFilteredChannels(List.of(ChannelType.CHANNEL));
+    }
+
+    public void updateLastMessage(Channel channel) {
+        channel.setLastMessage();
+        channelRepository.save(channel);
     }
 }

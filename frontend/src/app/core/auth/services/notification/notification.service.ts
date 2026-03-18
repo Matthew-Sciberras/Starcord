@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ToastComponent } from '../../shared/components/toast/toast.component'; // adjust path if needed
+import { ToastComponent } from '@shared/components/toast/toast.component'; // adjust path if needed
 
 @Injectable({
   providedIn: 'root'

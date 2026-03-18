@@ -17,7 +17,7 @@ public class MessageMapper {
         MessageResponse response = new MessageResponse();
         response.setContent(message.getContent());
         response.setMessageID(message.getId());
-        response.setTimestamp(message.getTimestamp().getEpochSecond());
+        response.setTimestamp(message.getTimestamp());
         response.setChannelID(message.getChannel().getId());
         response.setAuthorID(message.getAuthor().getID());
         return response;

@@ -10,11 +10,11 @@ import { Router, RouterLink } from '@angular/router';
 import { emailValidator, passwordRequiredValidator, safeTextValidator } from '@shared/validators';
 import { firstValueFrom } from 'rxjs';
 
-import { NotificationService } from '@shared/services/notification.service';
+import { NotificationService } from '@core/auth/services/notification/notification.service';
 import { LoginRequest } from './login-request.model';
 import { AuthService } from '@app/core/auth/authentication.service';
 import { AuthStateService } from '@app/core/auth/auth-state.service';
-import { ChannelService } from '@app/core/channels/channel.service';
+import { ChannelService } from '@core/auth/services/channels/channel.service';
 import {UserProfile} from '@shared/models/user-profile.model';
 
 @Component({
