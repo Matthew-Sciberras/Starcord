@@ -1,14 +1,14 @@
 <div class="home-container">
   <div class="sidebar-left">
     <div class="logo">
-      <img src="../../../../assets/images/StarcordBannerPNG(2).png" alt="logo">
+      <img src="../../../../assets/images/StarcordBannerTransparent.png" alt="logo">
     </div>
 
     <div class="divider"></div>
 
     <div class="direct-messages-div">
       <p>Direct Messages</p>
-      <img id="add-star" src="../../../../assets/svgs/four-point-star.svg" alt="" />
+      <img id="add-star" src="../../../../assets/svgs/four-point-star.svg" alt="add" />
     </div>
 
     <div class="sidebar-users">
@@ -34,6 +34,28 @@
   </div>
 
   <div class="main-content">
+    <div class="message-content">
+    </div>
+
+    <div class="message-sending">
+      <div class="input-wrapper">
+        <button class="add-button">
+          <lucide-icon name="plus" [size]="14"></lucide-icon>
+        </button>
+
+        <textarea
+          #messageInput
+          placeholder="Message this chat"
+          rows="1"
+          (input)="adjustHeight(messageInput)"
+          (keydown.enter)="$any($event).shiftKey ? null : handleSend($event, messageInput)"
+        ></textarea>
+
+        <button class="send-button" (click)="handleSend($event, messageInput)">
+          <lucide-icon name="send-horizontal" [size]="18"></lucide-icon>
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="sidebar-right"></div>
