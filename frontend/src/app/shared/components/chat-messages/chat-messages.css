@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  background-color: transparent;
+  font-family: 'Figtree', sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #1e1f22 transparent;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+}
+
+.channel-intro {
+  padding: 40px 20px 10px 20px;
+}
+
+.channel-intro h1 {
+  color: #ffffff;
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.channel-intro p {
+  color: #b5bac1;
+  margin: 0;
+}
+
+.divider-line {
+  border-top: 1px solid #3f4147;
+  margin: 24px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 1px;
+}
+
+.divider-line span {
+  position: absolute;
+  background-color: #313338;
+  padding: 0 12px;
+  color: #949ba4;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.message-entry {
+  display: flex;
+  padding: 10px 20px;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.message-entry:hover {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.content-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: baseline;
+  /* Reduced from 2px to 0 to close the gap */
+  margin-bottom: 0px;
+}
+
+.username {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.time {
+  color: #949ba4;
+  font-size: 0.72rem;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.text {
+  color: #dbdee1;
+  font-size: 1rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* Ensured no extra top margin is pushing the text away */
+  margin-top: 0px;
+}
+
+/* Custom Scrollbar */
+.chat-wrapper::-webkit-scrollbar { width: 8px; }
+.chat-wrapper::-webkit-scrollbar-track { background: transparent; }
+.chat-wrapper::-webkit-scrollbar-thumb { background: #1e1f22; border-radius: 4px; }

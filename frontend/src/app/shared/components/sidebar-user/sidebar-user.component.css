@@ -1,55 +1,118 @@
-.main {
-  width: 90%;
-  height: 50px;
-}
 
-/* 1. Allow .main to grow with content */
+
 .main {
-  width: 100%;       /* Match the sidebar width */
-  height: auto;      /* Let it expand to fit the list */
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 10px;   /* Add some breathing room */
+  padding: 8px;
   box-sizing: border-box;
-}
-
-/* 2. Changed #avatar to .avatar */
-.avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  margin-right: 15px;
-  object-fit: cover;
-  flex-shrink: 0;
 }
 
 .contact-row {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 10px 12px;
-  width: 100%;
+  padding: 8px 12px;
+  margin: 2px 0;
   cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.2s ease, opacity 0.2s ease;
-  opacity: 0.8;
-  color: #ffffff;
-  box-sizing: border-box;
+  border-radius: 8px;
+  /* Added transitions for a smoother hover-to-active flow */
+  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.contact-row:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+/* HOVER ANIMATION */
+.contact-row:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Show a small 'nub' pill on hover */
+.contact-row:hover:not(.active) .active-indicator {
+  height: 8px;
+  opacity: 0.5;
+  left: 0;
+}
+
+/* ACTIVE STATE */
+.contact-row.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* Indicator Pill Base */
+.active-indicator {
+  position: absolute;
+  left: -4px; /* Hidden off-left slightly */
+  width: 4px;
+  height: 0;
+  background-color: #ffffff;
+  border-radius: 0 4px 4px 0;
+  opacity: 0;
+  /* cubic-bezier makes the "pop" feel more like Discord/Slack */
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+  left 0.2s ease,
+  opacity 0.2s ease;
+}
+
+/* Full pill for active state */
+.contact-row.active .active-indicator {
+  height: 24px;
+  left: 0;
   opacity: 1;
 }
 
+/* Avatar & Status Dot */
+.avatar-container {
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #1e1f22;
+  background-color: #80848e;
+  transition: background-color 0.3s ease;
+}
+
+.status-dot.online {
+  background-color: #23a559;
+}
+
+.contact-row.active .status-dot.online {
+  box-shadow: 0 0 6px rgba(35, 165, 89, 0.5);
+}
+
+/* Typography */
 .info {
   flex: 1;
+  min-width: 0;
 }
 
 .name {
-  font-size: 1rem;
-  color: var(--primary-text-color);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.status {
-  color: var(--secondary-text-color);
+.status-text {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  text-transform: capitalize;
 }
+

@@ -1,11 +1,28 @@
 <div class="main">
   @for (person of contacts$ | async; track person.channelID) {
-    <div class="contact-row">
-      <img class="avatar" [src]="person.displayImage || 'assets/images/pfp_christmas.png'" alt="avatar">
+    <div
+      class="contact-row"
+      [class.active]="(activeChannelId$ | async) == person.channelID"
+      (click)="onChannelClick(person.channelID)">
+
+      <div class="active-indicator"></div>
+
+      <div class="avatar-container">
+        <img
+          class="avatar"
+          [src]="person.displayImage || 'assets/images/pfp_christmas.png'"
+          alt="avatar">
+
+        @if (person.channelType === 'DM') {
+          <div class="status-dot" [class.online]="person.status === 'Active'"></div>
+        }
+      </div>
 
       <div class="info">
         <div class="name">{{ person.displayName }}</div>
-        <div class="status">Active</div>
+        <div class="status-text">
+          {{ person.channelType === 'DM' ? person.status : person.members.length + ' members' }}
+        </div>
       </div>
     </div>
   }

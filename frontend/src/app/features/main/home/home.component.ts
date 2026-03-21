@@ -6,6 +6,7 @@ import { AuthStateService } from '@core/auth/auth-state.service';
 import { LucideAngularModule } from 'lucide-angular';
 import { SidebarUserComponent } from '@shared/components/sidebar-user/sidebar-user.component';
 import { FormsModule } from '@angular/forms';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     SidebarUserComponent,
     LucideAngularModule,
-    FormsModule
+    FormsModule,
+    RouterOutlet
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy {

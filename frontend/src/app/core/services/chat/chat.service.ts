@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { RxStomp, RxStompState } from '@stomp/rx-stomp';
 import { map } from 'rxjs/operators';
-import { AuthStateService } from '@core/auth/auth-state.service';
-import {customRxStompConfig} from '@core/config/websocket.config';
 import { Observable } from 'rxjs';
+import { AuthStateService } from '@core/auth/auth-state.service';
+import { customRxStompConfig } from '@core/config/websocket.config';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
   private rxStomp: RxStomp;
+  private readonly API_URL = 'http://localhost:8080/api/v1/messages';
 
-  constructor(private authState: AuthStateService) {
+  constructor(
+    private authState: AuthStateService,
+    private http: HttpClient
+  ) {
     this.rxStomp = new RxStomp();
 
     if (this.authState.isAuthenticated()) {
@@ -17,6 +22,9 @@ export class ChatService {
     }
   }
 
+  /**
+   * WEBSOCKET: Connection Logic
+   */
   private connect() {
     const token = this.authState.getAccessToken();
 
@@ -29,11 +37,22 @@ export class ChatService {
 
     this.rxStomp.activate();
 
-    // Log connection state changes to console
     this.rxStomp.connectionState$.subscribe(state => {
-      console.log('Connection State:', RxStompState[state]);
+      console.log('Chat WebSocket State:', RxStompState[state]);
     });
   }
+
+  /**
+   * HTTP: Fetch Message History
+   * Hits: http://localhost:8080/api/v1/messages/{channelId}
+   */
+  getMessagesByChannel(channelId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/${channelId}`);
+  }
+
+  /**
+   * WEBSOCKET: Real-time Listeners
+   */
 
   // Listener for Private DMs
   watchDMs(): Observable<any> {
@@ -42,14 +61,16 @@ export class ChatService {
     );
   }
 
-  // Listener for Groups
+  // Listener for Groups/Channels
   watchGroup(groupId: string): Observable<any> {
     return this.rxStomp.watch(`/topic/group.${groupId}`).pipe(
       map(message => JSON.parse(message.body))
     );
   }
 
-  // Method to send a message
+  /**
+   * WEBSOCKET: Sending Logic
+   */
   sendMessage(destination: string, payload: any) {
     this.rxStomp.publish({
       destination: destination,

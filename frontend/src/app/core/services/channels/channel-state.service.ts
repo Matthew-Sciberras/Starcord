@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
-export class AuthStateService {
-  private currentChatId: string | null = null;
+@Injectable({
+  providedIn: 'root'
+})
+export class ChannelStateService {
+  private activeChannelId$ = new BehaviorSubject<string | null>(null);
 
-  setCurrentChatId(chatId: string | null): void {
-    this.currentChatId = chatId;
+  selectedChannel$ = this.activeChannelId$.asObservable();
+
+  setActiveChannel(id: string | null): void {
+    this.activeChannelId$.next(id);
   }
 
-  getCurrentChatId(): string | null {
-    return this.currentChatId;
-  }
-
-  clear() {
-    this.currentChatId = null;
+  getActiveId(): string | null {
+    return this.activeChannelId$.getValue();
   }
 }
