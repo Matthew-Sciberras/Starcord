@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '@core/services/chat/chat.service';
 import { UserService } from '@core/services/user/user.service';
 import { switchMap, filter, map, tap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 interface MessageGroup {
   dateLabel: string;
@@ -17,12 +18,13 @@ interface MessageGroup {
   templateUrl: './chat-messages.html',
   styleUrl: './chat-messages.css',
 })
-export class ChatMessagesComponent implements OnInit, AfterViewChecked {
+export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
 
   currentChannelId: string | null = null;
-  groupedMessages: MessageGroup[] = []; // Grouped for headers
+  groupedMessages: MessageGroup[] = [];
   private shouldScroll = false;
+  private socketSub?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,23 +52,57 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
         this.cdr.detectChanges();
       }
     });
+
+    this.socketSub = this.chatService.newMessage$.subscribe((msg) => {
+      this.appendLiveMessage(msg);
+    });
+  }
+
+  private appendLiveMessage(m: any) {
+    // Large IDs coming from Java need to be handled carefully
+    const authorId = String(m.authorID);
+    const user = this.userService.getUserById(authorId);
+
+    const date = new Date(m.timestamp);
+    const dateLabel = this.getDateLabel(date);
+
+    const normalizedMsg = {
+      ...m,
+      displayName: user ? user.displayName : `User ${authorId}`,
+      profilePicture: user?.profilePicture || 'assets/images/pfp_christmas.png',
+      displayTime: this.formatMessageTime(date),
+      uniqueId: String(m.messageID)
+    };
+
+    const lastGroup = this.groupedMessages[this.groupedMessages.length - 1];
+
+    if (lastGroup && lastGroup.dateLabel === dateLabel) {
+      lastGroup.messages.push(normalizedMsg);
+    } else {
+      this.groupedMessages.push({
+        dateLabel: dateLabel,
+        messages: [normalizedMsg]
+      });
+    }
+
+    this.shouldScroll = true;
+    this.cdr.detectChanges();
   }
 
   private processMessages(raw: any[]): MessageGroup[] {
     const groups: MessageGroup[] = [];
-
     raw.forEach(m => {
-      const user = this.userService.getUserById(m.authorID);
+      const authorId = String(m.authorID || m.authorId);
+      const user = this.userService.getUserById(authorId);
       const date = new Date(m.timestamp);
       const dateLabel = this.getDateLabel(date);
 
       const normalizedMsg = {
         ...m,
-        displayName: user ? user.displayName : `User ${m.authorID}`,
+        displayName: user ? user.displayName : `User ${authorId}`,
         profilePicture: user?.profilePicture || 'assets/images/pfp_christmas.png',
-        // New conditional time display logic
         displayTime: this.formatMessageTime(date),
-        uniqueId: typeof m.messageID === 'object' ? m.messageID.source : String(m.messageID)
+        uniqueId: String(m.messageID || m.id)
       };
 
       const lastGroup = groups[groups.length - 1];
@@ -76,7 +112,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
         groups.push({ dateLabel, messages: [normalizedMsg] });
       }
     });
-
     return groups;
   }
 
@@ -85,20 +120,12 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-
     const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
-    if (msgDate.getTime() === today.getTime()) {
-      return timeStr;
-    } else if (msgDate.getTime() === yesterday.getTime()) {
-      return `Yesterday at ${timeStr}`;
-    } else {
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}/${month}/${year} ${timeStr}`;
-    }
+    if (msgDate.getTime() === today.getTime()) return timeStr;
+    if (msgDate.getTime() === yesterday.getTime()) return `Yesterday at ${timeStr}`;
+    return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()} ${timeStr}`;
   }
 
   private getDateLabel(date: Date): string {
@@ -106,7 +133,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-
     const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
     if (msgDate.getTime() === today.getTime()) return 'Today';
@@ -116,14 +142,10 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
     const suffix = (d: number) => {
       if (d > 3 && d < 21) return 'th';
       switch (d % 10) {
-        case 1: return "st";
-        case 2: return "nd";
-        case 3: return "rd";
-        default: return "th";
+        case 1: return "st"; case 2: return "nd"; case 3: return "rd"; default: return "th";
       }
     };
-    const month = date.toLocaleString('default', { month: 'long' });
-    return `${day}${suffix(day)} ${month} ${date.getFullYear()}`;
+    return `${day}${suffix(day)} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
   }
 
   ngAfterViewChecked() {
@@ -138,5 +160,9 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked {
     setTimeout(() => {
       this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
     }, 50);
+  }
+
+  ngOnDestroy() {
+    this.socketSub?.unsubscribe();
   }
 }

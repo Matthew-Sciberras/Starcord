@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChatService } from '@core/services/chat/chat.service';
 import { AuthStateService } from '@core/auth/auth-state.service';
-
 import { LucideAngularModule } from 'lucide-angular';
 import { SidebarUserComponent } from '@shared/components/sidebar-user/sidebar-user.component';
 import { FormsModule } from '@angular/forms';
-import {RouterOutlet} from '@angular/router';
+import { RouterOutlet } from '@angular/router';
+import { ChannelStateService } from '@core/services/channels/channel-state.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +17,7 @@ import {RouterOutlet} from '@angular/router';
     SidebarUserComponent,
     LucideAngularModule,
     FormsModule,
-    RouterOutlet
+    RouterOutlet,
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -25,7 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private chatService: ChatService,
-    private authState: AuthStateService
+    private authState: AuthStateService,
+    private channelState: ChannelStateService,
   ) {}
 
   ngOnInit() {
@@ -33,67 +34,49 @@ export class HomeComponent implements OnInit, OnDestroy {
       const user = this.authState.getUserProfile();
       console.log(`%c [Starcord] Initializing Chat for ${user?.username} `, 'background: #7289da; color: white');
 
-      // Subscribe to DMs
       this.dmSub = this.chatService.watchDMs().subscribe({
         next: (message) => {
           console.log('%c [New Message Received] ', 'color: #43b581; font-weight: bold');
-          console.table(message);
+          console.log('Payload:', message);
+
+          const activeChannelId = this.channelState.getActiveId();
+
+          // Using String() to ensure comparison works regardless of type (number vs string)
+          if (String(message.channelID) === String(activeChannelId)) {
+            this.chatService.announceNewMessage(message);
+          } else {
+            console.log(`Message for channel ${message.channelID} ignored (Active: ${activeChannelId})`);
+          }
         },
         error: (err) => console.error('DM Subscription Error:', err)
       });
 
-    } else {
-      console.error('[Starcord] WebSocket aborted: No active session found in AuthStateService.');
     }
   }
 
-  /**
-   * Adjusts the height of the textarea dynamically as the user types.
-   * Limits growth based on the CSS max-height
-   */
   adjustHeight(el: HTMLTextAreaElement) {
-    el.style.height = 'auto'; // Reset height to recalculate scrollHeight
+    el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
 
   handleSend(event: Event, el: HTMLTextAreaElement) {
-    // Prevent the default "Enter" behavior (new line) unless Shift is held
     event.preventDefault();
-
     const message = el.value.trim();
 
     if (message) {
-      console.log('Sending message:', message);
-
       const payload = {
         content: message,
-        channelId: "278835366006784", // To be updated
+        channelId: this.channelState.getActiveId()
       };
-
       this.chatService.sendMessage('/app/chat.private', payload);
-
-      // UI Reset
       el.value = '';
       el.style.height = 'auto';
     }
   }
 
-  /**
-   * Original helper method for manual console testing.
-   * ng.getComponent(document.querySelector("app-home")).testSend("hello", "278835366006784")
-   */
-  testSend(content: string, channelId: string) {
-    const payload = {
-      content: content,
-      channelId: channelId,
-    }
-    this.chatService.sendMessage('/app/chat.private', payload);
-  }
-
   ngOnDestroy() {
     if (this.dmSub) {
       this.dmSub.unsubscribe();
-      console.log('[Starcord] Cleaned up WebSocket subscriptions.');
     }
   }
 }
