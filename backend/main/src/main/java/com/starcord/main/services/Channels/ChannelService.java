@@ -11,6 +11,7 @@ import com.starcord.main.exceptions.TooManyMembersException;
 import com.starcord.main.exceptions.UnauthorizedException;
 import com.starcord.main.mappers.ChannelMapper;
 import com.starcord.main.models.Channel;
+import com.starcord.main.models.ChannelMember;
 import com.starcord.main.models.User;
 import com.starcord.main.repositories.ChannelRepository;
 import com.starcord.main.services.Auth.CustomUserDetailsService;
@@ -147,5 +148,10 @@ public class ChannelService {
     @Transactional
     public void setLastMessage(Channel channel, Instant timestamp) {
         channel.setLastMessageAt(timestamp);
+    }
+
+    public Channel getChannelWithMembers(Long id) {
+        return channelRepository.findByIdWithMembers(id)
+                .orElseThrow(() -> new NotFoundException("Channel not found"));
     }
 }

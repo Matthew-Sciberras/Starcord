@@ -27,6 +27,8 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
         StompHeaderAccessor accessor =
                 MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
+        System.out.printf("Attempting to connect to endpoint %s headers: %s and payload: %s%n", message.toString(), message.getHeaders(), message.getPayload());
+
         // Care only about the CONNECT frame (the initial handshake)
         if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
 
@@ -43,6 +45,8 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
 
                     // Attach user to session
                     accessor.setUser(principal);
+
+                    System.out.printf("User with user ID: %s has connected %n", userID);
                 } else {
                     throw new MessageDeliveryException("Invalid credentials, connection denied.");
                 }

@@ -26,9 +26,6 @@ export class ChatService {
     }
   }
 
-  /**
-   * NEW: Helper to push a received message into the local UI stream
-   */
   announceNewMessage(message: any) {
     this.newMessageSource.next(message);
   }

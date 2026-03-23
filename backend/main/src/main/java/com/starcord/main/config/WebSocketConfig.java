@@ -30,14 +30,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // Unified endpoint. Angular will connect to: ws://localhost:8080/ws
         registry.addEndpoint("/ws")
                 .setAllowedOriginPatterns("*");
-
-        // Separate registration for SockJS fallback if needed
-        registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
     }
 
     @Override
