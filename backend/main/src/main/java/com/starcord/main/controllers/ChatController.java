@@ -63,6 +63,7 @@ public class ChatController {
      * Handle Direct Messages
      * Client sends to: /app/chat.private
      */
+    // TODO: Add a way so that the sender can see the status code of the request rather than sending 2 messages
     @MessageMapping("/chat.private")
     public void processPrivateMessage(@Payload MessageRequest request,
                                       Principal principal) {
