@@ -69,4 +69,10 @@ export class ChatService {
       body: JSON.stringify(payload)
     });
   }
+
+  watchFeedback(): Observable<any> {
+    return this.rxStomp.watch('/user/queue/reply').pipe(
+      map(message => JSON.parse(message.body))
+    );
+  }
 }

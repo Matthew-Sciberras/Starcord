@@ -24,7 +24,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // Outbound prefix for sending to specific users
         config.setUserDestinationPrefix("/user");
 
-        // Inbound prefix for messages hitting your @MessageMapping controllers
+        // Inbound prefix for messages hitting @MessageMapping controllers
         config.setApplicationDestinationPrefixes("/app");
     }
 

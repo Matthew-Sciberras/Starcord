@@ -1,9 +1,11 @@
 package com.starcord.main.controllers;
 
+import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
 import com.starcord.main.enums.ChannelType;
 import com.starcord.main.exceptions.BadRequestException;
+import com.starcord.main.exceptions.NotFoundException;
 import com.starcord.main.mappers.MessageMapper;
 import com.starcord.main.models.Channel;
 import com.starcord.main.models.ChannelMember;
@@ -15,6 +17,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
@@ -65,14 +68,11 @@ public class ChatController {
      */
     // TODO: Add a way so that the sender can see the status code of the request rather than sending 2 messages
     @MessageMapping("/chat.private")
-    public void processPrivateMessage(@Payload MessageRequest request,
-                                      Principal principal) {
+    @SendToUser("/queue/reply")
+    public SuccessResponse processPrivateMessage(@Payload MessageRequest request,
+                                                 Principal principal) {
 
-        Message message = messageService.save(MessageMapper.convertToChatMessage(request, principal.getName()));
-
-        MessageResponse response = MessageMapper.convertToResponse(message);
-
-        Channel channel = channelService.getChannelWithMembers(response.getChannelID());
+        Channel channel = channelService.getChannelWithMembers(request.getChannelId());
         // Checks
         if(channel.getChannelType() != ChannelType.DM) {
             throw new BadRequestException("This endpoint should only be used for DM's, please use the appropriate endpoint for your channel type.");
@@ -81,14 +81,17 @@ public class ChatController {
         long recipientId = channel.getMembers().stream()
                 .map(ChannelMember::getUser)
                 .map(User::getID)
-                .filter(id -> !id.equals(response.getAuthorID()))
+                .filter(id -> !id.equals(Long.parseLong(principal.getName())))
                 .findFirst()
                 .orElse(-1L);
 
         if (recipientId == -1L) {
             System.out.println("CRITICAL: No recipient found in the channel members!");
+            throw new NotFoundException("No recipient found in the channel members!");
         }
 
+        Message message = messageService.save(MessageMapper.convertToChatMessage(request, principal.getName()));
+        MessageResponse response = MessageMapper.convertToResponse(message);
         // Send specifically to the recipient's private queue
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(recipientId),
@@ -97,5 +100,6 @@ public class ChatController {
         );
 
         System.out.printf("DM sent from %s to %d%n", principal.getName(), recipientId);
+        return new SuccessResponse("Message Sent to %d".formatted(recipientId), 200, response);
     }
 }
