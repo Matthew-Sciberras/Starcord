@@ -5,6 +5,7 @@ import { UserService } from '@core/services/user/user.service';
 import { switchMap, filter, map, tap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import {NotificationService} from '@core/services/notification/notification.service';
 
 interface MessageGroup {
   dateLabel: string;
@@ -24,42 +25,60 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
   currentChannelId: string | null = null;
   groupedMessages: MessageGroup[] = [];
   private shouldScroll = false;
-  private socketSub?: Subscription;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
     private chatService: ChatService,
     private userService: UserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService,
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      map(params => params.get('id')),
-      filter(id => !!id),
-      tap(id => {
-        this.groupedMessages = [];
-        this.currentChannelId = id;
-        this.cdr.detectChanges();
-      }),
-      switchMap(id => this.chatService.getMessagesByChannel(id!).pipe(
-        map((res: any) => this.processMessages(res.messages || []))
-      ))
-    ).subscribe({
-      next: (groups) => {
-        this.groupedMessages = groups;
-        this.shouldScroll = true;
-        this.cdr.detectChanges();
-      }
-    });
+    this.subscriptions.add(
+      this.route.paramMap.pipe(
+        map(params => params.get('id')),
+        filter(id => !!id),
+        tap(id => {
+          this.groupedMessages = [];
+          this.currentChannelId = id;
+          this.cdr.detectChanges();
+        }),
+        switchMap(id => this.chatService.getMessagesByChannel(id!).pipe(
+          map((res: any) => this.processMessages(res.messages || []))
+        ))
+      ).subscribe({
+        next: (groups) => {
+          this.groupedMessages = groups;
+          this.shouldScroll = true;
+          this.cdr.detectChanges();
+        }
+      })
+    );
 
-    this.socketSub = this.chatService.newMessage$.subscribe((msg) => {
-      this.appendLiveMessage(msg);
-    });
+    this.subscriptions.add(
+      this.chatService.newMessage$.subscribe((msg) => {
+        this.appendLiveMessage(msg);
+      })
+    );
+
+    this.subscriptions.add(
+      this.chatService.watchFeedback().subscribe({
+        next: (response) => {
+          console.table(response);
+          if (response.status === 200) {
+            this.appendLiveMessage(response.data);
+          } else {
+            this.notificationService.showError("An error occurred while trying to watch feedback");
+          }
+        },
+        error: (err) => console.error('Feedback error:', err)
+      })
+    );
   }
 
   private appendLiveMessage(m: any) {
-    // Large IDs coming from Java need to be handled carefully
     const authorId = String(m.authorID);
     const user = this.userService.getUserById(authorId);
 
@@ -163,6 +182,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
   }
 
   ngOnDestroy() {
-    this.socketSub?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
