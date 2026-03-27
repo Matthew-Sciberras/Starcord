@@ -5,7 +5,7 @@ import { UserService } from '@core/services/user/user.service';
 import { switchMap, filter, map, tap } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import {NotificationService} from '@core/services/notification/notification.service';
+import { NotificationService } from '@core/services/notification/notification.service';
 
 interface MessageGroup {
   dateLabel: string;
@@ -59,18 +59,20 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
 
     this.subscriptions.add(
       this.chatService.newMessage$.subscribe((msg) => {
-        this.appendLiveMessage(msg);
+        // If the message has a status already (like 'pending'), treat it as optimistic
+        this.appendLiveMessage(msg, !!msg.status);
       })
     );
 
     this.subscriptions.add(
       this.chatService.watchFeedback().subscribe({
         next: (response) => {
-          console.table(response);
           if (response.status === 200) {
-            this.appendLiveMessage(response.data);
+            // Update the pending message to 'sent'
+            this.updateMessageStatus(response.data.tempId, 'sent', response.data);
           } else {
             this.notificationService.showError("An error occurred while trying to watch feedback");
+            this.updateMessageStatus(response.data?.tempId, 'error');
           }
         },
         error: (err) => console.error('Feedback error:', err)
@@ -78,8 +80,24 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
     );
   }
 
-  private appendLiveMessage(m: any) {
-    const authorId = String(m.authorID);
+  private updateMessageStatus(tempId: string, status: 'sent' | 'error', finalData?: any) {
+    if (!tempId) return;
+
+    for (const group of this.groupedMessages) {
+      const msgIndex = group.messages.findIndex(m => m.uniqueId === tempId);
+      if (msgIndex !== -1) {
+        group.messages[msgIndex].status = status;
+        if (finalData?.messageID) {
+          group.messages[msgIndex].uniqueId = String(finalData.messageID);
+        }
+        break;
+      }
+    }
+    this.cdr.detectChanges();
+  }
+
+  private appendLiveMessage(m: any, isOptimistic = false) {
+    const authorId = String(m.authorID || m.authorId);
     const user = this.userService.getUserById(authorId);
 
     const date = new Date(m.timestamp);
@@ -90,7 +108,8 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
       displayName: user ? user.displayName : `User ${authorId}`,
       profilePicture: user?.profilePicture || 'assets/images/pfp_christmas.png',
       displayTime: this.formatMessageTime(date),
-      uniqueId: String(m.messageID)
+      uniqueId: String(m.messageID || m.tempId),
+      status: m.status || (isOptimistic ? 'pending' : 'sent')
     };
 
     const lastGroup = this.groupedMessages[this.groupedMessages.length - 1];
@@ -121,7 +140,8 @@ export class ChatMessagesComponent implements OnInit, AfterViewChecked, OnDestro
         displayName: user ? user.displayName : `User ${authorId}`,
         profilePicture: user?.profilePicture || 'assets/images/pfp_christmas.png',
         displayTime: this.formatMessageTime(date),
-        uniqueId: String(m.messageID || m.id)
+        uniqueId: String(m.messageID || m.id),
+        status: 'sent' // Loaded history is always 'sent'
       };
 
       const lastGroup = groups[groups.length - 1];

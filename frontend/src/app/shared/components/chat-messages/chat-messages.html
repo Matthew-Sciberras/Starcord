@@ -9,7 +9,7 @@
       <div class="divider-line"><span>{{ group.dateLabel }}</span></div>
 
       @for (msg of group.messages; track msg.uniqueId) {
-        <div class="message-entry">
+        <div class="message-entry" [ngClass]="msg.status">
           <img class="avatar" [src]="msg.profilePicture" alt="pfp">
           <div class="content-area">
             <div class="header">

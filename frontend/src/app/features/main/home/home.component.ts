@@ -32,25 +32,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.authState.isAuthenticated()) {
       const user = this.authState.getUserProfile();
-      console.log(`%c [Starcord] Initializing Chat for ${user?.username} `, 'background: #7289da; color: white');
 
       this.dmSub = this.chatService.watchDMs().subscribe({
         next: (message) => {
-          console.log('%c [New Message Received] ', 'color: #43b581; font-weight: bold');
-          console.log('Payload:', message);
-
           const activeChannelId = this.channelState.getActiveId();
-
-          // Using String() to ensure comparison works regardless of type (number vs string)
+          // Logic: If it's the current channel, show it
           if (String(message.channelID) === String(activeChannelId)) {
             this.chatService.announceNewMessage(message);
-          } else {
-            console.log(`Message for channel ${message.channelID} ignored (Active: ${activeChannelId})`);
           }
         },
         error: (err) => console.error('DM Subscription Error:', err)
       });
-
     }
   }
 
@@ -64,11 +56,31 @@ export class HomeComponent implements OnInit, OnDestroy {
     const message = el.value.trim();
 
     if (message) {
+      const activeId = this.channelState.getActiveId();
+      const user = this.authState.getUserProfile();
+      const tempId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`; // Using a UUID to prevent collisions
+
+      // 1. Create the optimistic UI message
+      const optimisticMsg = {
+        content: message,
+        authorID: user?.userID,
+        timestamp: new Date().toISOString(),
+        tempId: tempId,
+        status: 'pending'
+      };
+
+      // 2. Announce it locally immediately
+      this.chatService.announceNewMessage(optimisticMsg);
+
+      // 3. Send via WebSocket with the tempId
       const payload = {
         content: message,
-        channelId: this.channelState.getActiveId()
+        channelId: activeId,
+        tempId: tempId
       };
+
       this.chatService.sendMessage('/app/chat.private', payload);
+
       el.value = '';
       el.style.height = 'auto';
     }

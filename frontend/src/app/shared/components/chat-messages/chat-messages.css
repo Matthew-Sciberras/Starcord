@@ -63,10 +63,29 @@
   gap: 16px;
   width: 100%;
   box-sizing: border-box;
+  transition: opacity 0.3s ease;
 }
 
 .message-entry:hover {
   background-color: rgba(255, 255, 255, 0.015);
+}
+
+/* --- OPTIMISTIC STATES --- */
+
+/* Pending: Greayer and slightly transparent */
+.message-entry.pending {
+  opacity: 0.7;
+}
+.message-entry.pending .text {
+  color: #949ba4;
+}
+
+/* Error: A soft, non-aggressive red */
+.message-entry.error .text {
+  color: #fa777c;
+}
+.message-entry.error {
+  background-color: rgba(250, 119, 124, 0.03);
 }
 
 .avatar {
@@ -85,7 +104,6 @@
 .header {
   display: flex;
   align-items: baseline;
-  /* Reduced from 2px to 0 to close the gap */
   margin-bottom: 0px;
 }
 
@@ -108,8 +126,7 @@
   line-height: 1.45;
   white-space: pre-wrap;
   word-break: break-word;
-  /* Ensured no extra top margin is pushing the text away */
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 /* Custom Scrollbar */
