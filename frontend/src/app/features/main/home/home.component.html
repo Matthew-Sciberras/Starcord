@@ -15,20 +15,34 @@
       <app-sidebar-user></app-sidebar-user>
     </div>
 
-    <div class="divider"></div>
-
     <div class="sidebar-footer">
-      <div class="footer-item">
-        <lucide-icon name="users" [size]="18"></lucide-icon>
-        <span>Friends</span>
+      <div class="footer-top-actions">
+        <div class="footer-item">
+          <lucide-icon name="users" [size]="18"></lucide-icon>
+          <span>Friends</span>
+        </div>
       </div>
-      <div class="footer-item">
-        <lucide-icon name="settings" [size]="18"></lucide-icon>
-        <span>Settings</span>
-      </div>
-      <div class="footer-item logout">
-        <lucide-icon name="log-out" [size]="18"></lucide-icon>
-        <span>Log out</span>
+
+      <div class="user-control-bar" *ngIf="userProfile">
+        <div class="user-info-section">
+          <div class="avatar-wrapper">
+            <img [src]="userProfile.profilePicture" alt="avatar">
+            <div class="status-indicator"></div>
+          </div>
+          <div class="user-text">
+            <span class="username">{{ userProfile.username }}</span>
+            <span class="status-text">Online</span>
+          </div>
+        </div>
+
+        <div class="user-actions">
+          <button class="action-btn" title="Settings">
+            <lucide-icon name="settings" [size]="16"></lucide-icon>
+          </button>
+          <button class="action-btn logout" title="Log out">
+            <lucide-icon name="log-out" [size]="16"></lucide-icon>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -41,7 +55,7 @@
     <div class="message-sending">
       <div class="input-wrapper">
         <button class="add-button">
-          <lucide-icon name="plus" [size]="14"></lucide-icon>
+          <lucide-icon name="plus" [size]="16"></lucide-icon>
         </button>
 
         <textarea

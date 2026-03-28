@@ -7,6 +7,8 @@ import { SidebarUserComponent } from '@shared/components/sidebar-user/sidebar-us
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { ChannelStateService } from '@core/services/channels/channel-state.service';
+import { CommonModule } from '@angular/common';
+import { UserProfile } from '@shared/models/user-profile.model';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +16,7 @@ import { ChannelStateService } from '@core/services/channels/channel-state.servi
   styleUrls: ['./home.component.css'],
   standalone: true,
   imports: [
+    CommonModule,
     SidebarUserComponent,
     LucideAngularModule,
     FormsModule,
@@ -22,6 +25,7 @@ import { ChannelStateService } from '@core/services/channels/channel-state.servi
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private dmSub?: Subscription;
+  userProfile: UserProfile | null = null;
 
   constructor(
     private chatService: ChatService,
@@ -31,12 +35,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.authState.isAuthenticated()) {
-      const user = this.authState.getUserProfile();
+      this.userProfile = this.authState.getUserProfile();
 
       this.dmSub = this.chatService.watchDMs().subscribe({
         next: (message) => {
           const activeChannelId = this.channelState.getActiveId();
-          // Logic: If it's the current channel, show it
           if (String(message.channelID) === String(activeChannelId)) {
             this.chatService.announceNewMessage(message);
           }
@@ -58,9 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (message) {
       const activeId = this.channelState.getActiveId();
       const user = this.authState.getUserProfile();
-      const tempId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`; // Using a UUID to prevent collisions
+      const tempId = `temp-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
-      // 1. Create the optimistic UI message
       const optimisticMsg = {
         content: message,
         authorID: user?.userID,
@@ -69,10 +71,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         status: 'pending'
       };
 
-      // 2. Announce it locally immediately
       this.chatService.announceNewMessage(optimisticMsg);
 
-      // 3. Send via WebSocket with the tempId
       const payload = {
         content: message,
         channelId: activeId,
