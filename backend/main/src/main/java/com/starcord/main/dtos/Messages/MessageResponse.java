@@ -8,6 +8,7 @@ public class MessageResponse {
     private Instant timestamp;
     private long channelID;
     private long messageID;
+    private String tempId;
 
     public long getAuthorID() { return authorID; }
     public void setAuthorID(long authorID) { this.authorID = authorID; }
@@ -23,4 +24,7 @@ public class MessageResponse {
 
     public long getMessageID() { return messageID; }
     public void setMessageID(long messageID) { this.messageID = messageID; }
+
+    public String getTempId() { return tempId; }
+    public void setTempId(String tempId) { this.tempId = tempId; }
 }

@@ -66,7 +66,6 @@ public class ChatController {
      * Handle Direct Messages
      * Client sends to: /app/chat.private
      */
-    // TODO: Add a way so that the sender can see the status code of the request rather than sending 2 messages
     @MessageMapping("/chat.private")
     @SendToUser("/queue/reply")
     public SuccessResponse processPrivateMessage(@Payload MessageRequest request,
@@ -91,7 +90,7 @@ public class ChatController {
         }
 
         Message message = messageService.save(MessageMapper.convertToChatMessage(request, principal.getName()));
-        MessageResponse response = MessageMapper.convertToResponse(message);
+        SuccessResponse response = MessageMapper.convertToSuccessResponse(message, request.getTempId());
         // Send specifically to the recipient's private queue
         messagingTemplate.convertAndSendToUser(
                 String.valueOf(recipientId),
@@ -100,6 +99,6 @@ public class ChatController {
         );
 
         System.out.printf("DM sent from %s to %d%n", principal.getName(), recipientId);
-        return new SuccessResponse("Message Sent to %d".formatted(recipientId), 200, response);
+        return response;
     }
 }

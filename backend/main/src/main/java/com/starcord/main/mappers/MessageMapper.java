@@ -1,5 +1,6 @@
 package com.starcord.main.mappers;
 
+import com.starcord.main.dtos.General.SuccessResponse;
 import com.starcord.main.dtos.Messages.ChatMessage;
 import com.starcord.main.dtos.Messages.MessageRequest;
 import com.starcord.main.dtos.Messages.MessageResponse;
@@ -25,6 +26,16 @@ public class MessageMapper {
         response.setChannelID(message.getChannel().getId());
         response.setAuthorID(message.getAuthor().getID());
         return response;
+    }
+
+    public static SuccessResponse convertToSuccessResponse(Message message, String tempId) {
+        MessageResponse messageResponse = convertToResponse(message);
+        messageResponse.setTempId(tempId);
+        return new SuccessResponse(
+                "Message sent successfully to channel: %s".formatted(message.getChannel()),
+                200,
+                messageResponse
+        );
     }
 
     public static ChatMessage convertToChatMessage(MessageRequest request, String authorId) {
