@@ -1,11 +1,14 @@
 package com.starcord.main.dtos.Users;
 
+import com.starcord.main.enums.UserPresence;
+
 public class PublicUserResponse {
     private long userID;
     private String username;
     private String displayName;
     private String profilePicture;
     private long createdAt;
+    private UserPresence presence;
 
     public long getUserID() { return userID; }
     public void setUserID(long userID) { this.userID = userID; }
@@ -21,4 +24,7 @@ public class PublicUserResponse {
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    public UserPresence getPresence() { return presence; }
+    public void setPresence(UserPresence presence) { this.presence = presence; }
 }

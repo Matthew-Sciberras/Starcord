@@ -26,7 +26,7 @@ public class AuthController {
      * @param request SignupRequest
      * @return SignupResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/signup")
     public @ResponseBody SignupResponse signup(@RequestBody SignupRequest request){
         return signupService.createUser(request);
@@ -36,7 +36,7 @@ public class AuthController {
      * @param request LoginRequest
      * @return LoginResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/login")
     public @ResponseBody LoginPublicResponse login(@RequestBody LoginRequest request, HttpServletResponse response) {
         LoginResponse loginResponse = authService.login(request);
@@ -49,7 +49,7 @@ public class AuthController {
     /**
      * @return SuccessResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/logout")
     public @ResponseBody SuccessResponse logout() {
         return authService.logout();
@@ -58,7 +58,7 @@ public class AuthController {
     /**
      * @return SuccessResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/logoutAll")
     public @ResponseBody SuccessResponse logoutAll() {
         return authService.logoutAll();
@@ -68,7 +68,7 @@ public class AuthController {
      * @param refreshToken
      * @return AuthTokenResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/refresh")
     public @ResponseBody AuthTokenResponse refresh(@CookieValue("refreshToken") String refreshToken) {
         return authService.refreshToken(refreshToken);

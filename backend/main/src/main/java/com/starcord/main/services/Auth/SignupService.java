@@ -2,6 +2,7 @@ package com.starcord.main.services.Auth;
 
 import com.starcord.main.dtos.Auth.SignupRequest;
 import com.starcord.main.dtos.Auth.SignupResponse;
+import com.starcord.main.enums.UserPresence;
 import com.starcord.main.exceptions.EmailInUseException;
 import com.starcord.main.exceptions.UsernameInUseException;
 import com.starcord.main.mappers.UserMapper;
@@ -19,7 +20,6 @@ public class SignupService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final IdUtils idUtils;
-    private final UserMapper userMapper = new UserMapper();
 
     public SignupService(UserRepository userRepository, PasswordEncoder passwordEncoder, IdUtils idUtils) {
         this.userRepository = userRepository;
@@ -43,8 +43,9 @@ public class SignupService {
         user.setEmail(request.getEmail());
         user.setMfa(false);
         user.setActive(false);
+        user.setPresence(UserPresence.INVISIBLE);
 
         userRepository.save(user);
-        return userMapper.convertToDTO(user);
+        return UserMapper.convertToDTO(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.starcord.main.models;
 
+import com.starcord.main.enums.UserPresence;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -35,9 +36,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ChannelMember> channelMemberships = new HashSet<>();
 
-
     @Column
     private boolean active;
+
+    @Column
+    private UserPresence presence;
 
     public Long getID() { return id; }
     public void setID(Long id) { this.id = id; }
@@ -67,4 +70,7 @@ public class User {
 
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+
+    public UserPresence getPresence() { return presence; }
+    public void setPresence(UserPresence presence) { this.presence = presence; }
 }

@@ -23,20 +23,22 @@ public class ChannelController {
      * Takes in CreateChannelRequest
      * @return ChannelResponse
      */
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @PostMapping("/create")
     public @ResponseBody ChannelResponse create(@RequestBody CreateChannelRequest request) {
         return channelService.createChannel(request);
     }
 
-    @RateLimit(limit = 25, timeWindowSeconds = 60)
+    // Todo: Update these to have the better convention of /api/v1/channels/{channelId}/subService
+    // Todo: Remove redundant /get in all paths
+    @RateLimit(limit = 25)
     @PostMapping("/add/{channelID}")
     public SuccessResponse add(@PathVariable long channelID, @RequestBody AddMemberRequest request) {
         channelService.addMembers(channelID, request.getMembers());
         return new SuccessResponse("Successfully added user");
     }
 
-    @RateLimit(limit = 50, timeWindowSeconds = 60)
+    @RateLimit(limit = 50)
     @GetMapping("/get/{channelID}")
     public @ResponseBody ChannelResponse get(@PathVariable long channelID) {
         if(!channelService.isInChannel(channelID)) {
@@ -45,19 +47,19 @@ public class ChannelController {
         return channelService.getChannelData(channelID);
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @GetMapping("/getAll")
     public @ResponseBody ListOfChannels getAll() {
         return channelService.getAllConversations();
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @GetMapping("/getAll/chats")
     public @ResponseBody ListOfChannels getAllChats() {
         return channelService.getUserChats();
     }
 
-    @RateLimit(limit = 10, timeWindowSeconds = 60)
+    @RateLimit(limit = 10)
     @GetMapping("/getAll/channels")
     public @ResponseBody ListOfChannels getUserChannels() {
         return channelService.getUserChannels();

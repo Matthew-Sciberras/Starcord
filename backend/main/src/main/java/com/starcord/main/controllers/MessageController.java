@@ -20,7 +20,7 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @RateLimit(limit = 100, timeWindowSeconds = 60)
+    @RateLimit(limit = 100)
     @GetMapping("/{channelID}")
     public @ResponseBody ListOfMessages getMessages(@PathVariable long channelID) {
         return messageService.getAllMessages(channelID);
@@ -36,7 +36,7 @@ public class MessageController {
      * @param after
      * @return
      */
-    @RateLimit(limit = 100, timeWindowSeconds = 60)
+    @RateLimit(limit = 100)
     @GetMapping("/history/{channelID}")
     public @ResponseBody ListOfMessages getHistory(
             @PathVariable long channelID,

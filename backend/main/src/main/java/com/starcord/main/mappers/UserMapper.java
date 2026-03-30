@@ -22,6 +22,7 @@ public class UserMapper {
         response.setUsername(user.getUsername());
         response.setProfilePicture(user.getProfilePicture());
         response.setCreatedAt(user.getCreatedAt());
+        response.setPresence(user.getPresence());
         return response;
     }
 }
