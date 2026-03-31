@@ -3,6 +3,8 @@ package com.starcord.main.handlers;
 import com.starcord.main.dtos.General.ErrorResponse;
 import com.starcord.main.exceptions.*;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.boot.json.JsonParseException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -40,7 +42,7 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
-    // 400 Too Bad Request
+    // 400 Bad Request
     @ExceptionHandler(TooManyMembersException.class)
     public ResponseEntity<ErrorResponse> handleTooManyMembersException(TooManyMembersException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
