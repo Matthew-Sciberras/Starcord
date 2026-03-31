@@ -29,17 +29,15 @@ public class ChannelController {
         return channelService.createChannel(request);
     }
 
-    // Todo: Update these to have the better convention of /api/v1/channels/{channelId}/subService
-    // Todo: Remove redundant /get in all paths
     @RateLimit(limit = 25)
-    @PostMapping("/add/{channelID}")
-    public SuccessResponse add(@PathVariable long channelID, @RequestBody AddMemberRequest request) {
-        channelService.addMembers(channelID, request.getMembers());
+    @PostMapping("/add")
+    public SuccessResponse add(@RequestBody AddMemberRequest request) {
+        channelService.addMembers(request.getChannelId(), request.getMembers());
         return new SuccessResponse("Successfully added user");
     }
 
     @RateLimit(limit = 50)
-    @GetMapping("/get/{channelID}")
+    @GetMapping("/{channelID}")
     public @ResponseBody ChannelResponse get(@PathVariable long channelID) {
         if(!channelService.isInChannel(channelID)) {
             throw new UnauthorizedException("You do not have access to this channel");

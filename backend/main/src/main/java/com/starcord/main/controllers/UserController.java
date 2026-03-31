@@ -30,9 +30,8 @@ public class UserController {
         this.presenceService = presenceService;
     }
 
-    // Todo: Update this to better convention
     @RateLimit(limit = 50)
-    @GetMapping("/get/{userID}")
+    @GetMapping("/{userID}")
     public @ResponseBody PublicUserResponse get(@PathVariable long userID) {
         User user = userDetailsService.loadUserByID(userID);
         return UserMapper.convertToPublicDTO(user);
