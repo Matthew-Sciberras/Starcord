@@ -1,11 +1,11 @@
-
-
 .main {
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 8px;
   box-sizing: border-box;
+  /* Force this to match the sidebar's actual background */
+  background-color: transparent !important;
 }
 
 .contact-row {
@@ -13,56 +13,49 @@
   display: flex;
   align-items: center;
   padding: 8px 12px;
-  margin: 2px 0;
+  margin: 1px 0;
   cursor: pointer;
-  border-radius: 8px;
-  /* Added transitions for a smoother hover-to-active flow */
-  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
-  color: rgba(255, 255, 255, 0.6);
+  border-radius: 4px; /* Discord uses a smaller radius for rows */
+  color: #949ba4;
+  background-color: transparent;
+  transition: background-color 0.1s ease;
 }
 
-/* HOVER ANIMATION */
+/* Hover effect - only the row should light up */
 .contact-row:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.9);
+  background-color: #35373c !important;
+  color: #dbdee1;
 }
 
-/* Show a small 'nub' pill on hover */
-.contact-row:hover:not(.active) .active-indicator {
-  height: 8px;
-  opacity: 0.5;
-  left: 0;
-}
-
-/* ACTIVE STATE */
+/* Active state */
 .contact-row.active {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #404249 !important;
   color: #ffffff;
 }
 
-/* Indicator Pill Base */
+/* --- INDICATOR PILL --- */
 .active-indicator {
   position: absolute;
-  left: -4px; /* Hidden off-left slightly */
+  left: 0;
   width: 4px;
   height: 0;
   background-color: #ffffff;
   border-radius: 0 4px 4px 0;
+  transition: height 0.2s ease, opacity 0.2s ease;
   opacity: 0;
-  /* cubic-bezier makes the "pop" feel more like Discord/Slack */
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-  left 0.2s ease,
-  opacity 0.2s ease;
 }
 
-/* Full pill for active state */
-.contact-row.active .active-indicator {
-  height: 24px;
-  left: 0;
+.contact-row:hover .active-indicator {
+  height: 12px;
   opacity: 1;
 }
 
-/* Avatar & Status Dot */
+.contact-row.active .active-indicator {
+  height: 24px;
+  opacity: 1;
+}
+
+/* --- AVATAR & STATUS --- */
 .avatar-container {
   position: relative;
   margin-right: 12px;
@@ -70,49 +63,63 @@
 }
 
 .avatar {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  object-fit: cover;
+  display: block;
 }
+
+.status-mask {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  padding: 2px;
+  border-radius: 50%;
+  /* Use a variable or the exact sidebar color so it blends */
+  background-color: #2b2d31;
+  transition: background-color 0.1s ease;
+}
+
+/* The mask must change color to match the row's background */
+.contact-row:hover .status-mask { background-color: #35373c; }
+.contact-row.active .status-mask { background-color: #404249; }
 
 .status-dot {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  border: 2px solid #1e1f22;
-  background-color: #80848e;
-  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.status-dot.online {
-  background-color: #23a559;
-}
+.online { background-color: #23a55a; }
+.idle { background-color: #f0b232; }
+.dnd { background-color: #f23f43; }
+.offline, .invisible { background-color: #80848e; }
 
-.contact-row.active .status-dot.online {
-  box-shadow: 0 0 6px rgba(35, 165, 89, 0.5);
+.minus {
+  width: 6px;
+  height: 2px;
+  background-color: #35373c; /* Start with hover bg */
+  border-radius: 1px;
 }
+.contact-row:not(:hover):not(.active) .minus { background-color: #2b2d31; }
+.contact-row.active .minus { background-color: #404249; }
 
-/* Typography */
-.info {
-  flex: 1;
-  min-width: 0;
+.moon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #f0b232;
+  box-shadow: -2.5px -2px 0 0 #2b2d31;
+  margin-top: -2px;
+  margin-left: -2px;
 }
+.contact-row:hover .moon { box-shadow: -2.5px -2px 0 0 #35373c; }
+.contact-row.active .moon { box-shadow: -2.5px -2px 0 0 #404249; }
 
-.name {
-  font-size: 0.95rem;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.status-text {
-  font-size: 0.75rem;
-  opacity: 0.6;
-  text-transform: capitalize;
-}
-
+/* --- TEXT --- */
+.info { flex: 1; min-width: 0; }
+.name { font-size: 0.95rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status-text { font-size: 0.75rem; color: #949ba4; }

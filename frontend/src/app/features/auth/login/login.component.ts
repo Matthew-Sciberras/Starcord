@@ -98,7 +98,7 @@ export class LoginComponent {
         username: response.username,
         createdAt: response.createdAt,
         profilePicture: response.profilePicture,
-        status: "Online" // TODO: Update this to dynamically update based on the status
+        presence: "Online" // TODO: Update this to dynamically update based on the status
       };
 
       this.authStateService.setUserProfile(userProfile);

@@ -5,5 +5,5 @@ export interface UserProfile {
   username: string;
   createdAt: number;
   profilePicture: string;
-  status: string;
+  presence: string;
 }

@@ -14,14 +14,29 @@
           alt="avatar">
 
         @if (person.channelType === 'DM') {
-          <div class="status-dot" [class.online]="person.status === 'Active'"></div>
+          <div class="status-mask">
+            <div class="status-dot" [className]="'status-dot ' + (person.presence || 'offline').toLowerCase()">
+              @switch (person.presence) {
+                @case ('IDLE') {
+                  <div class="moon"></div>
+                }
+                @case ('DND') {
+                  <div class="minus"></div>
+                }
+              }
+            </div>
+          </div>
         }
       </div>
 
       <div class="info">
         <div class="name">{{ person.displayName }}</div>
         <div class="status-text">
-          {{ person.channelType === 'DM' ? person.status : person.members.length + ' members' }}
+          @if (person.channelType === 'DM') {
+            {{ person.presence === 'DND' ? 'DND' : (person.presence | titlecase) }}
+          } @else {
+            {{ person.members.length }} members
+          }
         </div>
       </div>
     </div>
