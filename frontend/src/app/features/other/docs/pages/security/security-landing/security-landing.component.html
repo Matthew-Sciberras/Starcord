@@ -1,0 +1,73 @@
+<div class="category-view">
+  <div class="docs-layout">
+    <div class="info-pane wide-mode">
+      <article class="docs-article">
+        <header class="article-header">
+          <div class="section-label"><span>Security Documentation</span></div>
+          <h1>Starcord Security Overview</h1>
+          <pre class="introduction-text">
+Hello! If you are reading this.. oh boy. You are in for quite the rollercoaster.
+
+Throughout this document, I will <strong>attempt</strong>, to the best of my ability, to explain to your peanut brain how Starcord makes, and uses it's security.
+
+"Right now, I'm the only one that doesn't understand quantum mechanics. In about 7 days, all of you wil be unable to understand quantum mechanics, then you can go back and spread your ignorance everywhere else." - Richard Fineman
+
+So friend, let's start the deep dive into the world of security shall we?
+
+Fun fact, this doc was made on April 1st, commonly known as April fools, to represent the fool I was to take so long to learn how to properly do security, just to probably have a vulnerability anyway.</pre>
+        </header>
+
+        <div class="endpoint-grid">
+
+          @defer (on viewport) {
+            <div class="animate-in">
+              <a [routerLink]="['/docs/security/auth-flow']" class="endpoint-card">
+                <div class="card-head">
+                  <span class="method-tag" data-method="RED">OAUTH</span>
+                  <code class="path-tiny">Last updated: 1st April, 2026</code>
+                </div>
+                <h3>The Auth Flow</h3>
+                <p>Our system is built on <strong>OAuth 2.0 principles</strong> using JWT rotation.</p>
+              </a>
+            </div>
+          } @placeholder { <div class="card-placeholder"></div> }
+
+          @defer (on viewport) {
+            <div class="animate-in">
+              <a [routerLink]="['/docs/security/ratelimit']" class="endpoint-card">
+                <div class="card-head">
+                  <span class="method-tag" data-method="INDIGO">Rate Limiting</span>
+                  <code class="path-tiny">Last updated: 2nd April, 2026</code>
+                </div>
+                <h3>Rate Limiting</h3>
+                <p>Custom annotated rate limiting built right into Starcord.</p>
+              </a>
+            </div>
+          } @placeholder { <div class="card-placeholder"></div> }
+
+        </div>
+
+        <div class="content-sections">
+          <section id="auth-flow" class="article-section">
+          </section>
+
+          <section id="security-levels" class="article-section">
+          </section>
+        </div>
+
+      </article>
+    </div>
+
+    <aside class="toc-sidebar">
+      <div class="toc-container">
+        <span class="toc-title">On this page</span>
+        <nav>
+          <ul>
+            <li><a [routerLink]="['./']" fragment="auth-flow">The Auth Flow</a></li>
+            <li><a [routerLink]="['./']" fragment="rate-limiting">Rate Limiting</a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+  </div>
+</div>

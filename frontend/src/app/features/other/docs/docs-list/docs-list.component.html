@@ -1,0 +1,34 @@
+<div class="category-view">
+  <div class="info-pane full-width">
+    <header>
+      <div class="section-label">API DOCUMENTATION</div>
+      <h1>Developer Hub</h1>
+      <p class="desc">
+        Explore the Starcord API Docs
+
+        Your complete guide to the Starcord API. Everything you need to handle authentication, power your messaging, and manage users is right here at your fingertips. Happy coding and try not to swear too much!
+      </p>
+    </header>
+
+    @for (cat of categories; track cat.name) {
+      <div class="category-section" style="margin-top: 80px;">
+        <div class="section-label">{{ cat.name }}</div>
+        <h2 style="color: #f8fafc; font-size: 28px; margin-bottom: 12px;">{{ cat.name }} Reference</h2>
+        <p class="desc" style="margin-bottom: 30px;">{{ cat.description }}</p>
+
+        <div class="endpoint-grid">
+          @for (end of cat.endpoints; track end.id) {
+            <a [routerLink]="['/docs', end.id]" class="endpoint-card">
+              <div class="card-head">
+                <span class="method-tag" [attr.data-method]="end.method">{{ end.method }}</span>
+                <code class="path-tiny">{{ end.path }}</code>
+              </div>
+              <h3>{{ end.title }}</h3>
+              <p>{{ end.description }}</p>
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

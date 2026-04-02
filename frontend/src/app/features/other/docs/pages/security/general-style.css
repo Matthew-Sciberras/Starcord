@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;600;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  background-color: #1a1f28;
+  color: #cbd5e1;
+  font-family: 'Inter', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --- LAYOUT FIX: NO MORE FLOATING --- */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 1fr 240px; /* Tightened sidebar even more */
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.info-pane.wide-mode {
+  padding: 60px 40px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* --- THE SECTION LABEL BAR --- */
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 32px; /* Fixed height */
+  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid #475569;
+  border-radius: 0 4px 4px 0;
+  box-sizing: border-box;
+  margin-top: 30px;
+  margin-bottom: 15px;
+
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.copy-section-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+
+  display: grid;
+  place-items: center;
+
+  height: 32px;
+  width: 32px;
+  line-height: 0;
+  outline: none;
+}
+
+.link-icon {
+  display: block;
+  color: #475569;
+  transition: color 0.2s ease;
+}
+
+.section-label:hover .link-icon {
+  color: #94a3b8;
+}
+
+.copy-section-link:hover .link-icon {
+  color: #ffffff !important;
+}
+
+.copy-section-link:active .link-icon {
+  color: #10b981 !important;
+  transition: none;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+  max-width: 900px;
+}
+
+.introduction-text {
+  font-family: 'JetBrains Mono', monospace;
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 900px;
+  color: #cbd5e1;
+}
+
+.toc-sidebar {
+  padding: 80px 20px 0 30px;
+}
+
+.toc-container {
+  position: sticky;
+  top: 60px;
+}
+
+.toc-title {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: #475569;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.toc-sidebar ul { list-style: none; padding: 0; }
+
+.toc-sidebar a {
+  display: block;
+  font-size: 13px;
+  color: #94a3b8;
+  text-decoration: none;
+  padding: 5px 0;
+  transition: 0.2s;
+}
+
+.toc-sidebar a:hover { color: #38bdf8; }
+
+/* --- ORIGINAL CODE BOX STYLE --- */
+.code-box {
+  background: #0d1117; /* Darker contrast */
+  border: 1px solid #21262d;
+  border-radius: 10px;
+  padding: 24px;
+  margin: 30px 0;
+}
+
+.response-title {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #475569;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 8px;
+}
+
+code {
+  font-family: 'JetBrains Mono', monospace;
+  color: #38bdf8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.animate-in {
+  animation: fadeInBlur 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes fadeInBlur {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.article-section {
+  contain: content;
+}
+
+.method-tag[data-method="BLUE"] { background: rgba(56, 189, 248, 0.1) !important; color: #38bdf8 !important; border: 1px solid rgba(56, 189, 248, 0.2) !important; }
+.method-tag[data-method="PURPLE"] { background: rgba(168, 85, 247, 0.1) !important; color: #a855f7 !important; border: 1px solid rgba(168, 85, 247, 0.2) !important; }
+.method-tag[data-method="RED"] { background: rgba(244, 63, 94, 0.1) !important; color: #f43f5e !important; border: 1px solid rgba(244, 63, 94, 0.2) !important; }
+.method-tag[data-method="PINK"] { background: rgba(236, 72, 153, 0.1) !important; color: #ec4899 !important; border: 1px solid rgba(236, 72, 153, 0.2) !important; }
+.method-tag[data-method="CYAN"] { background: rgba(6, 182, 212, 0.1) !important; color: #06b6d4 !important; border: 1px solid rgba(6, 182, 212, 0.2) !important; }
+.method-tag[data-method="INDIGO"] { background: rgba(99, 102, 241, 0.1) !important; color: #6366f1 !important; border: 1px solid rgba(99, 102, 241, 0.2) !important; }
+.method-tag[data-method="EMERALD"] { background: rgba(16, 185, 129, 0.1) !important; color: #10b981 !important; border: 1px solid rgba(16, 185, 129, 0.2) !important; }
+.method-tag[data-method="AMBER"] { background: rgba(245, 158, 11, 0.1) !important; color: #f59e0b !important; border: 1px solid rgba(245, 158, 11, 0.2) !important; }
+.method-tag[data-method="SLATE"] { background: rgba(148, 163, 184, 0.1) !important; color: #94a3b8 !important; border: 1px solid rgba(148, 163, 184, 0.2) !important; }
+
+.endpoint-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: stretch; /* Forces children (animate-in) to tallest height */
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.animate-in {
+  display: flex;
+  flex: 1;
+  min-width: 380px;
+  /* Remove 'forwards' if you want the hover 'lift' to work! */
+  animation: fadeInBlur 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.endpoint-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* This is the key: it tells the link to fill the 'animate-in' div */
+
+  /* Standardizing height */
+  min-height: 150px;
+
+  background: #222933;
+  border: 1px solid #2d3544;
+  padding: 24px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  color: #cbd5e1 !important;
+}
+
+.endpoint-card p {
+  flex-grow: 1; /* Pushes content so cards with less text still look full */
+  margin: 0;
+  line-height: 1.6;
+}

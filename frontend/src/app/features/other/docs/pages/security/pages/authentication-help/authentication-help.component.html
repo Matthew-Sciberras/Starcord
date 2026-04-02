@@ -1,0 +1,66 @@
+<div class="category-view">
+  <div class="docs-layout">
+
+    <div class="info-pane wide-mode">
+      <article class="docs-article">
+        <header class="article-header">
+          <div class="section-label"><span>API Documentation</span></div>
+          <h1>Authentication Guide</h1>
+          <pre class="introduction-text">
+Hello! If you are reading this.. oh boy. You are in for quite the rollercoaster.
+
+Throughout this document, I will <strong>attempt</strong>, to the best of my ability, to explain to your peanut brain how Starcord makes, and uses it's security.
+
+"Right now, I'm the only one that doesn't understand quantum mechanics. In about 7 days, all of you wil be unable to understand quantum mechanics, then you can go back and spread your ignorance everywhere else." - Richard Fineman
+
+So friend, let's start the deep dive into the world of security shall we?
+
+Fun fact, this doc was made on April 1st, commonly known as April fools, to represent the fool I was to take so long to learn how to properly do security, just to probably have a vulnerability anyway.</pre>
+        </header>
+
+        @defer (on viewport) {
+          <section id="auth-flow" class="article-section animate-in">
+            <div class="section-label">
+              <span>The Protocol</span>
+              <button class="copy-section-link" (click)="copyLink('auth-flow')">
+                <lucide-icon [img]="Link" class="link-icon"></lucide-icon>
+              </button>
+            </div>
+            <h2>The Auth Flow</h2>
+            <p>Our system is built on <strong>OAuth 2.0 principles</strong>.</p>
+          </section>
+        } @placeholder {
+          <div style="height: 200px;"></div>
+        }
+
+        @defer (on viewport) {
+          <section id="security-levels" class="article-section animate-in">
+            <div class="section-label">
+              <span>Security</span>
+              <button class="copy-section-link" (click)="copyLink('security-levels')">
+                <lucide-icon [img]="Link" class="link-icon"></lucide-icon>
+              </button>
+            </div>
+            <h2>Security Levels</h2>
+            <p>Different endpoints require different security clearances.</p>
+          </section>
+        } @placeholder {
+          <div style="height: 200px;"></div>
+        }
+      </article>
+    </div>
+
+    <aside class="toc-sidebar">
+      <div class="toc-container">
+        <span class="toc-title">On this page</span>
+        <nav>
+          <ul>
+            <li><a href="/docs/authentication#auth-flow">The Auth Flow</a></li>
+            <li><a href="/docs/authentication#security-levels">Security Levels</a></li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+  </div>
+</div>

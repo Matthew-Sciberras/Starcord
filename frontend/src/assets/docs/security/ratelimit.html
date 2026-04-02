@@ -1,0 +1,160 @@
+<div class="docs-layout">
+  <div class="info-pane wide-mode">
+    <article class="docs-article">
+
+      <header class="article-header">
+        <div class="section-label"><span>Ratelimit Documentation</span></div>
+        <h1>Ratelimit Guide</h1>
+        <pre class="introduction-text">
+Hello! Good to see you've made it to the next stage.
+
+Throughout this section, I'll be explaining rate limiting, a fairly simple topic in Starcord, but a powerful one indeed!
+
+We'll go over caching, annotations, IP logging, custom parameters, and more!
+
+Are you ready friend? If so, let's get started shall we</pre>
+      </header>
+
+      <section id="ratelimts-explained" class="article-section animate-in">
+        <div class="section-label">
+          <span>What is a rate limit</span>
+          <button class="copy-section-link" data-fragment="ratelimts-explained">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>Rate-limits Explained</h2>
+        <p>You may be wondering, what is a <code>rate limit</code>? Well I'm glad you asked</p>
+        <p>Put simply, ratelimits are a way to limit the number of requests someone can do to your server, in a given amount of time</p>
+        <p>This can be done, not only for normal users, when little Timmy decides that a loading animation means spam the login button 20 more times, but it also is there for bad actors, such as hackers, who try to <code>DDOS</code> your server, or other methods.</p>
+        <p>"woah Matthew, whats a DDOS?", well, DDOS, the abbreviation for a Distributed Denial of Service Attack, is when a hacker uses multiple devices to send hundreds of thousands of requests, sometimes even millions, all to your tiny server.</p>
+        <p>Let's take an example where they are attempting to target the <code>/login</code> endpoint. Each login request goes through a controller, service, repository, makes multiple calls to a database, goes through many helper functions, and more. All this is very costly for the server, so, it starts to back up requests for your normal users, which makes the website slow.</p>
+        <p>If the traffic is too much to handle, the server may even crash, causing your entire application to go temporarily unavailable.</p>
+        <p>Obviously, this is a big no no in the world of cybersecurity, so we add ratelimits. Rate limiting is very cheap, in terms of server resources, usually only passing through a controller and a cache, nothing major. If the cache realizes that the user has exceeded the maximum number of requests for that endpoint, the request instantly gets cut off, no need for any expensive database calls.</p>
+      </section>
+
+      <section id="what-is-caching" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>Caching</span>
+          <button class="copy-section-link" data-fragment="what-is-caching">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>What is caching?</h2>
+        <p>In the previous section, I mentioned a little thing called <code>caching</code>. Already know what that is? Feel free to skip to the next question</p>
+        <p>Oh you're still reading? Great. Let me explain to you how caching works.</p>
+        <p>All data, be it text, numbers, booleans, etc, are all stored somewhere. Some are stored in <strong>long-term</strong> storage, which, if the server restarts, will not loose it's data, this is usually done through a database (or if you're lazy a text/json file)</p>
+        <p>On the other hand, we have <strong>short-term</strong> memory (caching). This data is lost when the server is restarted, so it's good for storing things that need to be kept for a short amount of time.</p>
+        <p>So, you may ask, why don't we just use long term for everything? One problem, it's incredibly slow and costly (relative). It's still only a few hundred ms, but caching is so fast, it's usually measured in nanoseconds (1 millisecond is 1000000 nanoseconds).</p>
+        <p>Since it's incredibly fast, it adds little to no latency to our API's, which is why it's perfect for rate limiting. It allows very fast inputting and fetching of data, which means all requests won't feel bulky, and it also is fine if that data is lost after a restart.</p>
+        <p>So, to recap, <code>caching</code> go brrrrr like Lightning Mcqueen, but has the memory of a goldfish. <code>Databases</code> are slow like Lance Stroll, but at least they remember things. </p>
+      </section>
+
+      <section id="redis" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>Redis Caching</span>
+          <button class="copy-section-link" data-fragment="redis">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>Redis</h2>
+        <p>Okay good, now you know what caching is. Now, question is, how do we cache?</p>
+        <p>Caching comes in many different forms, your computer RAM is a form of a cache, your CPU has a cache, etc. But, in Starcord, I opted for a more structured cache.</p>
+        <p>I decided to use the popular caching "database" called <code>Redis</code></p>
+        <p><code>Redis</code>, has all the advantages of the lightning fast cache, while also giving you a structured way to store that data, rather than storing it in a variable in memory. Redis allows you to have tables, which structures the data much better, and makes it easier to access</p>
+        <p>Put simply, Redis takes caching, and makes it easier to deal with. Rather than playing around with memory (poor C developers), or else using plain variables, it's a much better way to store your caching data, and also faster.</p>
+      </section>
+
+      <section id="ip-logging" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>IP Logging</span>
+          <button class="copy-section-link" data-fragment="ip-logging">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>IP Logging in Starcord</h2>
+        <p>As you should know, every web page you access has the ability to access your IP. This is why it's important to be careful which websites you visit kids!</p>
+        <p>Now me personally, I'm not interested in seeing where Little Timmy lives. But, I do want to make sure that Little Timmy doesn't spam my endpoints and attempt to break the server</p>
+        <p>One way to do this, would be to store the amount of requests per account. This creates an issue though. Web pages are slow because you need to render data, consoles, which hackers opt for, are not as slow. You can also run multiple requests <code>concurrently</code> (together) to make even more requests, and you can do so with multiple accounts, rendering this method useless.</p>
+        <p>The second option, more widely used, is to ratelimit based on the users IP. Since the data is not stored, rather just cached, you do not have to worry about your IP getting leaked to the internet. This option is more widely used, because even if Little Timmy has 5 computers at home, they're all registered under the same IP, rendering his so called DDOS useless.</p>
+        <p>You may tell me "can he not just use a VPN?", answer is, yes. VPN's can technically bypass this limitation, but seeing as Starcord is open source, and not designed for mass public use, I cannot be asked to go into more restrictive, and annoying measures, which can also sometimes raise false positives, giving an annoying user experience (cough cough Discord logins)</p>
+
+      </section>
+
+      <section id="ratelimiting-backend" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>Ratelimits in the backend</span>
+          <button class="copy-section-link" data-fragment="ip-logging">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>In the back end (pause)</h2>
+        <p>In the Spring backend, the rate limit's themselves are stored in the redis cache like we had said, in the form <code>ratelimit:clientIp:methodName</code>. This allows the ratelimit to be checked per ip, per name</p>
+        <p>Different methods of course have different ratelimits. A presence GET request should have more leniency than a login request, as you may need to get the presence of many users, but should only realistically be logging in at most 3 times in a minute</p>
+        <p>Of course, I didn't set the hard limit to be at the "realistically" point, we gave a bit of breathing room, just in case you logged in the wrong account 5 times for example</p>
+        <p>Of course, the source code is all public, so you can go check the ratelimits for each API yourself, but they are also listed in each endpoint's docs, on the left hand side of your screen (i feel like a flight attendant showing you the emergency exits!)</p>
+        <p>To dive a bit more into the technical side, the actual ratelimits are handled by an annotation, and a rate limit service</p>
+        <p>The annotation, written as <code>&#64;Ratelimit(limit=x)</code>, is annotated on top of every controller method. There is also an optional parameter for <code>timeWindowSeconds</code> which allows you to change the amount of time before the ratelimit resets, but the default for this is 60s</p>
+        <p>That limit is then passed onto the <code>Ratelimit aspect class</code>, who is like the bodyguard, checking if your request is allowed before it even reaches the service level. The Ratelimit aspect class calls one service, the <code>RateLimitService</code> (very original I know) to actually check if the user has exceeded the ratelimit amount, and if so, reject the request</p>
+
+      </section>
+
+      <section id="conclusion" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>The end</span>
+          <button class="copy-section-link" data-fragment="ip-logging">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>Ah I haven't bored you to sleep yet? Delightful.</p>
+        <p>In conclusion, or if you were too lazy to read the rest and just jumped here, <code>Ratelimits</code> are a very helpful way to both stop... mentally challenged users, as well as bad actors from attempting to stop, or slow your servers</p>
+        <p>We use <code>caching</code> since it's very fast (Max Verstappen), and also very lightweight. The data is also <code>lost</code> when the server is restarted, making it perfect to store IP's short term</p>
+        <p>Your IP won't get leaked, it's not even stored in a database! Don't worry</p>
+        <p>We use <code>Annotations</code> and <code>Services</code> to actually handle the ratelimits on the backend</p>
+        <p>That's it folks, thanks for reading, and I'll see you later! BYEEE!</p>
+
+      </section>
+    </article>
+  </div>
+
+  <aside class="toc-sidebar">
+    <div class="toc-container">
+      <span class="toc-title">On this page</span>
+      <nav>
+        <ul>
+          <li><a href="docs/security/ratelimit">Ratelimit Guide</a></li>
+          <li><a href="docs/security/ratelimit#ratelimts-explained">Ratelimits Explained</a></li>
+          <li><a href="docs/security/ratelimit#what-is-caching">What is caching</a></li>
+          <li><a href="docs/security/ratelimit#redis">Redis Explained</a></li>
+          <li><a href="docs/security/ratelimit#ip-logging">IP Logging</a></li>
+          <li><a href="docs/security/ratelimit#ratelimiting-backend">Ratelimits in the backend</a></li>
+          <li><a href="docs/security/ratelimit#conclusion">Conclusion</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+</div>

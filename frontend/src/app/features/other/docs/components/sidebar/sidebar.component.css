@@ -1,0 +1,213 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1f28;
+  font-family: 'Inter', sans-serif;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.sidebar-wrapper {
+  padding: 16px 0;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: none;
+}
+
+.sidebar-wrapper:hover {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
+}
+
+.sidebar-wrapper::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+}
+
+.sidebar-wrapper:hover::-webkit-scrollbar-thumb {
+  background-color: #334155;
+
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+/* SEARCH AREA */
+.sidebar-header {
+  padding: 0 16px 16px;
+}
+
+.jump-to {
+  background: #2d3544;
+  color: #94a3b8;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #3d4658;
+  cursor: text;
+}
+
+.jump-to-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* NAV ITEMS & LINKS */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 44px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #94a3b8;
+  transition: all 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+.icon-margin {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.icon-muted {
+  color: #64748b;
+}
+
+.divider {
+  font-size: 10px;
+  font-weight: 800;
+  color: #475569;
+  padding: 24px 16px 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* --- REFACTORED CATEGORY HEADERS --- */
+.category-group {
+  margin-bottom: 2px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 8px 0 16px;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 6px;
+  margin: 0 4px;
+}
+
+
+/* The clickable arrow area */
+.toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 4px;
+  color: #64748b;
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+/* The clickable route name */
+.category-link {
+  flex-grow: 1;
+  text-decoration: none;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  transition: color 0.2s;
+}
+
+.category-link:hover {
+  color: #fff;
+}
+
+.arrow-icon {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.is-open .arrow-icon {
+  transform: rotate(90deg);
+}
+
+/* ENDPOINTS */
+.endpoint-list {
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.nav-item.endpoint {
+  padding-left: 48px; /* Aligns text with category name above */
+  height: 38px;
+  justify-content: space-between;
+}
+
+
+.category-header.active-category {
+  background: rgba(56, 189, 248, 0.1) !important;
+}
+
+.active-category .category-link,
+.active-category .arrow-icon {
+  color: #38bdf8 !important;
+}
+
+.category-header:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.category-header.active-category:hover {
+  background: rgba(56, 189, 248, 0.15) !important;
+}
+
+.active-link[data-method="GET"]    { border-left-color: #10b981; }
+.active-link[data-method="POST"]   { border-left-color: #ffb400; }
+.active-link[data-method="DELETE"] { border-left-color: #f43f5e; }
+.active-link[data-method="PATCH"]  { border-left-color: #38bdf8; }
+.active-link[data-method="WS"]     { border-left-color: #a855f7; }
+
+/* METHOD BADGES */
+.method-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+[data-method="GET"] .method-badge    { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+[data-method="POST"] .method-badge   { color: #ffb400; background: rgba(255, 180, 0, 0.1); }
+[data-method="DELETE"] .method-badge { color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+[data-method="PATCH"] .method-badge  { color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+[data-method="WS"] .method-badge     { color: #a855f7; background: rgba(168, 85, 247, 0.1); }

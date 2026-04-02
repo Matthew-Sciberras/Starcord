@@ -1,0 +1,140 @@
+@if (endpoint) {
+  <div class="full-screen-detail">
+    <div class="info-pane">
+      <div class="title-row">
+        <h1>{{ endpoint.title }}</h1>
+        <div class="metadata-pills">
+          <div class="pill auth-pill" [class.is-unauthenticated]="endpoint.authenticated === false">
+            <span class="status-dot"></span>
+            {{ endpoint.authenticated === false ? 'Public' : 'Authenticated' }}
+          </div>
+          <div class="pill rate-pill">
+            <span class="pill-label">Rate Limit</span>
+            <span class="pill-value">{{ endpoint.rateLimit }} requests per minute</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="url-bar">
+        <span class="method-tag" [attr.data-method]="endpoint.method">{{ endpoint.method }}</span>
+        <code class="path">{{ endpoint.path }}</code>
+      </div>
+
+      <p class="desc">{{ endpoint.description }}</p>
+
+      @if (endpoint.parameters && endpoint.parameters.length > 0) {
+        <div class="section-label">PARAMETERS</div>
+        <div class="params-container">
+          @for (param of endpoint.parameters; track param.name) {
+            <div class="param-row">
+              <div class="param-line">
+                <span class="name">{{ param.name }}</span>
+                <span class="type">{{ param.type }}</span>
+                @if (param.required) { <span class="req">REQUIRED</span> }
+              </div>
+              <p class="p-desc">{{ param.description }}</p>
+
+              @if (param.exampleValue !== undefined) {
+                <div class="ex">Example: <code>{{ param.exampleValue }}</code></div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      @if (endpoint.headers && endpoint.headers.length > 0) {
+        <div class="section-label">HEADERS</div>
+        <div class="params-container">
+          @for (header of endpoint.headers; track header.name) {
+            <div class="param-row">
+              <div class="param-line">
+                <span class="name">{{ header.name }}</span>
+                <span class="type">{{ header.type }}</span>
+                @if (header.required) { <span class="req">REQUIRED</span> }
+              </div>
+              <p class="p-desc">{{ header.description }}</p>
+
+              @if (header.exampleValue) {
+                <div class="ex">Example: <code>{{ header.exampleValue }}</code></div>
+              }
+            </div>
+          }
+        </div>
+      }
+
+      @if (endpoint.bodyParams && endpoint.bodyParams.length > 0) {
+        <div class="section-label">BODY PARAMETERS</div>
+        <div class="params-container">
+          @for (param of endpoint.bodyParams; track param.name) {
+            <div class="param-row">
+              <div class="param-line">
+                <span class="name">{{ param.name }}</span>
+                <span class="type">{{ param.type }}</span>
+                @if (param.required) { <span class="req">REQUIRED</span> }
+              </div>
+              <p class="p-desc">{{ param.description }}</p>
+
+              @if (param.exampleValue) {
+                <div class="ex">Example: <code>{{ param.exampleValue }}</code></div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="response-pane">
+      <div class="section-label">RESPONSES</div>
+      @for (res of endpoint.responses; track res.title) {
+        <div class="res-card">
+          <div class="res-header">
+            <span class="response-title">{{ res.title }}</span>
+            <div class="status-wrapper">
+              <span class="status-description">{{ res.description }}</span>
+              <span class="status-code" [ngClass]="{
+                'code-success': res.code < 300,
+                'code-error': res.code >= 400 && res.code < 500,
+                'code-server': res.code >= 500
+              }">{{ res.code }}</span>
+            </div>
+          </div>
+          <div class="code-box">
+            <pre><code>{{ res.exampleJson }}</code></pre>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}
+
+@else if (category) {
+  <div class="category-view">
+    <div class="info-pane full-width">
+      <header>
+        <div class="section-label">API REFERENCE</div>
+        <h1>{{ category.name }}</h1>
+        <p class="desc">{{ category.description }}</p>
+
+        <div class="base-url-box">
+          <span class="response-title">BASE URL</span>
+          <div class="code-box">
+            <code>{{ category.basePath }}</code>
+          </div>
+        </div>
+      </header>
+      <div class="section-label">ENDPOINTS</div>
+      <div class="endpoint-grid">
+        @for (end of category.endpoints; track end.id) {
+          <a [routerLink]="['/docs', end.id]" class="endpoint-card">
+            <div class="card-head">
+              <span class="method-tag" [attr.data-method]="end.method">{{ end.method }}</span>
+              <code class="path-tiny">{{ end.path }}</code>
+            </div>
+            <h3>{{ end.title }}</h3>
+            <p>{{ end.description }}</p>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+}

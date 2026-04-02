@@ -1,0 +1,63 @@
+<div class="docs-layout">
+  <div class="info-pane wide-mode">
+    <article class="docs-article">
+
+      <header class="article-header">
+        <div class="section-label"><span>API Documentation</span></div>
+        <h1>Authentication Guide</h1>
+        <pre class="introduction-text">
+Hello! If you are reading this.. oh boy. You are in for quite the rollercoaster.
+
+Throughout this document, I will <strong>attempt</strong>, to the best of my ability, to explain to your peanut brain how Starcord makes, and uses its security.</pre>
+      </header>
+
+      <section id="auth-flow" class="article-section animate-in">
+        <div class="section-label">
+          <span>The Protocol</span>
+          <button class="copy-section-link" data-fragment="auth-flow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>The Auth Flow</h2>
+        <p>Our system is built on <strong>OAuth 2.0 principles</strong>. Every request must include a Bearer token in the authorization header.</p>
+
+        <div class="code-box">
+          <span class="response-title">Example Header</span>
+          <code>Authorization: Bearer starcord_token_xyz123</code>
+        </div>
+      </section>
+
+      <section id="security-levels" class="article-section animate-in" style="margin-top: 100px;">
+        <div class="section-label">
+          <span>Clearance</span>
+          <button class="copy-section-link" data-fragment="security-levels">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+
+        <h2>Security Levels</h2>
+        <p>Endpoints are protected by roles. If your "peanut brain" tries to access an admin route without a <code>ROLE_ADMIN</code> grant, you'll get a 403.</p>
+      </section>
+
+    </article>
+  </div>
+
+  <aside class="toc-sidebar">
+    <div class="toc-container">
+      <span class="toc-title">On this page</span>
+      <nav>
+        <ul>
+          <li><a href="docs/security/auth-flow#auth-flow">The Auth Flow</a></li>
+          <li><a href="docs/security/auth-flow#security-levels">Security Levels</a></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+</div>

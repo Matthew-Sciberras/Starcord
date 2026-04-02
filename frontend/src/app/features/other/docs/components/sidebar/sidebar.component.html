@@ -1,0 +1,53 @@
+<nav class="sidebar-wrapper">
+  <div class="sidebar-header">
+    <div class="jump-to">
+      <lucide-icon [img]="Search" [size]="14" class="icon-muted"></lucide-icon>
+      <span class="jump-to-text">JUMP TO</span>
+    </div>
+  </div>
+
+  <div class="static-links">
+    <a class="nav-item" routerLink="/docs/getting-started" routerLinkActive="active-static">
+      <lucide-icon [img]="BookOpen" [size]="16" class="icon-margin"></lucide-icon>
+      <span class="nav-text">Getting Started</span>
+    </a>
+    <a class="nav-item" routerLink="/docs/security" routerLinkActive="active-static">
+      <lucide-icon [img]="Lock" [size]="16" class="icon-margin"></lucide-icon>
+      <span class="nav-text">Security</span>
+    </a>
+  </div>
+
+  <div class="divider">API REFERENCE</div>
+
+  @for (cat of menuData; track cat.name) {
+    <div class="category-group" [class.is-open]="expandedCategories[cat.name]">
+
+      <div class="category-header" [class.active-category]="rla.isActive">
+        <div class="toggle-button" (click)="toggleCategory(cat.name)" title="Toggle Category">
+          <lucide-icon [img]="ChevronRight" [size]="14" class="arrow-icon"></lucide-icon>
+        </div>
+
+        <a [routerLink]="['/docs/category', cat.name.toLowerCase()]"
+           routerLinkActive="active-category"
+           #rla="routerLinkActive"
+           class="category-link">
+          <span class="category-name">{{ cat.name }}</span>
+        </a>
+      </div>
+
+      @if (expandedCategories[cat.name]) {
+        <div class="endpoint-list">
+          @for (end of cat.endpoints; track end.id) {
+            <a [routerLink]="['/docs', end.id]"
+               routerLinkActive="active-link"
+               class="nav-item endpoint"
+               [attr.data-method]="end.method">
+              <span class="endpoint-name">{{ end.title }}</span>
+              <span class="method-badge">{{ end.method }}</span>
+            </a>
+          }
+        </div>
+      }
+    </div>
+  }
+</nav>
