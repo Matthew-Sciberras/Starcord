@@ -108,7 +108,7 @@ public class AuthService {
         return authTokenResponse;
     }
 
-    //Todo: Update to allow to log out of multiple sessions with the same device ID if there are
+    // Todo: Update to allow to log out of multiple sessions with the same device ID if there are
     public SuccessResponse logout() {
         String deviceID = RequestUtils.getHeader("X-Device-Id");
         User user = authUtils.getCurrentUser();

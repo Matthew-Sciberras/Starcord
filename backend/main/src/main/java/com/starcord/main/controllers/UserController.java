@@ -46,6 +46,7 @@ public class UserController {
                 .collect(Collectors.toSet());
     }
 
+    //Todo: Do Tousend's idea where invisible actually returns offline
     @RateLimit(limit=30)
     @GetMapping("/{userId}/presence")
     public @ResponseBody PresenceResponse getUserPresence(@PathVariable String userId) {
