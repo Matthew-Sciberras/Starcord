@@ -12,12 +12,30 @@ export interface ApiEndpoint {
   method: HttpMethod;
   description: string;
   bodyParams?: ApiParam[];
+  headers?: ApiHeader[];
+  parameters?: ApiParamater[];
   responses: ApiResponse[];
   authenticated?: boolean;
   rateLimit: number;
 }
 
 export interface ApiParam {
+  name: string;
+  type: 'string' | 'number' | 'boolean' | 'uuid' | 'object' | 'array';
+  description: string;
+  exampleValue?: string | number | boolean;
+  required?: boolean;
+}
+
+export interface ApiHeader {
+  name: string;
+  type: 'string' | 'number' | 'boolean' | 'uuid' | 'object' | 'array';
+  description: string;
+  exampleValue?: string | number | boolean;
+  required?: boolean;
+}
+
+export interface ApiParamater {
   name: string;
   type: 'string' | 'number' | 'boolean' | 'uuid' | 'object' | 'array';
   description: string;
@@ -35,4 +53,4 @@ export interface ApiResponse {
   exampleJson: string;
 }
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'WS';
