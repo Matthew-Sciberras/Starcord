@@ -17,7 +17,9 @@
       </schema-mapping>
     </data-source>
     <data-source name="starcord-redis" uuid="ed823859-92dd-4c57-b747-4dc3222d141c">
-      <database-info product="Redis Standalone" version="8.4.2" jdbc-version="4.2" driver-name="Redis JDBC Driver" driver-version="1.5" dbms="REDIS" exact-version="8.4.2" exact-driver-version="1.5" />
+      <database-info product="Redis Standalone" version="8.4.2" jdbc-version="4.2" driver-name="Redis JDBC Driver" driver-version="1.5" dbms="REDIS" exact-version="8.4.2" exact-driver-version="1.5">
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <schema-mapping>

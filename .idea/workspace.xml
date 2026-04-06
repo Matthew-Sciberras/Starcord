@@ -2,49 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/components/sidebar/sidebar.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/components/sidebar/sidebar.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/components/sidebar/sidebar.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/components/sidebar/sidebar.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-detail/docs-detail.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-detail/docs-detail.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-detail/docs-detail.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-detail/docs-detail.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-layout/docs-layout.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-layout/docs-layout.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-layout/docs-layout.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-list/docs-list.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-list/docs-list.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-list/docs-list.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/docs-list/docs-list.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/getting-started/getting-started.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/getting-started/getting-started.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/getting-started/getting-started.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/getting-started/getting-started.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/general-style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/helper-methods.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/pages/authentication-help/authentication-help.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/pages/authentication-help/authentication-help.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/pages/authentication-help/authentication-help.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/pages/authentication-help/authentication-help.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-content/pages-styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-content/security-content.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-content/security-content.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-overview.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-overview.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-overview.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-overview.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/data/default-responses.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/docs/security/auth-flow.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/assets/docs/security/ratelimit.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/services/Auth/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main/src/main/java/com/starcord/main/services/Auth/AuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/shared/models/api-docs.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/shared/models/api-docs.model.ts" afterDir="false" />
