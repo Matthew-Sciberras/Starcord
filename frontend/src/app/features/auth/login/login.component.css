@@ -23,7 +23,7 @@
   width: calc(50% - 5px);
   float: left;
   background-color: var(--primary-background-color);
-  border-right-width: 0px;
+  border-right-width: 0;
   border-right-color: var(--accent-color-gray);
   border-right-style: solid;
 
