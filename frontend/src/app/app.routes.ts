@@ -28,7 +28,8 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'channel/:id', component: ChatMessagesComponent }
-    ]
+    ],
+    title: "Starcord | Home"
   },
   {
     path: 'docs',
@@ -41,21 +42,17 @@ export const routes: Routes = [
       },
       { path: 'getting-started', component: GettingStartedComponent },
 
-      // Security Module
       {
         path: 'security',
-        // No need for a separate Overview component unless it has its own unique layout
         children: [
-          { path: '', component: SecurityLandingComponent }, // /docs/security
-          { path: ':id', component: SecurityContentComponent } // /docs/security/auth-flow
+          { path: '', component: SecurityLandingComponent },
+          { path: ':id', component: SecurityContentComponent }
         ]
       },
-
-      // Static categories should always be ABOVE dynamic :ids
       { path: 'category/:catName', component: DocsDetailComponent },
 
-      // Dynamic endpoint detail (The Catch-all for everything else)
       { path: ':endpointId', component: DocsDetailComponent },
-    ]
+    ],
+    title: "Starcord | Docs"
   }
 ];

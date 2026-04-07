@@ -185,14 +185,42 @@
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
-  padding: 0 16px;
+  padding: 8px 16px;
   min-height: 44px;
   box-sizing: border-box;
 }
 
+.input-wrapper textarea {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  line-height: 24px;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  display: block;
+  box-sizing: border-box;
+}
+
+.input-wrapper textarea::placeholder {
+  line-height: 24px;
+}
+
+.add-button, .send-button {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
 .add-button {
   background: none;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -223,26 +251,6 @@
   transform: rotate(90deg);
 }
 
-.input-wrapper textarea {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: #fff;
-  font-size: 14px;
-  font-family: inherit;
-  resize: none;
-  line-height: 24px;
-  padding: 10px 0;
-  margin: 0;
-  max-height: 200px;
-  overflow-y: auto;
-  display: block;
-}
-
-.input-wrapper textarea::placeholder {
-  line-height: 24px;
-}
 
 .send-button {
   background: none;
@@ -259,5 +267,6 @@
 }
 
 .send-button:hover { color: #fff; transform: translateX(2px); }
+
 
 .sidebar-right { width: 15%; border-left: 1px solid rgba(255, 255, 255, 0.05); }
