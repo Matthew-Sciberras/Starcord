@@ -1,0 +1,42 @@
+services:
+  starcord-postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
+      - POSTGRES_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+
+  starcord-redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+
+  starcord-backend:
+    build: ./backend/main
+    depends_on:
+      - starcord-postgres
+      - starcord-redis
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://starcord-postgres:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_DATA_REDIS_HOST=starcord-redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - JWT_SECRETKEY=${JWT_SECRETKEY}
+      - JWT_ACCESSEXPIRATION=${JWT_ACCESSEXPIRATION}
+      - JWT_REFRESHEXPIRATION=${JWT_REFRESHEXPIRATION}
+      - JWT_REFRESHEXPIRATIONSECONDS=${JWT_REFRESHEXPIRATIONSECONDS}
+    ports:
+      - "8080:8080"
+
+  starcord-frontend:
+    build: ./frontend
+    environment:
+      - CI=true
+    ports:
+      - "4200:4200"
+    command: >
+      sh -c "npx pnpm install && npx ng serve --host 0.0.0.0"
