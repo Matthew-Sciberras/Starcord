@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="starcord-redis">
-  <database-model serializer="dbm" dbms="REDIS" family-id="REDIS" format-version="4.54">
+  <database-model serializer="dbm" dbms="REDIS" family-id="REDIS" format-version="4.55">
     <root id="1">
-      <ServerVersion>8.4.2</ServerVersion>
+      <ServerVersion>7.4.7</ServerVersion>
     </root>
     <schema id="2" parent="1" name="0">
       <Current>1</Current>
@@ -22,8 +22,5 @@
     <schema id="15" parent="1" name="7"/>
     <schema id="16" parent="1" name="8"/>
     <schema id="17" parent="1" name="9"/>
-    <redis-key id="18" parent="2" name="ratelimit:0:0:0:0:0:0:0:1:login">
-      <Type>string</Type>
-    </redis-key>
   </database-model>
 </dataSource>

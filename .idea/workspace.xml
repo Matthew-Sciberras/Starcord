@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/shared/models/api-docs.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/shared/models/api-docs.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/data/endpoints.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/data/endpoints.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/public.abK9xQ.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ed823859-92dd-4c57-b747-4dc3222d141c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ed823859-92dd-4c57-b747-4dc3222d141c.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/db-forest-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +60,7 @@
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/matth/Documents/Programming/Projects/Starcord&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/matthew/Documents/Programming/Projects/Starcord&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
