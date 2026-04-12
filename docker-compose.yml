@@ -42,13 +42,17 @@ services:
       - "8080:8080"
 
   starcord-frontend:
+    user: root
     build: ./frontend
     environment:
       - CI=true
     ports:
       - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     command: >
-      sh -c "npx pnpm install && npx ng serve --host 0.0.0.0"
+      sh -c "npx pnpm install && npx ng serve --host 0.0.0.0 --poll 2000"
 
 volumes:
     postgres_data:
