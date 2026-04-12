@@ -6,14 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="97978730-eb33-4ea4-aa88-2868512cbff4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2fbae589-2677-408c-aad9-26dc4fe8d2bb/storage_v2/_src_/database/starcord.8Dx1Tg/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ed823859-92dd-4c57-b747-4dc3222d141c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ed823859-92dd-4c57-b747-4dc3222d141c.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/db-forest-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/features/other/docs/pages/security/security-landing/security-landing.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/docs/security/auth-flow.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/docs/security/auth-flow.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
